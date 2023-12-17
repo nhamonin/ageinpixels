@@ -1,13 +1,16 @@
-import { Analytics } from '@vercel/analytics/react';
-import './App.css'
+import { Questions } from '@/components/questions';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
+
+import './App.css';
 
 function App() {
   return (
     <>
-      <h1>Age in pixels</h1>
-      <Analytics />
+      <Questions />
+
+      <VercelAnalytics />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
