@@ -1,1 +1,1 @@
-export type { CountrySelectorProps } from './CountrySelectorProps';
+export type { CountrySelectorProps, SexRadioGroupProps, BirthdayInputProps } from './QuestionProps';

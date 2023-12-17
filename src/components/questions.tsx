@@ -7,11 +7,14 @@ import { CountrySelector } from '@/components/country-selector';
 import { SexRadiogroup } from '@/components/sex-radiogroup';
 import { BirthdayInput } from '@/components/birthday-input';
 import { useUserData, UserData } from '@/contexts/UserDataContext';
+import { CountrySelectorProps, SexRadioGroupProps, BirthdayInputProps } from '@/types';
+
+type QuestionComponent = FC<CountrySelectorProps> | FC<SexRadioGroupProps> | FC<BirthdayInputProps>;
 
 type Question = {
   id: number;
   text: string;
-  component: FC;
+  component: QuestionComponent;
 };
 
 const questions: Question[] = [
@@ -35,7 +38,7 @@ const questions: Question[] = [
 export function Questions() {
   const { userData, updateUserData } = useUserData();
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [currentInput, setCurrentInput] = useState<string | Date | null>(null);
+  const [currentInput, setCurrentInput] = useState<string | Date>('');
   const currentQuestionData = questions[currentQuestion];
 
   const handleInputChange = (value: string | Date) => {
@@ -49,17 +52,13 @@ export function Questions() {
   };
 
   const handleNext = () => {
-    // Update context with current input
     const key = Object.keys(userData)[currentQuestion] as keyof UserData;
     updateUserData({ [key]: currentInput });
 
-    // Move to next question or handle submit
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      // Reset current input for the next question
-      setCurrentInput(null);
+      setCurrentInput('');
     } else {
-      // Handle form submission here
       console.log('Form submission:', userData);
     }
   };
@@ -88,7 +87,7 @@ export function Questions() {
               </h3>
               <p className="text-base text-gray-500">{currentQuestionData.text}</p>
               <div className="my-12 w-full">
-                <Component value={currentInput} onChange={handleInputChange} />
+                <Component value={currentInput as string & Date} onChange={handleInputChange} />
               </div>
               <div className="flex justify-between w-full">
                 <Button
