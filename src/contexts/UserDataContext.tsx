@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 export type UserData = {
   country: string;
   sex: 'male' | 'female';
-  birthDate: Date;
+  birthDate: string;
 };
 
 type UserDataContextType = {
@@ -14,7 +14,7 @@ type UserDataContextType = {
 const defaultUserData: UserData = {
   country: '',
   sex: 'male',
-  birthDate: new Date(1990, 0, 1),
+  birthDate: '',
 };
 
 const UserDataContext = createContext<UserDataContextType>({

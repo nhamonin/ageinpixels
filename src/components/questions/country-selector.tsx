@@ -8,9 +8,14 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-export function CountrySelector() {
+interface CountrySelectorProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export function CountrySelector({ value, onChange }: CountrySelectorProps) {
   return (
-    <Select>
+    <Select value={value} onValueChange={onChange}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder="Select a country" />
       </SelectTrigger>
