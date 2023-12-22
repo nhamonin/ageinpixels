@@ -7,25 +7,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { LoadingSpinner } from '../ui/loading';
+import { useCountries } from '@/hooks/useCountries';
+import { QuestionsInputProps } from '@/types';
 
-interface CountrySelectorProps {
-  value: string;
-  onChange: (value: string) => void;
-}
+export function CountrySelector({ value, onChange }: QuestionsInputProps) {
+  const { countries, isLoading, error } = useCountries();
 
-export function CountrySelector({ value, onChange }: CountrySelectorProps) {
+  const renderContent = () => {
+    if (isLoading) {
+      return <LoadingSpinner className="text-gray-500" size={20} />;
+    }
+
+    if (error) {
+      return 'Error loading countries. Please try again.';
+    }
+
+    if (!countries?.length) {
+      return 'No countries available.';
+    }
+
+    return countries.map((country) => (
+      <SelectItem key={country.Code} value={country.Code}>
+        {country.Title}
+      </SelectItem>
+    ));
+  };
+
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger className="w-full">
-        <SelectValue placeholder="Select a country" />
+        <SelectValue placeholder={isLoading || error ? '' : 'Select a country'} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Countries</SelectLabel>
-          <SelectItem value="ukr">Ukraine</SelectItem>
-          <SelectItem value="us">United States</SelectItem>
-          <SelectItem value="ca">Canada</SelectItem>
-          <SelectItem value="mx">Mexico</SelectItem>
+          {renderContent()}
         </SelectGroup>
       </SelectContent>
     </Select>

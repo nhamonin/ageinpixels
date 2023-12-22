@@ -13,6 +13,8 @@
     "components": "@/components",
     "utils": "@/lib/utils",
     "contexts": "@/contexts",
-    "types": "@/types"
+    "hooks": "@/hooks",
+    "types": "@/types",
+    "constants": "@/constants"
   }
 }

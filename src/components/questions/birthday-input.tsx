@@ -2,13 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { QuestionsInputProps } from '@/types';
 
-interface BirthdayInputProps {
-  value: string; // "dd-mm-yyyy"
-  onChange: (value: string) => void;
-}
-
-export const BirthdayInput = ({ value, onChange }: BirthdayInputProps) => {
+export const BirthdayInput = ({ value, onChange }: QuestionsInputProps) => {
   const [day, month, year] = value ? value.split('-') : ['', '', ''];
 
   const [localDay, setLocalDay] = useState(day);

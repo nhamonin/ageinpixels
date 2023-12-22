@@ -1,12 +1,8 @@
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { QuestionsInputProps } from '@/types';
 
-interface SexRadiogroupProps {
-  value: string;
-  onChange: (value: string) => void;
-}
-
-export function SexRadiogroup({ value, onChange }: SexRadiogroupProps) {
+export function SexRadiogroup({ value, onChange }: QuestionsInputProps) {
   return (
     <RadioGroup value={value} onValueChange={onChange}>
       <div className="flex items-center space-x-2">
