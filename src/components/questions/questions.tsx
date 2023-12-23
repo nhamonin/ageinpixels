@@ -8,6 +8,7 @@ import { SexRadiogroup } from '@/components/questions/sex-radiogroup';
 import { BirthdayInput } from '@/components/questions/birthday-input';
 import { useUserData, UserData } from '@/contexts/UserDataContext';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
+import { useQuestionsContext } from '@/contexts/QuestionsContext';
 
 const questions = [
   {
@@ -29,6 +30,7 @@ export function Questions() {
   const { lifeExpectancy } = useLifeExpectancy();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentInput, setCurrentInput] = useState('');
+  const { setQuestionsCompleted } = useQuestionsContext();
 
   useEffect(() => {
     const newInputValue = userData[Object.keys(userData)[currentQuestion] as keyof UserData];
@@ -74,6 +76,10 @@ export function Questions() {
   const handleSubmit = () => {
     const key = Object.keys(userData)[currentQuestion] as keyof UserData;
     updateUserData({ [key]: currentInput });
+
+    if (isFormComplete()) {
+      setQuestionsCompleted(true);
+    }
   };
 
   function isFormComplete() {

@@ -1,30 +1,31 @@
-import { Questions } from '@/components/questions/questions';
-import { UserDataProvider } from './contexts/UserDataContext';
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 
+import { Questions } from '@/components/questions/questions';
+import { Dashboard } from '@/components/lifeVisualization/Dashboard';
+import { useQuestionsContext } from './contexts/QuestionsContext';
+
 import './App.css';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 0,
-    },
-  },
-});
-
 function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <UserDataProvider>
-        <Questions />
+  const { questionsCompleted } = useQuestionsContext();
+  const dashboardRef = useRef<HTMLDivElement>(null);
 
-        <ReactQueryDevtools initialIsOpen={false} />
-        <VercelAnalytics />
-      </UserDataProvider>
-    </QueryClientProvider>
+  useEffect(() => {
+    if (questionsCompleted && dashboardRef.current) {
+      dashboardRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [questionsCompleted]);
+
+  return (
+    <>
+      <Questions />
+      <Dashboard ref={dashboardRef} />
+
+      <ReactQueryDevtools initialIsOpen={false} />
+      <VercelAnalytics />
+    </>
   );
 }
 
