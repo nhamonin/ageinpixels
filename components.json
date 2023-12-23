@@ -15,6 +15,7 @@
     "contexts": "@/contexts",
     "hooks": "@/hooks",
     "types": "@/types",
-    "constants": "@/constants"
+    "constants": "@/constants",
+    "api": "@/api"
   }
 }

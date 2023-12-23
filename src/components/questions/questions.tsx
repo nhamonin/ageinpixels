@@ -7,6 +7,7 @@ import { CountrySelector } from '@/components/questions/country-selector';
 import { SexRadiogroup } from '@/components/questions/sex-radiogroup';
 import { BirthdayInput } from '@/components/questions/birthday-input';
 import { useUserData, UserData } from '@/contexts/UserDataContext';
+import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
 
 const questions = [
   {
@@ -25,12 +26,13 @@ const questions = [
 
 export function Questions() {
   const { userData, updateUserData } = useUserData();
+  const { lifeExpectancy } = useLifeExpectancy();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentInput, setCurrentInput] = useState('');
 
   useEffect(() => {
-    const newInputValue = userData[Object.keys(userData)[currentQuestion] as keyof UserData] || '';
-    setCurrentInput(newInputValue);
+    const newInputValue = userData[Object.keys(userData)[currentQuestion] as keyof UserData];
+    setCurrentInput(newInputValue !== undefined ? String(newInputValue) : '');
   }, [currentQuestion, userData]);
 
   useEffect(() => {
@@ -42,6 +44,12 @@ export function Questions() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentInput, currentQuestion]);
 
+  useEffect(() => {
+    if (lifeExpectancy && lifeExpectancy !== userData.lifeExpectancy) {
+      updateUserData({ ...userData, lifeExpectancy });
+    }
+  }, [lifeExpectancy, userData, updateUserData]);
+
   const Component = questions[currentQuestion].component;
 
   const handleInputChange = (value: string) => setCurrentInput(value);
@@ -49,7 +57,8 @@ export function Questions() {
     if (currentQuestion <= 0) return;
 
     setCurrentQuestion(currentQuestion - 1);
-    setCurrentInput(userData[Object.keys(userData)[currentQuestion - 1] as keyof UserData]);
+    const prevInputValue = userData[Object.keys(userData)[currentQuestion - 1] as keyof UserData];
+    setCurrentInput(prevInputValue !== undefined ? String(prevInputValue) : '');
   };
 
   const handleNext = () => {
@@ -59,16 +68,12 @@ export function Questions() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
       setCurrentInput('');
-    } else {
-      console.log('Form submission:', userData);
     }
   };
 
   const handleSubmit = () => {
     const key = Object.keys(userData)[currentQuestion] as keyof UserData;
     updateUserData({ [key]: currentInput });
-
-    console.log('Form submission:', userData);
   };
 
   function isFormComplete() {

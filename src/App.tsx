@@ -1,4 +1,5 @@
 import { Questions } from '@/components/questions/questions';
+import { UserDataProvider } from './contexts/UserDataContext';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -17,10 +18,12 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Questions />
+      <UserDataProvider>
+        <Questions />
 
-      <ReactQueryDevtools initialIsOpen={false} />
-      <VercelAnalytics />
+        <ReactQueryDevtools initialIsOpen={false} />
+        <VercelAnalytics />
+      </UserDataProvider>
     </QueryClientProvider>
   );
 }
