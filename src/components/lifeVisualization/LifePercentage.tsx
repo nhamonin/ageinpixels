@@ -57,10 +57,14 @@ export const LifePercentage = () => {
   }, [birthDate, lifeExpectancy, isFirstLoad, questionsCompleted]);
 
   const displayPercentage = isNaN(lifePercentage) ? 0 : Math.min(lifePercentage, 100);
+  const textVisibility = lifePercentage > 0 ? 'visible' : 'hidden';
+  const textOpacity = lifePercentage > 0 ? 1 : 0;
 
   return (
     <div className="flex flex-col gap-5">
-      {lifePercentage > 0 && <p className="text-lg">You lived {lifePercentage.toFixed(8)}%</p>}
+      <p className="text-lg" style={{ visibility: textVisibility, opacity: textOpacity }}>
+        You lived {lifePercentage.toFixed(8)}%
+      </p>
       <div className="w-full">
         <Progress
           className="h-[2px] bg-gray-200 rounded-full transition-all duration-1000 ease-out w-full"
