@@ -80,7 +80,7 @@ export function Questions({ onCompleted }: QuestionsProps) {
 
   const handleSubmit = () => {
     const key = Object.keys(userData)[currentQuestion] as keyof UserData;
-    updateUserData({ [key]: currentInput });
+    updateUserData({ [key]: currentInput, questionsCompleted: true });
 
     if (isFormComplete()) {
       onCompleted();
@@ -101,56 +101,45 @@ export function Questions({ onCompleted }: QuestionsProps) {
   <p className="text-base text-gray-500">{questions[currentQuestion].text}</p>;
 
   return (
-    <main className="min-h-screen bg-white dark:bg-gray-800">
-      <section className="py-12 md:py-24">
-        <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8">
-              Answer the questions below
-            </h2>
+    <section className="w-4/5 max-w-7xl py-12 md:py-24 h-[var(--content-height)]">
+      <div className="text-center">
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8">
+          Answer the questions below
+        </h2>
+      </div>
+      <div className="h-[6px] bg-gray-200 mt-10 mb-12">
+        <Progress className="h-full" value={((currentQuestion + 1) / questions.length) * 100} />
+      </div>
+      <Card>
+        <CardContent className="p-8 flex flex-col gap-6 items-center">
+          <h3 className="text-2xl font-semibold">
+            Question {currentQuestion + 1} / {questions.length}
+          </h3>
+          <p className="text-base text-gray-500">{questions[currentQuestion].text}</p>
+          <div className="my-12 w-full">
+            <Component value={currentInput} onChange={handleInputChange} />
           </div>
-          <div className="w-full h-[6px] bg-gray-200 mt-10 mb-12 rounded-full">
-            <Progress
-              className="h-full rounded-full"
-              value={((currentQuestion + 1) / questions.length) * 100}
-            />
+          <div className="flex justify-between w-full">
+            <Button
+              className="w-1/3"
+              variant="outline"
+              onClick={handlePrevious}
+              disabled={currentQuestion === 0}
+            >
+              Previous
+            </Button>
+            {currentQuestion < questions.length - 1 ? (
+              <Button className="w-1/3" onClick={handleNext} disabled={currentInput.trim() === ''}>
+                Next
+              </Button>
+            ) : (
+              <Button className="w-1/3" onClick={handleSubmit} disabled={!isFormComplete()}>
+                Submit
+              </Button>
+            )}
           </div>
-          <Card>
-            <CardContent className="p-8 flex flex-col gap-6 items-center">
-              <h3 className="text-2xl font-semibold">
-                Question {currentQuestion + 1} / {questions.length}
-              </h3>
-              <p className="text-base text-gray-500">{questions[currentQuestion].text}</p>
-              <div className="my-12 w-full">
-                <Component value={currentInput} onChange={handleInputChange} />
-              </div>
-              <div className="flex justify-between w-full">
-                <Button
-                  className="w-1/3"
-                  variant="outline"
-                  onClick={handlePrevious}
-                  disabled={currentQuestion === 0}
-                >
-                  Previous
-                </Button>
-                {currentQuestion < questions.length - 1 ? (
-                  <Button
-                    className="w-1/3"
-                    onClick={handleNext}
-                    disabled={currentInput.trim() === ''}
-                  >
-                    Next
-                  </Button>
-                ) : (
-                  <Button className="w-1/3" onClick={handleSubmit} disabled={!isFormComplete()}>
-                    Submit
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-    </main>
+        </CardContent>
+      </Card>
+    </section>
   );
 }

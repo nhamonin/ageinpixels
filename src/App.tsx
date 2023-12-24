@@ -1,19 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 
+import { Layout } from '@/components/layout/Layout';
 import { Questions } from '@/components/questions/questions';
 import { Dashboard } from '@/components/lifeVisualization/Dashboard';
 
-import './App.css';
+import { useUserData } from './contexts/UserDataContext';
 
 function App() {
+  const { userData, updateUserData } = useUserData();
   const dashboardRef = useRef<HTMLDivElement>(null);
-  const [questionsCompleted, setQuestionsCompleted] = useState(false);
+
   let scrollTimeout: NodeJS.Timeout | null = null;
 
   const handleCompletedQuestions = () => {
-    setQuestionsCompleted(true);
+    updateUserData({ ...userData, questionsCompleted: true });
 
     scrollTimeout = setTimeout(() => {
       if (dashboardRef.current) {
@@ -31,14 +33,14 @@ function App() {
   }, [scrollTimeout]);
 
   return (
-    <>
+    <Layout>
       <Questions onCompleted={handleCompletedQuestions} />
 
-      {questionsCompleted && <Dashboard ref={dashboardRef} />}
+      {userData.questionsCompleted && <Dashboard ref={dashboardRef} />}
 
       <ReactQueryDevtools initialIsOpen={false} />
       <VercelAnalytics />
-    </>
+    </Layout>
   );
 }
 

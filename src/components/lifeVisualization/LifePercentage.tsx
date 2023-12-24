@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
 
 import { Progress } from '@/components/ui/progress';
+import { useUserData } from '@/contexts/UserDataContext';
 
-type LifePercentageProps = {
-  birthDate: string;
-  lifeExpectancy: number;
-  isVisible: boolean;
-};
-
-export const LifePercentage = ({ birthDate, lifeExpectancy, isVisible }: LifePercentageProps) => {
+export const LifePercentage = () => {
+  const { userData } = useUserData();
+  const { birthDate, lifeExpectancy, questionsCompleted } = userData;
   const [lifePercentage, setLifePercentage] = useState(0);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!questionsCompleted) return;
 
     const parseDate = (dateStr: string) => {
       const parts = dateStr.split('-');
@@ -36,16 +33,18 @@ export const LifePercentage = ({ birthDate, lifeExpectancy, isVisible }: LifePer
     if (isFirstLoad) {
       let start = 0;
       const end = calculateLifePercentage();
+      const rateChange = 5;
+      const interval = 40;
 
       const textAnimationInterval = setInterval(() => {
-        start += (end - start) / 10;
+        start += (end - start) / rateChange;
         setLifePercentage(start);
         if (Math.abs(start - end) < 0.01) {
           setLifePercentage(end);
           clearInterval(textAnimationInterval);
           setIsFirstLoad(false);
         }
-      }, 50);
+      }, interval);
 
       return () => clearInterval(textAnimationInterval);
     } else {
@@ -55,19 +54,16 @@ export const LifePercentage = ({ birthDate, lifeExpectancy, isVisible }: LifePer
 
       return () => clearInterval(interval);
     }
-  }, [birthDate, lifeExpectancy, isFirstLoad, isVisible]);
+  }, [birthDate, lifeExpectancy, isFirstLoad, questionsCompleted]);
 
   const displayPercentage = isNaN(lifePercentage) ? 0 : Math.min(lifePercentage, 100);
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <h1 className="text-4xl md:text-6xl font-bold text-center">Life Percentage:</h1>
-      <p className="text-3xl md:text-5xl mt-5 tabular-nums">
-        {isNaN(lifePercentage) ? 'Loading...' : lifePercentage.toFixed(8)}%
-      </p>
-      <div className="w-full max-w-md mt-5">
+    <div className="flex flex-col gap-5">
+      {lifePercentage > 0 && <p className="text-lg">You lived {lifePercentage.toFixed(8)}%</p>}
+      <div className="w-full">
         <Progress
-          className="h-6 bg-gray-200 rounded-full transition-all duration-1000 ease-out"
+          className="h-[2px] bg-gray-200 rounded-full transition-all duration-1000 ease-out w-full"
           value={displayPercentage}
         />
       </div>
