@@ -1,27 +1,40 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 
 import { Questions } from '@/components/questions/questions';
 import { Dashboard } from '@/components/lifeVisualization/Dashboard';
-import { useQuestionsContext } from './contexts/QuestionsContext';
 
 import './App.css';
 
 function App() {
-  const { questionsCompleted } = useQuestionsContext();
   const dashboardRef = useRef<HTMLDivElement>(null);
+  const [questionsCompleted, setQuestionsCompleted] = useState(false);
+  let scrollTimeout: NodeJS.Timeout | null = null;
+
+  const handleCompletedQuestions = () => {
+    setQuestionsCompleted(true);
+
+    scrollTimeout = setTimeout(() => {
+      if (dashboardRef.current) {
+        dashboardRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
 
   useEffect(() => {
-    if (questionsCompleted && dashboardRef.current) {
-      dashboardRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [questionsCompleted]);
+    return () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+    };
+  }, []);
 
   return (
     <>
-      <Questions />
-      <Dashboard ref={dashboardRef} />
+      <Questions onCompleted={handleCompletedQuestions} />
+
+      {questionsCompleted && <Dashboard ref={dashboardRef} />}
 
       <ReactQueryDevtools initialIsOpen={false} />
       <VercelAnalytics />

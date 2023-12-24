@@ -8,29 +8,34 @@ import { SexRadiogroup } from '@/components/questions/sex-radiogroup';
 import { BirthdayInput } from '@/components/questions/birthday-input';
 import { useUserData, UserData } from '@/contexts/UserDataContext';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
-import { useQuestionsContext } from '@/contexts/QuestionsContext';
 
 const questions = [
   {
-    text: 'Select your country',
+    key: 'country',
+    text: 'Where do you live? Select your country.',
     component: CountrySelector,
   },
   {
-    text: 'Specify your sex',
+    key: 'sex',
+    text: 'What is your gender? This helps us provide more accurate life expectancy data.',
     component: SexRadiogroup,
   },
   {
-    text: 'Enter your birth date',
+    key: 'birthDate',
+    text: 'When were you born? Enter your birth date.',
     component: BirthdayInput,
   },
 ];
 
-export function Questions() {
+type QuestionsProps = {
+  onCompleted: () => void;
+};
+
+export function Questions({ onCompleted }: QuestionsProps) {
   const { userData, updateUserData } = useUserData();
   const { lifeExpectancy } = useLifeExpectancy();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentInput, setCurrentInput] = useState('');
-  const { setQuestionsCompleted } = useQuestionsContext();
 
   useEffect(() => {
     const newInputValue = userData[Object.keys(userData)[currentQuestion] as keyof UserData];
@@ -78,7 +83,7 @@ export function Questions() {
     updateUserData({ [key]: currentInput });
 
     if (isFormComplete()) {
-      setQuestionsCompleted(true);
+      onCompleted();
     }
   };
 

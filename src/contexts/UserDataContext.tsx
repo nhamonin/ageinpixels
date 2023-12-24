@@ -4,7 +4,7 @@ export type UserData = {
   country: string;
   sex: 'MLE' | 'FMLE';
   birthDate: string;
-  lifeExpectancy?: number;
+  lifeExpectancy: number;
 };
 
 type UserDataContextType = {
