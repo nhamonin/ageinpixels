@@ -62,8 +62,11 @@ export const LifePercentage = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      <p className="text-lg" style={{ visibility: textVisibility, opacity: textOpacity }}>
-        You lived {lifePercentage.toFixed(8)}%
+      <p
+        className="text-lg tabular-nums"
+        style={{ visibility: textVisibility, opacity: textOpacity }}
+      >
+        <span className="font-bold">{lifePercentage.toFixed(8)}%</span> Lived
       </p>
       <div className="w-full">
         <Progress
