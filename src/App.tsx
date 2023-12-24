@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import { Layout } from '@/components/layout/Layout';
 import { Questions } from '@/components/questions/questions';
@@ -39,7 +40,8 @@ function App() {
       {userData.questionsCompleted && <Dashboard ref={dashboardRef} />}
 
       <ReactQueryDevtools initialIsOpen={false} />
-      <VercelAnalytics />
+      <Analytics />
+      <SpeedInsights />
     </Layout>
   );
 }
