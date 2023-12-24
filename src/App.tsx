@@ -28,7 +28,7 @@ function App() {
         clearTimeout(scrollTimeout);
       }
     };
-  }, []);
+  }, [scrollTimeout]);
 
   return (
     <>
