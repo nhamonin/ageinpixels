@@ -101,22 +101,20 @@ export function Questions({ onCompleted }: QuestionsProps) {
   <p className="text-base text-gray-500">{questions[currentQuestion].text}</p>;
 
   return (
-    <section className="w-4/5 max-w-7xl py-12 md:py-24 h-[var(--content-height)]">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8">
-          Answer the questions below
-        </h2>
-      </div>
-      <div className="h-[6px] bg-gray-200 mt-10 mb-12">
+    <section className="w-full md:w-4/5 max-w-7xl py-0 md:py-24 h-[var(--content-height)]">
+      <h2 className="text-3xl font-bold text-center tracking-tighter sm:text-4xl md:text-5xl mb-4 md:mb-8">
+        Answer the questions below
+      </h2>
+      <div className="h-[6px] bg-gray-200 mt-6 mb:mt-10 mb-6 md:mb-12">
         <Progress className="h-full" value={((currentQuestion + 1) / questions.length) * 100} />
       </div>
       <Card>
-        <CardContent className="p-8 flex flex-col gap-6 items-center">
+        <CardContent className="p-8 flex flex-col gap-2 md:gap-6 items-center">
           <h3 className="text-2xl font-semibold">
             Question {currentQuestion + 1} / {questions.length}
           </h3>
-          <p className="text-base text-gray-500">{questions[currentQuestion].text}</p>
-          <div className="my-12 w-full">
+          <p className="text-base text-gray-500 text-center">{questions[currentQuestion].text}</p>
+          <div className="my-4 md:my-12 w-full">
             <Component value={currentInput} onChange={handleInputChange} />
           </div>
           <div className="flex justify-between w-full">
