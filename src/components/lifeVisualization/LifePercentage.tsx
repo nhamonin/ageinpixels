@@ -37,7 +37,7 @@ export const LifePercentage = ({ birthDate, lifeExpectancy }: LifePercentageProp
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <h1 className="text-6xl font-bold">Life Percentage:</h1>
-      <p className="text-5xl mt-5">
+      <p className="text-5xl mt-5 tabular-nums">
         {isNaN(lifePercentage) ? 'Loading...' : lifePercentage.toFixed(8)}%
       </p>
     </div>
