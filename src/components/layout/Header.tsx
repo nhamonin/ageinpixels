@@ -1,5 +1,6 @@
-import { Switch } from '@/components/ui/switch';
 import { useEffect, useState } from 'react';
+
+import { Switch } from '@/components/ui/switch';
 
 export const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
