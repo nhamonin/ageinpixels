@@ -110,7 +110,7 @@ export function Questions({ onCompleted }: QuestionsProps) {
         value={((currentQuestion + 1) / questions.length) * 100}
       />
       <Card>
-        <CardContent className="p-8 flex flex-col gap-2 md:gap-6 items-center">
+        <CardContent className="p-4 md:p-8 flex flex-col gap-2 md:gap-6 items-center">
           <h3 className="text-2xl font-semibold">
             Question {currentQuestion + 1} / {questions.length}
           </h3>
