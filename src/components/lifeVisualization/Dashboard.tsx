@@ -5,7 +5,7 @@ export const Dashboard = forwardRef<HTMLDivElement>((_props, ref) => {
 
   return (
     <div ref={ref} className="h-[var(--content-height)] flex justify-center items-center">
-      <div ref={dashboardRef} className="bg-black w-64 h-64 md:w-96 md:h-96"></div>
+      <div ref={dashboardRef} className="bg-black dark:bg-white w-64 h-64 md:w-96 md:h-96"></div>
     </div>
   );
 });

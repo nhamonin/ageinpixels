@@ -105,9 +105,10 @@ export function Questions({ onCompleted }: QuestionsProps) {
       <h2 className="text-3xl font-bold text-center tracking-tighter sm:text-4xl md:text-5xl mb-4 md:mb-8">
         Answer the questions below
       </h2>
-      <div className="h-[6px] bg-gray-200 mt-6 mb:mt-10 mb-6 md:mb-12">
-        <Progress className="h-full" value={((currentQuestion + 1) / questions.length) * 100} />
-      </div>
+      <Progress
+        className="h-[6px] mt-6 mb:mt-10 mb-6 md:mb-12"
+        value={((currentQuestion + 1) / questions.length) * 100}
+      />
       <Card>
         <CardContent className="p-8 flex flex-col gap-2 md:gap-6 items-center">
           <h3 className="text-2xl font-semibold">

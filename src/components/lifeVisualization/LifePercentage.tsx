@@ -70,7 +70,7 @@ export const LifePercentage = () => {
       </p>
       <div className="w-full">
         <Progress
-          className="h-[2px] bg-gray-200 rounded-full transition-all duration-1000 ease-out w-full"
+          className="h-[2px] rounded-full transition-all duration-1000 ease-out w-full"
           value={displayPercentage}
         />
       </div>
