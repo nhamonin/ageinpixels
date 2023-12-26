@@ -4,10 +4,13 @@ import { Switch } from '@/components/ui/switch';
 
 export const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    return (
-      localStorage.getItem('darkMode') === 'true' ||
-      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    );
+    const storedPreference = localStorage.getItem('darkMode');
+    if (storedPreference !== null) {
+      console.log('storedPreference', storedPreference);
+      return storedPreference === 'true';
+    } else {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
   });
 
   useEffect(() => {

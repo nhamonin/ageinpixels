@@ -7,7 +7,7 @@ import { Layout } from '@/components/layout/Layout';
 import { Questions } from '@/components/questions/questions';
 import { Dashboard } from '@/components/lifeVisualization/Dashboard';
 
-import { useUserData } from './contexts/UserDataContext';
+import { useUserData } from '@/contexts/UserDataContext';
 
 function App() {
   const { userData, updateUserData } = useUserData();
