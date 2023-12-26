@@ -10,7 +10,7 @@ export const useLifeExpectancy = () => {
     isLoading,
     isError,
     error,
-  } = useQuery<number, Error>({
+  } = useQuery<number | null, Error>({
     queryKey: ['lifeExpectancy', userData.country, userData.sex],
     queryFn: () => fetchLifeExpectancy({ countryCode: userData.country, sex: userData.sex }),
     enabled: !!userData.country && !!userData.sex,
@@ -18,6 +18,7 @@ export const useLifeExpectancy = () => {
 
   return {
     lifeExpectancy,
+    lifeExpectancyUnavailable: lifeExpectancy === null,
     isLoading,
     error: isError ? error : null,
   };

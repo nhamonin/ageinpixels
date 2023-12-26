@@ -4,7 +4,7 @@ export type UserData = {
   country: string;
   sex: 'MLE' | 'FMLE';
   birthDate: string;
-  lifeExpectancy: number;
+  lifeExpectancy: number | null;
   questionsCompleted: boolean;
 };
 
@@ -17,7 +17,7 @@ const defaultUserData: UserData = {
   country: '',
   sex: 'MLE',
   birthDate: '',
-  lifeExpectancy: 0,
+  lifeExpectancy: null,
   questionsCompleted: false,
 };
 

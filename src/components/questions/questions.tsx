@@ -33,7 +33,7 @@ type QuestionsProps = {
 
 export function Questions({ onCompleted }: QuestionsProps) {
   const { userData, updateUserData } = useUserData();
-  const { lifeExpectancy } = useLifeExpectancy();
+  const { lifeExpectancy, lifeExpectancyUnavailable } = useLifeExpectancy();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentInput, setCurrentInput] = useState('');
 
@@ -52,10 +52,15 @@ export function Questions({ onCompleted }: QuestionsProps) {
   }, [currentInput, currentQuestion]);
 
   useEffect(() => {
-    if (lifeExpectancy && lifeExpectancy !== userData.lifeExpectancy) {
+    if (
+      !lifeExpectancyUnavailable &&
+      lifeExpectancy !== null &&
+      lifeExpectancy !== undefined &&
+      lifeExpectancy !== userData.lifeExpectancy
+    ) {
       updateUserData({ ...userData, lifeExpectancy });
     }
-  }, [lifeExpectancy, userData, updateUserData]);
+  }, [lifeExpectancy, userData, updateUserData, lifeExpectancyUnavailable]);
 
   const Component = questions[currentQuestion].component;
 
@@ -114,11 +119,18 @@ export function Questions({ onCompleted }: QuestionsProps) {
           <h3 className="text-2xl font-semibold">
             Question {currentQuestion + 1} / {questions.length}
           </h3>
-          <p className="text-base text-gray-500 text-center">{questions[currentQuestion].text}</p>
-          <div className="my-4 md:my-12 w-full">
+          <p className="mb-4 md:mb-12 text-base text-gray-500 text-center">
+            {questions[currentQuestion].text}
+          </p>
+          <div className="w-full">
             <Component value={currentInput} onChange={handleInputChange} />
           </div>
-          <div className="flex justify-between w-full">
+          {lifeExpectancyUnavailable && (
+            <div className="text-red-500">
+              Life expectancy data is not available for the selected country.
+            </div>
+          )}
+          <div className="mt-4 md:mt-12 flex justify-between w-full">
             <Button
               className="w-1/3"
               variant="outline"
@@ -128,11 +140,19 @@ export function Questions({ onCompleted }: QuestionsProps) {
               Previous
             </Button>
             {currentQuestion < questions.length - 1 ? (
-              <Button className="w-1/3" onClick={handleNext} disabled={currentInput.trim() === ''}>
+              <Button
+                className="w-1/3"
+                onClick={handleNext}
+                disabled={lifeExpectancyUnavailable || currentInput.trim() === ''}
+              >
                 Next
               </Button>
             ) : (
-              <Button className="w-1/3" onClick={handleSubmit} disabled={!isFormComplete()}>
+              <Button
+                className="w-1/3"
+                onClick={handleSubmit}
+                disabled={lifeExpectancyUnavailable || !isFormComplete()}
+              >
                 Submit
               </Button>
             )}

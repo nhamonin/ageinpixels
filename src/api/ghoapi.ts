@@ -5,7 +5,7 @@ import { ApiResponse, LifeExpectancyParams, LifeExpectancy, Country } from '@/ty
 export const fetchLifeExpectancy = async ({
   countryCode,
   sex,
-}: LifeExpectancyParams): Promise<number> => {
+}: LifeExpectancyParams): Promise<number | null> => {
   const url = proxify(
     `${URLS.LIFE_EXPECTANCY}?$filter=SpatialDim eq '${countryCode}' and Dim1 eq '${sex}'`
   );
@@ -18,7 +18,7 @@ export const fetchLifeExpectancy = async ({
   const data: ApiResponse<LifeExpectancy> = await response.json();
 
   if (data.value.length === 0) {
-    throw new Error('No life expectancy data available');
+    return null;
   }
 
   const mostRecentData = data.value
