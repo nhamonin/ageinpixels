@@ -69,20 +69,20 @@ export const LifePercentage = () => {
 
   const displayPercentage = isNaN(lifePercentage) ? 0 : Math.min(lifePercentage, 100);
   const textVisibility = lifePercentage > 0 ? 'visible' : 'hidden';
-  const textOpacity = lifePercentage > 0 ? 1 : 0;
+  const textOpacity = lifePercentage > 0;
 
   return (
     <div className="flex flex-col tabular-nums">
       <p
-        className={`text-sm translate-y-8 ${
-          textOpacity ? 'translate-y-0' : ''
+        className={`text-sm translate-y-${
+          textOpacity ? '0' : '8'
         } transition ease-in-out delay-150`}
       >
         {currentTime}
       </p>
       <p
         className="text-lg mt-2 mb-5 transition ease-in-out delay-150"
-        style={{ visibility: textVisibility, opacity: textOpacity }}
+        style={{ visibility: textVisibility, opacity: +textOpacity }}
       >
         <span className="font-bold">{lifePercentage.toFixed(8)}%</span> Lived
       </p>
