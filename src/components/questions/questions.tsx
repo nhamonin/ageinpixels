@@ -106,59 +106,61 @@ export function Questions({ onCompleted }: QuestionsProps) {
   <p className="text-base text-gray-500">{questions[currentQuestion].text}</p>;
 
   return (
-    <section className="w-full md:w-4/5 max-w-7xl py-0 md:py-24 h-[var(--content-height)]">
-      <h2 className="text-3xl font-bold text-center tracking-tighter sm:text-4xl md:text-5xl mb-4 md:mb-8">
-        Answer the questions below
-      </h2>
-      <Progress
-        className="h-[6px] mt-6 mb:mt-10 mb-6 md:mb-12"
-        value={((currentQuestion + 1) / questions.length) * 100}
-      />
-      <Card>
-        <CardContent className="p-4 md:p-8 flex flex-col gap-2 md:gap-6 items-center">
-          <h3 className="text-2xl font-semibold">
-            Question {currentQuestion + 1} / {questions.length}
-          </h3>
-          <p className="mb-4 md:mb-12 text-base text-gray-500 text-center">
-            {questions[currentQuestion].text}
-          </p>
-          <div className="w-full">
-            <Component value={currentInput} onChange={handleInputChange} />
-          </div>
-          {lifeExpectancyUnavailable && (
-            <div className="text-red-500">
-              Life expectancy data is not available for the selected country.
+    <section className="flex items-center justify-center w-full md:w-4/5 max-w-7xl py-0 md:py-24 h-[var(--content-height)]">
+      <div>
+        <h2 className="text-3xl font-bold text-center tracking-tighter sm:text-4xl md:text-5xl mb-4 md:mb-8">
+          Answer the questions below
+        </h2>
+        <Progress
+          className="h-[6px] mt-6 mb:mt-10 mb-6 md:mb-12"
+          value={((currentQuestion + 1) / questions.length) * 100}
+        />
+        <Card>
+          <CardContent className="p-4 md:p-8 flex flex-col gap-2 md:gap-6 items-center">
+            <h3 className="text-2xl font-semibold">
+              Question {currentQuestion + 1} / {questions.length}
+            </h3>
+            <p className="mb-4 md:mb-12 text-base text-gray-500 text-center">
+              {questions[currentQuestion].text}
+            </p>
+            <div className="w-full">
+              <Component value={currentInput} onChange={handleInputChange} />
             </div>
-          )}
-          <div className="mt-4 md:mt-12 flex justify-between w-full">
-            <Button
-              className="w-1/3"
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={currentQuestion === 0}
-            >
-              Previous
-            </Button>
-            {currentQuestion < questions.length - 1 ? (
-              <Button
-                className="w-1/3"
-                onClick={handleNext}
-                disabled={lifeExpectancyUnavailable || currentInput.trim() === ''}
-              >
-                Next
-              </Button>
-            ) : (
-              <Button
-                className="w-1/3"
-                onClick={handleSubmit}
-                disabled={lifeExpectancyUnavailable || !isFormComplete()}
-              >
-                Submit
-              </Button>
+            {lifeExpectancyUnavailable && (
+              <div className="text-red-500">
+                Life expectancy data is not available for the selected country.
+              </div>
             )}
-          </div>
-        </CardContent>
-      </Card>
+            <div className="mt-4 md:mt-12 flex justify-between w-full">
+              <Button
+                className="w-1/3"
+                variant="outline"
+                onClick={handlePrevious}
+                disabled={currentQuestion === 0}
+              >
+                Previous
+              </Button>
+              {currentQuestion < questions.length - 1 ? (
+                <Button
+                  className="w-1/3"
+                  onClick={handleNext}
+                  disabled={lifeExpectancyUnavailable || currentInput.trim() === ''}
+                >
+                  Next
+                </Button>
+              ) : (
+                <Button
+                  className="w-1/3"
+                  onClick={handleSubmit}
+                  disabled={lifeExpectancyUnavailable || !isFormComplete()}
+                >
+                  Submit
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </section>
   );
 }

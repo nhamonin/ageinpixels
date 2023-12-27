@@ -2,7 +2,7 @@ import { LifePercentage } from '@/components/lifeVisualization/LifePercentage';
 
 export const Footer = () => {
   return (
-    <footer className="fixed bg-white dark:bg-black bottom-0 left-0 w-full z-10 p-10">
+    <footer className="fixed bg-white dark:bg-black bottom-0 left-0 w-full z-10 px-10 pb-10">
       <LifePercentage />
     </footer>
   );

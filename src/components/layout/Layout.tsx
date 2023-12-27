@@ -12,7 +12,7 @@ export const Layout = ({ children }: LayoutProps) => {
     <div className="flex flex-col min-h-screen bg-white dark:bg-black dark:text-white">
       <Header />
 
-      <main className="w-full flex flex-col items-center mx-auto overflow-auto pt-[var(--header-height)] pb-[var(--footer-height)] px-10">
+      <main className="w-full flex flex-col items-center justify-center mx-auto overflow-auto mt-[var(--header-height)] mb-[var(--footer-height)] px-10">
         {children}
       </main>
 
