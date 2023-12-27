@@ -74,9 +74,11 @@ export const LifePercentage = () => {
   return (
     <div className="flex flex-col tabular-nums">
       <p
-        className={`text-sm translate-y-${
-          textOpacity ? '0' : '8'
-        } transition ease-in-out delay-150`}
+        style={{
+          transform: `translateY(${textOpacity ? '0' : '2rem'})`,
+          transition: 'ease-in-out',
+          transitionDuration: '150ms',
+        }}
       >
         {currentTime}
       </p>
