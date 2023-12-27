@@ -10,7 +10,7 @@ export const LifePercentage = () => {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
-    if (!questionsCompleted) return;
+    if (!questionsCompleted || lifeExpectancy === null) return;
 
     const parseDate = (dateStr: string) => {
       const parts = dateStr.split('-');
