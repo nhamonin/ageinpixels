@@ -7,17 +7,30 @@ export const LifePercentage = () => {
   const { userData } = useUserData();
   const { birthDate, lifeExpectancy, questionsCompleted } = userData;
   const [lifePercentage, setLifePercentage] = useState(0);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [initialAnimationDone, setInitialAnimationDone] = useState(false);
+  const [currentTime, setCurrentTime] = useState(() => {
+    const date = new Date();
+    return `${date.getHours().toString().padStart(2, '0')}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, '0')}`;
+  });
 
   useEffect(() => {
-    if (!questionsCompleted || lifeExpectancy === null) return;
-
-    const parseDate = (dateStr: string) => {
-      const parts = dateStr.split('-');
-      return new Date(+parts[2], +parts[1] - 1, +parts[0]);
+    const formatTime = (date: Date) => {
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const seconds = date.getSeconds().toString().padStart(2, '0');
+      return `${hours}:${minutes}:${seconds}`;
     };
 
     const calculateLifePercentage = (): number => {
+      const parseDate = (dateStr: string) => {
+        const parts = dateStr.split('-');
+        return new Date(+parts[2], +parts[1] - 1, +parts[0]);
+      };
+
+      if (!birthDate || lifeExpectancy === null) return 0;
       const birthDateObj = parseDate(birthDate);
       const currentDate = new Date();
       const expectedEndDate = new Date(
@@ -30,40 +43,45 @@ export const LifePercentage = () => {
       return (livedMilliseconds / totalLifeMilliseconds) * 100;
     };
 
-    if (isFirstLoad) {
+    if (!questionsCompleted) return;
+
+    if (!initialAnimationDone) {
       let start = 0;
       const end = calculateLifePercentage();
-      const rateChange = 5;
-      const interval = 40;
-
-      const textAnimationInterval = setInterval(() => {
-        start += (end - start) / rateChange;
+      const animationInterval = setInterval(() => {
+        start += (end - start) / 5;
         setLifePercentage(start);
         if (Math.abs(start - end) < 0.01) {
           setLifePercentage(end);
-          clearInterval(textAnimationInterval);
-          setIsFirstLoad(false);
+          clearInterval(animationInterval);
+          setInitialAnimationDone(true);
         }
-      }, interval);
-
-      return () => clearInterval(textAnimationInterval);
+      }, 40);
+      return () => clearInterval(animationInterval);
     } else {
-      const interval = setInterval(() => {
+      const regularInterval = setInterval(() => {
+        setCurrentTime(formatTime(new Date()));
         setLifePercentage(calculateLifePercentage());
       }, 1000);
-
-      return () => clearInterval(interval);
+      return () => clearInterval(regularInterval);
     }
-  }, [birthDate, lifeExpectancy, isFirstLoad, questionsCompleted]);
+  }, [birthDate, lifeExpectancy, questionsCompleted, initialAnimationDone]);
 
   const displayPercentage = isNaN(lifePercentage) ? 0 : Math.min(lifePercentage, 100);
   const textVisibility = lifePercentage > 0 ? 'visible' : 'hidden';
   const textOpacity = lifePercentage > 0 ? 1 : 0;
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col tabular-nums">
       <p
-        className="text-lg tabular-nums"
+        className={`text-sm translate-y-8 ${
+          textOpacity ? 'translate-y-0' : ''
+        } transition ease-in-out delay-150`}
+      >
+        {currentTime}
+      </p>
+      <p
+        className="text-lg mt-2 mb-5 transition ease-in-out delay-150"
         style={{ visibility: textVisibility, opacity: textOpacity }}
       >
         <span className="font-bold">{lifePercentage.toFixed(8)}%</span> Lived
