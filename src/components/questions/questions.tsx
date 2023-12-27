@@ -107,7 +107,7 @@ export function Questions({ onCompleted }: QuestionsProps) {
 
   return (
     <section className="flex items-center justify-center w-full md:w-4/5 max-w-7xl py-0 md:py-24 h-[var(--content-height)]">
-      <div>
+      <div className="w-full">
         <h2 className="text-3xl font-bold text-center tracking-tighter sm:text-4xl md:text-5xl mb-4 md:mb-8">
           Answer the questions below
         </h2>
