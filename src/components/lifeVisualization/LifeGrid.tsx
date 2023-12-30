@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
 
+import { CameraAnimation } from '@/components/lifeVisualization/CameraAnimation';
 import { CameraLogger } from '@/components/lifeVisualization/CameraLogger';
 import { CameraSetter } from '@/components/lifeVisualization/CameraSetter';
 import { CubeWithEdges } from '@/components/lifeVisualization/CubeWidthEdges';
@@ -45,7 +45,7 @@ export const LifeGrid = ({ max = 0, current }: LifeGridProps) => {
 
   return (
     <Canvas style={{ width: '100%', height: '50vh' }} shadows>
-      <OrbitControls />
+      <CameraAnimation />
       <CameraSetter />
       <CameraLogger />
       <ambientLight intensity={0.5} />
