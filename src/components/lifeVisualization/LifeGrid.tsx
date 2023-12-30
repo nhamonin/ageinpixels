@@ -31,7 +31,7 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
       const isCurrentYear = cubeIndex === Math.floor(current);
       const fractionalInnerWidth = cubeIndex === Math.ceil(current) - 1 ? current % 1 : 1;
       const fractionalOuterWidth = isLastLayer && i === layerCubes - 1 ? max % 1 || 1 : 1;
-      const adjustX = (1 - fractionalOuterWidth) / 2;
+      const adjustX = (1 - (isCurrentYear ? fractionalInnerWidth : fractionalOuterWidth)) / 2;
 
       cubes.push(
         <CubeWithEdges

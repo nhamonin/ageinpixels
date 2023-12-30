@@ -56,7 +56,7 @@ export const CubeWithEdges = ({
   });
 
   return (
-    <mesh ref={meshRef} position={position} material={fillMaterial}>
+    <mesh ref={meshRef} position={position} scale={[innerWidth, 1, 1]} material={fillMaterial}>
       <boxGeometry args={[outerWidth, 1, 1]} />
       <lineSegments material={lineMaterial}>
         <edgesGeometry attach="geometry" args={[new THREE.BoxGeometry(outerWidth, 1, 1)]} />
