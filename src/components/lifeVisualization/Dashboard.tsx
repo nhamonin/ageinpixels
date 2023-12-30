@@ -27,7 +27,7 @@ export const Dashboard = forwardRef<HTMLDivElement>((_, ref) => {
   return (
     <div
       ref={ref}
-      className="h-[var(--content-height)] flex justify-center items-center w-2/3 sm:w-1/2 max-w-[440px]"
+      className="h-[var(--content-height)] flex justify-center items-center min-w-[600px] min-h-[600px] sm:min-w-auto sm:min-h-auto"
     >
       <div className="w-full">
         <LifeGrid max={lifeExpectancy || 0} current={currentAge || 0} />

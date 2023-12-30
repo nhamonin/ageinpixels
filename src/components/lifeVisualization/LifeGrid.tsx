@@ -25,10 +25,11 @@ export const LifeGrid = ({ max = 0, current }: LifeGridProps) => {
 
     for (let i = 0; i < layerCubes; i++) {
       const x = (i % layerSize) - Math.floor(layerSize / 2);
-      const y = layer;
+      const y = layer - 2;
       const z = Math.floor(i / layerSize) - Math.floor(layerSize / 2);
       const cubeIndex = layer * cubesPerLayer + i;
       const isLived = cubeIndex < current;
+      const isCurrentYear = cubeIndex === Math.floor(current);
 
       cubes.push(
         <CubeWithEdges
@@ -36,13 +37,14 @@ export const LifeGrid = ({ max = 0, current }: LifeGridProps) => {
           position={[x, y, z]}
           isLived={isLived}
           isDarkMode={isDarkMode}
+          isCurrentYear={isCurrentYear}
         />
       );
     }
   }
 
   return (
-    <Canvas style={{ width: '100%', height: '500px' }} shadows>
+    <Canvas style={{ width: '100%', height: '50vh' }} shadows>
       <OrbitControls />
       <CameraSetter />
       <CameraLogger />

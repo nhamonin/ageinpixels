@@ -5,8 +5,8 @@ export const CameraSetter = () => {
   const { camera } = useThree();
 
   useEffect(() => {
-    camera.position.set(3.922178698889387, 5.610373488685257, 6.225743344296638);
-    camera.rotation.set(-0.7334540753607448, 0.43772247223484645, 0.3648764749113862);
+    camera.position.set(4.707337099811188, 3.6236873560133684, 2.5425246562196513);
+    camera.rotation.set(-0.9499862757038413, 0.8337948398292025, 0.8028147398328144);
     camera.updateProjectionMatrix();
   }, [camera]);
 
