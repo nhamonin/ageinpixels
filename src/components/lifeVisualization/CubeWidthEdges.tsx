@@ -7,14 +7,23 @@ type CubeProps = MeshProps & {
   isLived: boolean;
   isDarkMode: boolean;
   isCurrentYear: boolean;
+  innerWidth: number;
+  outerWidth: number;
 };
 
 const lightColor = '#eee';
 const darkColor = '#666';
 
-export const CubeWithEdges = ({ position, isLived, isDarkMode, isCurrentYear }: CubeProps) => {
+export const CubeWithEdges = ({
+  position,
+  isLived,
+  isDarkMode,
+  isCurrentYear,
+  innerWidth,
+  outerWidth,
+}: CubeProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const animatedColor = new THREE.Color(darkColor);
+  const animatedColor = new THREE.Color(isDarkMode ? lightColor : darkColor);
 
   useFrame(({ clock }) => {
     if (isCurrentYear && meshRef.current) {
@@ -48,9 +57,9 @@ export const CubeWithEdges = ({ position, isLived, isDarkMode, isCurrentYear }: 
 
   return (
     <mesh ref={meshRef} position={position} material={fillMaterial}>
-      <boxGeometry args={[1, 1, 1]} />
+      <boxGeometry args={[outerWidth, 1, 1]} />
       <lineSegments material={lineMaterial}>
-        <edgesGeometry attach="geometry" args={[new THREE.BoxGeometry(1, 1, 1)]} />
+        <edgesGeometry attach="geometry" args={[new THREE.BoxGeometry(outerWidth, 1, 1)]} />
       </lineSegments>
     </mesh>
   );

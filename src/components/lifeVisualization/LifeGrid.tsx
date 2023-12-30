@@ -11,17 +11,16 @@ type LifeGridProps = {
   current: number;
 };
 
-export const LifeGrid = ({ max = 0, current }: LifeGridProps) => {
+export const LifeGrid = ({ max, current }: LifeGridProps) => {
   const cubes = [];
   const layerSize = Math.round(Math.cbrt(max));
   const cubesPerLayer = layerSize * layerSize;
   const totalLayers = Math.ceil(max / cubesPerLayer);
-  const cubesOnLastLayer = max % cubesPerLayer;
   const { isDarkMode } = useTheme();
 
   for (let layer = 0; layer < totalLayers; layer++) {
     const isLastLayer = layer === totalLayers - 1;
-    const layerCubes = isLastLayer && cubesOnLastLayer !== 0 ? cubesOnLastLayer : cubesPerLayer;
+    const layerCubes = isLastLayer ? Math.ceil(max % cubesPerLayer) : cubesPerLayer;
 
     for (let i = 0; i < layerCubes; i++) {
       const x = (i % layerSize) - Math.floor(layerSize / 2);
@@ -30,11 +29,16 @@ export const LifeGrid = ({ max = 0, current }: LifeGridProps) => {
       const cubeIndex = layer * cubesPerLayer + i;
       const isLived = cubeIndex < current;
       const isCurrentYear = cubeIndex === Math.floor(current);
+      const fractionalInnerWidth = cubeIndex === Math.ceil(current) - 1 ? current % 1 : 1;
+      const fractionalOuterWidth = isLastLayer && i === layerCubes - 1 ? max % 1 || 1 : 1;
+      const adjustX = (1 - fractionalOuterWidth) / 2;
 
       cubes.push(
         <CubeWithEdges
           key={`cube-${cubeIndex}`}
-          position={[x, y, z]}
+          position={[x - adjustX, y, z]}
+          innerWidth={fractionalInnerWidth}
+          outerWidth={fractionalOuterWidth}
           isLived={isLived}
           isDarkMode={isDarkMode}
           isCurrentYear={isCurrentYear}
