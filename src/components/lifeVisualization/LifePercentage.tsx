@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { Progress } from '@/components/ui/progress';
 import { useUserData } from '@/contexts/UserDataContext';
+import { parseDate } from '@/lib/utils';
 
 export const LifePercentage = () => {
   const { userData } = useUserData();
@@ -25,11 +26,6 @@ export const LifePercentage = () => {
     };
 
     const calculateLifePercentage = (): number => {
-      const parseDate = (dateStr: string) => {
-        const parts = dateStr.split('-');
-        return new Date(+parts[2], +parts[1] - 1, +parts[0]);
-      };
-
       if (!birthDate || lifeExpectancy === null) return 0;
       const birthDateObj = parseDate(birthDate);
       const currentDate = new Date();

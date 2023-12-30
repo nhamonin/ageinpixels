@@ -9,7 +9,7 @@ type LayoutProps = {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-black dark:text-white">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       <Header />
 
       <main className="w-full flex flex-col items-center justify-center mx-auto overflow-auto mt-[var(--header-height)] mb-[var(--footer-height)] px-10">
