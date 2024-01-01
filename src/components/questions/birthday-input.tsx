@@ -47,21 +47,30 @@ export const BirthdayInput = ({ value, onChange }: QuestionsInputProps) => {
       setLocalYear(partValue);
     }
 
-    const newDay = part === 'day' ? partValue : localDay;
-    const newMonth = part === 'month' ? partValue : localMonth;
-    const newYear = part === 'year' ? partValue : localYear;
+    let tempDay = part === 'day' ? partValue : localDay;
+    const tempMonth = part === 'month' ? partValue : localMonth;
+    const tempYear = part === 'year' ? partValue : localYear;
 
-    const validDay = Number(newDay) >= 1 && Number(newDay) <= 31;
-    const validMonth = Number(newMonth) >= 1 && Number(newMonth) <= 12;
-    const validYear =
-      newYear.length === 4 &&
-      Number(newYear) >= 1900 &&
-      Number(newYear) <= new Date().getFullYear();
-    const validDate = validDay && validMonth && validYear;
+    const daysInMonth = new Date(Number(tempYear), Number(tempMonth), 0).getDate();
 
-    if (validDate) {
-      const newValue = [newDay, newMonth, newYear].join('-');
+    if (Number(tempDay) > daysInMonth) {
+      tempDay = String(daysInMonth);
+      setLocalDay(tempDay);
+    }
+
+    const isValidDate =
+      Number(tempDay) >= 1 &&
+      Number(tempDay) <= daysInMonth &&
+      Number(tempMonth) >= 1 &&
+      Number(tempMonth) <= 12 &&
+      Number(tempYear) >= 1900 &&
+      Number(tempYear) <= new Date().getFullYear();
+
+    if (isValidDate) {
+      const newValue = [tempDay, tempMonth, tempYear].join('-');
       onChange(newValue);
+    } else {
+      onChange('');
     }
   };
 
