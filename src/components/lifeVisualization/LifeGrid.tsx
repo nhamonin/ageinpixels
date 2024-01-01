@@ -70,10 +70,9 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
           anchorX="center"
           anchorY="middle"
           fontSize={0.5}
-          font="Inter"
           position={[0, 0, 0]}
         >
-          {`${current.toFixed(2)}/${max.toFixed(2)} years`}
+          {`${current.toFixed(2)} / ${max.toFixed(2)} years`}
         </Text>
       </Billboard>
     </Canvas>
