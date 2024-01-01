@@ -68,18 +68,16 @@ export const LifePercentage = () => {
   const textOpacity = lifePercentage > 0;
 
   return (
-    <div className="flex flex-col tabular-nums">
+    <div className="flex flex-col tabular-nums transition ease-in-out delay-50">
       <p
         style={{
           transform: `translateY(${textOpacity ? '0' : '2rem'})`,
-          transition: 'ease-in-out',
-          transitionDuration: '150ms',
         }}
       >
         {currentTime}
       </p>
       <p
-        className="text-lg mt-2 mb-5 transition ease-in-out delay-150"
+        className="text-lg mt-2 mb-5"
         style={{ visibility: textVisibility, opacity: +textOpacity }}
       >
         <span className="font-bold">{lifePercentage.toFixed(8)}%</span> Lived
