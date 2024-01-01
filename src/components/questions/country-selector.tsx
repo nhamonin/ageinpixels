@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { LoadingSpinner } from '@/components/ui/loading';
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { useCountries } from '@/hooks/useCountries';
 import { QuestionsInputProps } from '@/types';
 
