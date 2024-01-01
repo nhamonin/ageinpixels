@@ -1,5 +1,4 @@
 import { Canvas } from '@react-three/fiber';
-import { Text, Billboard } from '@react-three/drei';
 
 import { CameraAnimation } from '@/components/lifeVisualization/CameraAnimation';
 import { CameraLogger } from '@/components/lifeVisualization/CameraLogger';
@@ -18,7 +17,6 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
   const cubesPerLayer = layerSize * layerSize;
   const totalLayers = Math.ceil(max / cubesPerLayer);
   const { isDarkMode } = useTheme();
-  const topY = totalLayers - 2 + 1;
 
   for (let layer = 0; layer < totalLayers; layer++) {
     const isLastLayer = layer === totalLayers - 1;
@@ -50,31 +48,25 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
   }
 
   return (
-    <Canvas style={{ width: '100%', height: '50vh' }} shadows>
-      <CameraAnimation />
-      <CameraSetter />
-      <CameraLogger />
-      <ambientLight intensity={0.5} />
-      <directionalLight
-        position={[10, 10, 0]}
-        intensity={0.7}
-        castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-      />
-      <pointLight position={[-10, -10, -10]} intensity={1} color="white" />
-      {cubes}
-      <Billboard position={[0, topY, 0]}>
-        <Text
-          color={isDarkMode ? 'white' : 'black'}
-          anchorX="center"
-          anchorY="middle"
-          fontSize={0.5}
-          position={[0, 0, 0]}
-        >
-          {`${current.toFixed(2)} / ${max.toFixed(2)} years`}
-        </Text>
-      </Billboard>
-    </Canvas>
+    <>
+      <p className="text-center text-lg">
+        {current.toFixed(2)} / {max.toFixed(2)} years
+      </p>
+      <Canvas style={{ width: '100%', height: '50vh' }} shadows>
+        <CameraAnimation />
+        <CameraSetter />
+        <CameraLogger />
+        <ambientLight intensity={0.5} />
+        <directionalLight
+          position={[10, 10, 0]}
+          intensity={0.7}
+          castShadow
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+        />
+        <pointLight position={[-10, -10, -10]} intensity={1} color="white" />
+        {cubes}
+      </Canvas>
+    </>
   );
 };
