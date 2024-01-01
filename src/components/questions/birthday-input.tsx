@@ -115,7 +115,9 @@ export const BirthdayInput = ({ value, onChange }: QuestionsInputProps) => {
           onValueChange={(newValue) => handleInputChange('month', newValue)}
         >
           <SelectTrigger>
-            <SelectValue placeholder="MM" />
+            <SelectValue placeholder="MM">
+              {months[Number(localMonth) - 1]?.slice(0, 3)}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             {months.map((monthOption, index) => (
