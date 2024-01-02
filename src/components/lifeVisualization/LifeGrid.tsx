@@ -52,7 +52,7 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
       <p className="text-center text-lg">
         {current.toFixed(2)} / {max.toFixed(2)} years
       </p>
-      <Canvas className="w-full h-[50svh]" shadows>
+      <Canvas className="w-full" style={{ height: '50svh' }} shadows>
         <CameraAnimation />
         <CameraSetter />
         <CameraLogger />
