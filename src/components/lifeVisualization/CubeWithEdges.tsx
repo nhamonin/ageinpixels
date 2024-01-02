@@ -36,23 +36,22 @@ export const CubeWithEdges = ({
     }
   });
 
-  const opacity = +!!isLived;
+  const opacity = isLived ? 1 : 0;
   const transparent = !isLived;
-  const fillColor = isCurrentYear
-    ? animatedColor
-    : !isLived
-    ? lightColor
-    : isDarkMode
-    ? lightColor
-    : darkColor;
+
+  let fillColor = isDarkMode ? lightColor : darkColor;
+  if (isCurrentYear) {
+    fillColor = isDarkMode ? darkColor : lightColor;
+  }
 
   const fillMaterial = new THREE.MeshStandardMaterial({
     color: fillColor,
     opacity: opacity,
-    transparent: transparent,
+    transparent,
   });
+  const lineColor = isDarkMode ? lightColor : darkColor;
   const lineMaterial = new THREE.LineBasicMaterial({
-    color: isDarkMode ? lightColor : darkColor,
+    color: lineColor,
   });
 
   return (

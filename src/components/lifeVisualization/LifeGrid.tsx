@@ -1,9 +1,9 @@
 import { Canvas } from '@react-three/fiber';
 
-import { CameraAnimation } from '@/components/lifeVisualization/CameraAnimation';
 import { CameraLogger } from '@/components/lifeVisualization/CameraLogger';
 import { CameraSetter } from '@/components/lifeVisualization/CameraSetter';
-import { CubeWithEdges } from '@/components/lifeVisualization/CubeWidthEdges';
+import { CubeWithEdges } from '@/components/lifeVisualization/CubeWithEdges';
+import { RotatingGrid } from '@/components/lifeVisualization/RotatingGrid';
 import { useTheme } from '@/contexts/ThemeContext';
 
 type LifeGridProps = {
@@ -24,7 +24,7 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
 
     for (let i = 0; i < layerCubes; i++) {
       const x = (i % layerSize) - Math.floor(layerSize / 2);
-      const y = layer - 2;
+      const y = layer - 1;
       const z = Math.floor(i / layerSize) - Math.floor(layerSize / 2);
       const cubeIndex = layer * cubesPerLayer + i;
       const isLived = cubeIndex < current;
@@ -53,19 +53,17 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
         {current.toFixed(2)} / {max.toFixed(2)} years
       </p>
       <Canvas className="w-full" style={{ height: '50svh' }} shadows>
-        <CameraAnimation />
         <CameraSetter />
         <CameraLogger />
-        <ambientLight intensity={0.5} />
+        <ambientLight intensity={0.7} />
         <directionalLight
-          position={[10, 10, 0]}
-          intensity={0.7}
+          position={[-5, 3, -2]}
+          intensity={0.5}
           castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
+          shadow-mapSize-width={500}
+          shadow-mapSize-height={500}
         />
-        <pointLight position={[-10, -10, -10]} intensity={1} color="white" />
-        {cubes}
+        <RotatingGrid cubes={cubes} />
       </Canvas>
     </>
   );
