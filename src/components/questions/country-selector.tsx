@@ -44,7 +44,7 @@ export function CountrySelector({ value, onChange }: QuestionsInputProps) {
   };
 
   return (
-    <Command className="rounded-lg border shadow-md">
+    <Command>
       <CommandInput
         placeholder="Search country..."
         value={inputValue}
