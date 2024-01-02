@@ -24,7 +24,7 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
 
     for (let i = 0; i < layerCubes; i++) {
       const x = (i % layerSize) - Math.floor(layerSize / 2);
-      const y = layer - 1;
+      const y = layer - 1.6;
       const z = Math.floor(i / layerSize) - Math.floor(layerSize / 2);
       const cubeIndex = layer * cubesPerLayer + i;
       const isLived = cubeIndex < current;
@@ -53,7 +53,7 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
         {current.toFixed(2)} / {max.toFixed(2)} years
       </p>
       <Canvas className="w-full" style={{ height: '50svh' }} shadows>
-        <CameraSetter />
+        <CameraSetter totalLayers={totalLayers} />
         <CameraLogger />
         <ambientLight intensity={0.7} />
         <directionalLight
