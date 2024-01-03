@@ -49,13 +49,13 @@ export const AgeVisualization = () => {
   }
 
   return (
-    <section className="flex flex-col justify-center items-center sm:min-w-auto sm:min-h-auto">
-      <p className="text-xl animate-levitate">
+    <section className="flex flex-col justify-center items-center sm:min-w-auto sm:min-h-auto relative">
+      <p className="text-xl animate-levitate absolute top-10">
         {formatNumber(currentAge)} / {formatNumber(lifeExpectancy)} years
       </p>
       <Canvas
         className="cursor-pointer"
-        style={{ height: '50svh', width: '50vw', minWidth: '600px' }}
+        style={{ height: 'var(--content-height)', width: 'calc(100vw - 680px)' }}
         shadows
       >
         <CameraSetter totalLayers={totalLayers} />

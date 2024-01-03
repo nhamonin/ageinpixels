@@ -12,7 +12,7 @@ export const Layout = ({ children }: LayoutProps) => {
     <div className="flex flex-col min-h-screen text-foreground">
       <Header />
 
-      <main className="grid grid-cols-[300px_1fr_300px] items-center justify-items-center gap-10 h-[var(--content-height)] overflow-auto mt-[var(--header-height)] mb-[var(--footer-height)] px-10">
+      <main className="grid grid-cols-[300px_1fr_300px] items-center justify-items-center h-[var(--content-height)] overflow-auto mt-[var(--header-height)] mb-[var(--footer-height)] px-10">
         {children}
       </main>
 

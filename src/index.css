@@ -101,9 +101,9 @@
       ),
       linear-gradient(
         to left,
-        transparent 356px,
-        hsl(var(--border)) 357px,
-        transparent 358px,
+        transparent 339px,
+        hsl(var(--border)) 340px,
+        transparent 341px,
         transparent 100%
       );
 
