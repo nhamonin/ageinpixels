@@ -69,6 +69,47 @@
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
   }
+
+  .grid-background {
+    background-image: linear-gradient(
+        to right,
+        transparent 39px,
+        hsl(var(--border)) 40px,
+        transparent 41px,
+        transparent 100%
+      ),
+      linear-gradient(
+        to right,
+        transparent 339px,
+        hsl(var(--border)) 340px,
+        transparent 341px,
+        transparent 100%
+      ),
+      linear-gradient(
+        to left,
+        transparent 39px,
+        hsl(var(--border)) 40px,
+        transparent 41px,
+        transparent 100%
+      ),
+      linear-gradient(
+        to left,
+        transparent 356px,
+        hsl(var(--border)) 357px,
+        transparent 358px,
+        transparent 100%
+      ),
+      linear-gradient(
+        to left,
+        transparent 39px,
+        hsl(var(--border)) 40px,
+        transparent 41px,
+        transparent 100%
+      );
+
+    position: relative;
+    z-index: 0;
+  }
 }
 
 @layer base {
@@ -76,7 +117,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background grid-background text-foreground;
     font-family: 'PT Sans', sans-serif;
   }
 }

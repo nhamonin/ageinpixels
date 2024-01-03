@@ -53,7 +53,11 @@ export const AgeVisualization = () => {
       <p className="text-xl animate-levitate">
         {formatNumber(currentAge)} / {formatNumber(lifeExpectancy)} years
       </p>
-      <Canvas style={{ height: '50svh', width: '50vw', minWidth: '600px' }} shadows>
+      <Canvas
+        className="cursor-pointer"
+        style={{ height: '50svh', width: '50vw', minWidth: '600px' }}
+        shadows
+      >
         <CameraSetter totalLayers={totalLayers} />
         <CameraLogger />
         <ambientLight intensity={0.7} />
