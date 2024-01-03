@@ -6,7 +6,7 @@ import { parseDate } from '@/lib/utils';
 
 export const LifePercentage = () => {
   const { userData } = useUserData();
-  const { birthDate, lifeExpectancy, questionsCompleted } = userData;
+  const { birthDate, lifeExpectancy } = userData;
   const [lifePercentage, setLifePercentage] = useState(0);
   const [initialAnimationDone, setInitialAnimationDone] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => {
@@ -39,8 +39,6 @@ export const LifePercentage = () => {
       return (livedMilliseconds / totalLifeMilliseconds) * 100;
     };
 
-    if (!questionsCompleted) return;
-
     if (!initialAnimationDone) {
       let start = 0;
       const end = calculateLifePercentage();
@@ -61,7 +59,7 @@ export const LifePercentage = () => {
       }, 1000);
       return () => clearInterval(regularInterval);
     }
-  }, [birthDate, lifeExpectancy, questionsCompleted, initialAnimationDone]);
+  }, [birthDate, lifeExpectancy, initialAnimationDone]);
 
   const displayPercentage = isNaN(lifePercentage) ? 0 : Math.min(lifePercentage, 100);
   const textVisibility = lifePercentage > 0 ? 'visible' : 'hidden';

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -107,45 +106,31 @@ export const BirthdayInput = ({ value, onChange }: QuestionsInputProps) => {
   const yearOptions = generateYearsOptions();
 
   return (
-    <div className="grid grid-cols-3 gap-4">
-      <div className="space-y-2">
-        <Label>Day</Label>
-        <Select value={localDay} onValueChange={(newValue) => handleInputChange('day', newValue)}>
-          <SelectTrigger>
-            <SelectValue placeholder="DD" />
-          </SelectTrigger>
-          <SelectContent>{daysOptions}</SelectContent>
-        </Select>
-      </div>
-      <div className="space-y-2">
-        <Label>Month</Label>
-        <Select
-          value={localMonth}
-          onValueChange={(newValue) => handleInputChange('month', newValue)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="MM">
-              {months[Number(localMonth) - 1]?.slice(0, 3)}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            {months.map((monthOption, index) => (
-              <SelectItem key={monthOption} value={String(index + 1).padStart(2, '0')}>
-                {monthOption}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="space-y-2">
-        <Label>Year</Label>
-        <Select value={localYear} onValueChange={(newValue) => handleInputChange('year', newValue)}>
-          <SelectTrigger>
-            <SelectValue placeholder="YYYY" />
-          </SelectTrigger>
-          <SelectContent>{yearOptions}</SelectContent>
-        </Select>
-      </div>
+    <div className="grid grid-cols-3 gap-[2px]">
+      <Select value={localDay} onValueChange={(newValue) => handleInputChange('day', newValue)}>
+        <SelectTrigger>
+          <SelectValue placeholder="DD" />
+        </SelectTrigger>
+        <SelectContent>{daysOptions}</SelectContent>
+      </Select>
+      <Select value={localMonth} onValueChange={(newValue) => handleInputChange('month', newValue)}>
+        <SelectTrigger>
+          <SelectValue placeholder="MM">{months[Number(localMonth) - 1]?.slice(0, 3)}</SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {months.map((monthOption, index) => (
+            <SelectItem key={monthOption} value={String(index + 1).padStart(2, '0')}>
+              {monthOption}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Select value={localYear} onValueChange={(newValue) => handleInputChange('year', newValue)}>
+        <SelectTrigger>
+          <SelectValue placeholder="YYYY" />
+        </SelectTrigger>
+        <SelectContent>{yearOptions}</SelectContent>
+      </Select>
     </div>
   );
 };

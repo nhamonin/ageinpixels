@@ -5,6 +5,7 @@ import { CameraSetter } from '@/components/lifeVisualization/CameraSetter';
 import { CubeWithEdges } from '@/components/lifeVisualization/CubeWithEdges';
 import { RotatingGrid } from '@/components/lifeVisualization/RotatingGrid';
 import { useTheme } from '@/contexts/ThemeContext';
+import { formatNumber } from '@/lib/utils';
 
 type LifeGridProps = {
   max: number;
@@ -23,9 +24,9 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
     const layerCubes = isLastLayer ? Math.ceil(max % cubesPerLayer) : cubesPerLayer;
 
     for (let i = 0; i < layerCubes; i++) {
-      const x = (i % layerSize) - Math.floor(layerSize / 2);
+      const x = (i % layerSize) - Math.floor(layerSize / 2) + 0.5;
       const y = layer - 1.6;
-      const z = Math.floor(i / layerSize) - Math.floor(layerSize / 2);
+      const z = Math.floor(i / layerSize) - Math.floor(layerSize / 2) + 0.5;
       const cubeIndex = layer * cubesPerLayer + i;
       const isLived = cubeIndex < current;
       const isCurrentYear = cubeIndex === Math.floor(current);
@@ -49,10 +50,10 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
 
   return (
     <>
-      <p className="text-center text-lg">
-        {current.toFixed(2)} / {max.toFixed(2)} years
+      <p className="text-xl animate-levitate">
+        {formatNumber(current)} / {formatNumber(max)} years
       </p>
-      <Canvas className="w-full" style={{ height: '50svh' }} shadows>
+      <Canvas style={{ height: '50svh', width: '50vw', minWidth: '600px' }} shadows>
         <CameraSetter totalLayers={totalLayers} />
         <CameraLogger />
         <ambientLight intensity={0.7} />

@@ -4,8 +4,7 @@ export type UserData = {
   country: string;
   sex: 'MLE' | 'FMLE';
   birthDate: string;
-  lifeExpectancy: number | null;
-  questionsCompleted: boolean;
+  lifeExpectancy: number;
 };
 
 type UserDataContextType = {
@@ -17,8 +16,7 @@ const defaultUserData: UserData = {
   country: '',
   sex: 'MLE',
   birthDate: '',
-  lifeExpectancy: null,
-  questionsCompleted: false,
+  lifeExpectancy: 64,
 };
 
 const UserDataContext = createContext<UserDataContextType>({

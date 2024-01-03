@@ -18,7 +18,8 @@ export function CountrySelector({ value, onChange }: QuestionsInputProps) {
 
   useEffect(() => {
     if (value && !isTyping) {
-      const selectedCountryTitle = countries?.find(country => country.Code === value)?.Title || '';
+      const selectedCountryTitle =
+        countries?.find((country) => country.Code === value)?.Title || '';
       setInputValue(selectedCountryTitle);
     }
   }, [value, isTyping, countries]);
@@ -44,30 +45,29 @@ export function CountrySelector({ value, onChange }: QuestionsInputProps) {
   };
 
   return (
-    <Command>
+    <Command className="relative overflow-visible">
       <CommandInput
         placeholder="Search country..."
         value={inputValue}
         onValueChange={handleInputChange}
       />
-      <CommandList>
+      <CommandList className="absolute top-full left-0 w-full">
         {isLoading && <LoadingSpinner className="text-gray-500" size={20} />}
         {error && <CommandEmpty>Error loading countries. Please try again.</CommandEmpty>}
         {!isLoading && !error && isTyping && inputValue.length > 0 && (
           <>
-            {filteredCountries?.length ? (
-              filteredCountries.map((country) => (
-                <CommandItem
-                  key={country.Code}
-                  onSelect={() => handleSelectCountry(country.Code)}
-                  value={country.Title}
-                >
-                  {country.Title}
-                </CommandItem>
-              ))
-            ) : (
-              <CommandEmpty>No countries found.</CommandEmpty>
-            )}
+            {filteredCountries?.length
+              ? filteredCountries.map((country) => (
+                  <CommandItem
+                    className="bg-background relative z-50"
+                    key={country.Code}
+                    onSelect={() => handleSelectCountry(country.Code)}
+                    value={country.Title}
+                  >
+                    {country.Title}
+                  </CommandItem>
+                ))
+              : null}
           </>
         )}
       </CommandList>
