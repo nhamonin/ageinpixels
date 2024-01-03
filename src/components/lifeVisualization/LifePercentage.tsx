@@ -62,30 +62,19 @@ export const LifePercentage = () => {
   }, [birthDate, lifeExpectancy, initialAnimationDone]);
 
   const displayPercentage = isNaN(lifePercentage) ? 0 : Math.min(lifePercentage, 100);
-  const textVisibility = lifePercentage > 0 ? 'visible' : 'hidden';
-  const textOpacity = lifePercentage > 0;
 
   return (
     <div className="flex flex-col tabular-nums transition ease-in-out delay-50">
-      <p
-        style={{
-          transform: `translateY(${textOpacity ? '0' : '2rem'})`,
-        }}
-      >
-        {currentTime}
-      </p>
-      <p
-        className="text-lg mt-2 mb-5"
-        style={{ visibility: textVisibility, opacity: +textOpacity }}
-      >
-        <span className="font-bold">{lifePercentage.toFixed(8)}%</span> Lived
-      </p>
-      <div className="w-full">
-        <Progress
-          className="h-[2px] rounded-full transition-all duration-1000 ease-out w-full"
-          value={displayPercentage}
-        />
-      </div>
+      <p className="mb-2">{currentTime}</p>
+      {lifePercentage > 0 && (
+        <p className="text-lg mb-5">
+          <span className="font-bold">{lifePercentage.toFixed(8)}%</span> Lived
+        </p>
+      )}
+      <Progress
+        className="h-[2px] rounded-full transition-all duration-1000 ease-out w-full"
+        value={displayPercentage}
+      />
     </div>
   );
 };
