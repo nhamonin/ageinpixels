@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { useFrame, extend, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls as OrbitControlsImpl } from 'three/addons/controls/OrbitControls.js';
@@ -12,24 +12,28 @@ type RotatingGridProps = {
 
 export const RotatingGrid = ({ cubes }: RotatingGridProps) => {
   const groupRef = useRef<THREE.Group>(null);
+  const orbitingRef = useRef(true);
   const { camera, gl } = useThree();
-  const [isOrbiting, setIsOrbiting] = useState(true);
+  const previousTimeRef = useRef(performance.now());
 
   useEffect(() => {
     const controls = new OrbitControlsImpl(camera, gl.domElement);
-    controls.addEventListener('start', () => setIsOrbiting(false));
-    controls.addEventListener('end', () => setIsOrbiting(true));
+
+    controls.addEventListener('start', () => (orbitingRef.current = false));
+    controls.addEventListener('end', () => (orbitingRef.current = true));
     return () => {
-      controls.removeEventListener('start', () => setIsOrbiting(false));
-      controls.removeEventListener('end', () => setIsOrbiting(true));
       controls.dispose();
     };
   }, [camera, gl.domElement]);
 
   useFrame(() => {
-    if (groupRef.current && isOrbiting) {
-      const rotationSpeed = 0.005;
-      groupRef.current.rotation.y += rotationSpeed;
+    const currentTime = performance.now();
+    const deltaTime = (currentTime - previousTimeRef.current) / 1000; // Convert to seconds
+    previousTimeRef.current = currentTime;
+
+    if (groupRef.current && orbitingRef.current) {
+      const rotationSpeed = 0.3;
+      groupRef.current.rotation.y += rotationSpeed * deltaTime; // Use deltaTime directly
     }
   });
 

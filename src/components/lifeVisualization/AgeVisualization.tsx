@@ -4,34 +4,34 @@ import { CameraLogger } from '@/components/lifeVisualization/CameraLogger';
 import { CameraSetter } from '@/components/lifeVisualization/CameraSetter';
 import { CubeWithEdges } from '@/components/lifeVisualization/CubeWithEdges';
 import { RotatingGrid } from '@/components/lifeVisualization/RotatingGrid';
+import { useUserData } from '@/contexts/UserDataContext';
 import { useTheme } from '@/contexts/ThemeContext';
-import { formatNumber } from '@/lib/utils';
+import { formatNumber, calculateAge } from '@/lib/utils';
 
-type LifeGridProps = {
-  max: number;
-  current: number;
-};
-
-export const LifeGrid = ({ max, current }: LifeGridProps) => {
-  const cubes = [];
-  const layerSize = Math.round(Math.cbrt(max));
-  const cubesPerLayer = layerSize * layerSize;
-  const totalLayers = Math.ceil(max / cubesPerLayer);
+export const AgeVisualization = () => {
   const { isDarkMode } = useTheme();
+  const { userData } = useUserData();
+  const { birthDate, lifeExpectancy } = userData;
+  const currentAge = birthDate ? calculateAge(birthDate) : 0;
+  const layerSize = Math.round(Math.cbrt(lifeExpectancy));
+  const cubesPerLayer = layerSize * layerSize;
+  const totalLayers = Math.ceil(lifeExpectancy / cubesPerLayer);
+  const cubes = [];
 
   for (let layer = 0; layer < totalLayers; layer++) {
     const isLastLayer = layer === totalLayers - 1;
-    const layerCubes = isLastLayer ? Math.ceil(max % cubesPerLayer) : cubesPerLayer;
+    const layerCubes = isLastLayer ? Math.ceil(lifeExpectancy % cubesPerLayer) : cubesPerLayer;
 
     for (let i = 0; i < layerCubes; i++) {
       const x = (i % layerSize) - Math.floor(layerSize / 2) + 0.5;
       const y = layer - 1.6;
       const z = Math.floor(i / layerSize) - Math.floor(layerSize / 2) + 0.5;
       const cubeIndex = layer * cubesPerLayer + i;
-      const isLived = cubeIndex < current;
-      const isCurrentYear = cubeIndex === Math.floor(current);
-      const fractionalInnerWidth = cubeIndex === Math.ceil(current) - 1 ? current % 1 : 1;
-      const fractionalOuterWidth = isLastLayer && i === layerCubes - 1 ? max % 1 || 1 : 1;
+      const isLived = cubeIndex < currentAge;
+      const isCurrentYear = cubeIndex === Math.floor(currentAge);
+      const fractionalInnerWidth = cubeIndex === Math.ceil(currentAge) - 1 ? currentAge % 1 : 1;
+      const fractionalOuterWidth =
+        isLastLayer && i === layerCubes - 1 ? lifeExpectancy % 1 || 1 : 1;
       const adjustX = (1 - (isCurrentYear ? fractionalInnerWidth : fractionalOuterWidth)) / 2;
 
       cubes.push(
@@ -49,9 +49,9 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
   }
 
   return (
-    <>
+    <section className="flex flex-col justify-center items-center sm:min-w-auto sm:min-h-auto">
       <p className="text-xl animate-levitate">
-        {formatNumber(current)} / {formatNumber(max)} years
+        {formatNumber(currentAge)} / {formatNumber(lifeExpectancy)} years
       </p>
       <Canvas style={{ height: '50svh', width: '50vw', minWidth: '600px' }} shadows>
         <CameraSetter totalLayers={totalLayers} />
@@ -66,6 +66,6 @@ export const LifeGrid = ({ max, current }: LifeGridProps) => {
         />
         <RotatingGrid cubes={cubes} />
       </Canvas>
-    </>
+    </section>
   );
 };
