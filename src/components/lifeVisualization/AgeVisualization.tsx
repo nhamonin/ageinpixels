@@ -38,7 +38,7 @@ export const AgeVisualization = () => {
         className="cursor-pointer"
         style={{
           height: 'var(--content-height)',
-          width: 'calc(100vw - 680px)',
+          width: 'calc(100vw - 600px - 2 * var(--padding-x))',
           transform,
           transition: 'transform 0.2s ease-out',
         }}
