@@ -66,15 +66,15 @@ export const LifePercentage = () => {
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--footer-height',
-      lifePercentage > 0 ? '123px' : '75px'
+      lifePercentage > 0 ? 'var(--footer-max-height)' : 'var(--footer-min-height)'
     );
   }, [lifePercentage]);
 
   return (
     <div className="flex flex-col tabular-nums transition ease-in-out delay-50">
-      <p className="mb-2">{currentTime}</p>
+      <p className="text-muted mb-0">{currentTime}</p>
       {lifePercentage > 0 && (
-        <p className="text-lg mb-5">
+        <p className="text-lg mb-2">
           <span className="font-bold">{lifePercentage.toFixed(8)}%</span> Lived
         </p>
       )}
