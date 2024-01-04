@@ -34,14 +34,14 @@
 
     --radius: 0rem;
 
-    --header-height: 103px;
+    --header-height: 80px;
 
     --footer-min-height: 52px;
     --footer-max-height: 88px;
     --footer-height: var(--footer-min-height);
 
-    --gradient-line-min-height: 55px;
-    --gradient-line-max-height: 35px;
+    --gradient-line-min-height: 45px;
+    --gradient-line-max-height: 25px;
     --gradient-line-height: var(--gradient-line-min-height);
 
     --content-height: calc(100vh - var(--header-height) - var(--footer-height));
