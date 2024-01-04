@@ -46,11 +46,7 @@ export function CountrySelector({ value, onChange }: QuestionsInputProps) {
 
   return (
     <Command className="relative overflow-visible">
-      <CommandInput
-        placeholder="Search country..."
-        value={inputValue}
-        onValueChange={handleInputChange}
-      />
+      <CommandInput placeholder="Country" value={inputValue} onValueChange={handleInputChange} />
       <CommandList className="absolute top-full left-0 w-full">
         {isLoading && <LoadingSpinner className="text-gray-500" size={20} />}
         {error && <CommandEmpty>Error loading countries. Please try again.</CommandEmpty>}
