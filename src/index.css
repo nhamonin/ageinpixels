@@ -40,6 +40,10 @@
     --footer-max-height: 88px;
     --footer-height: var(--footer-min-height);
 
+    --gradient-line-min-height: 55px;
+    --gradient-line-max-height: 35px;
+    --gradient-line-height: var(--gradient-line-min-height);
+
     --content-height: calc(100vh - var(--header-height) - var(--footer-height));
     --content-height: calc(100svh - var(--header-height) - var(--footer-height));
 
@@ -81,7 +85,14 @@
   }
 
   .grid-background {
-    background-image: linear-gradient(
+    background-image: radial-gradient(
+        circle at center,
+        hsl(var(--background)) 10%,
+        hsl(var(--background)) 25%,
+        transparent 31%,
+        transparent 100%
+      ),
+      linear-gradient(
         to right,
         transparent calc(var(--padding-x) - 1px),
         hsl(var(--border)) var(--padding-x),
@@ -93,6 +104,13 @@
         transparent calc(var(--padding-x) + 300px - 1px),
         hsl(var(--border)) calc(var(--padding-x) + 300px),
         transparent calc(var(--padding-x) + 300px + 1px),
+        transparent 100%
+      ),
+      linear-gradient(
+        to right,
+        transparent calc(50vw - 1px),
+        hsl(var(--border)) calc(50vw),
+        transparent calc(50vw + 1px),
         transparent 100%
       ),
       linear-gradient(
@@ -114,6 +132,13 @@
         transparent calc(var(--padding-x) + 300px - 1px),
         hsl(var(--border)) calc(var(--padding-x) + 300px),
         transparent calc(var(--padding-x) + 300px + 1px),
+        transparent 100%
+      ),
+      linear-gradient(
+        to top,
+        transparent calc(50svh - var(--gradient-line-height) - 1px),
+        hsl(var(--border)) calc(50svh - var(--gradient-line-height)),
+        transparent calc(50svh - var(--gradient-line-height) + 1px),
         transparent 100%
       );
 

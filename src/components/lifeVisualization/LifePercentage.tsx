@@ -68,6 +68,11 @@ export const LifePercentage = () => {
       '--footer-height',
       lifePercentage > 0 ? 'var(--footer-max-height)' : 'var(--footer-min-height)'
     );
+
+    document.documentElement.style.setProperty(
+      '--gradient-line-height',
+      lifePercentage > 0 ? 'var(--gradient-line-max-height)' : 'var(--gradient-line-min-height)'
+    );
   }, [lifePercentage]);
 
   return (

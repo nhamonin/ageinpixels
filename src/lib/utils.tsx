@@ -57,7 +57,7 @@ export const generateCubes = ({
 
     for (let i = 0; i < layerCubes; i++) {
       const x = (i % layerSize) - Math.floor(layerSize / 2) + 0.5;
-      const y = layer - 1.6;
+      const y = layer - 1.2;
       const z = Math.floor(i / layerSize) - Math.floor(layerSize / 2) + 0.5;
       const cubeIndex = layer * cubesPerLayer + i;
       const isLived = cubeIndex < currentAge;
