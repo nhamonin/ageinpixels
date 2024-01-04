@@ -53,7 +53,8 @@ export const generateCubes = ({
 
   for (let layer = 0; layer < totalLayers; layer++) {
     const isLastLayer = layer === totalLayers - 1;
-    const layerCubes = isLastLayer ? Math.ceil(lifeExpectancy % cubesPerLayer) : cubesPerLayer;
+    const remainingCubes = lifeExpectancy - layer * cubesPerLayer;
+    const layerCubes = isLastLayer ? Math.min(remainingCubes, cubesPerLayer) : cubesPerLayer;
 
     for (let i = 0; i < layerCubes; i++) {
       const x = (i % layerSize) - Math.floor(layerSize / 2) + 0.5;
@@ -82,4 +83,8 @@ export const generateCubes = ({
   }
 
   return cubes;
+};
+
+export const createMarkup = (htmlContent: string) => {
+  return { __html: htmlContent };
 };

@@ -1,15 +1,18 @@
+import { useEffect } from 'react';
+
 import { CountrySelector } from '@/components/questions/country';
 import { SexSelect } from '@/components/questions/sex';
 import { BirthdayInput } from '@/components/questions/birthday';
 import { useUserData } from '@/contexts/UserDataContext';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
-import { useEffect } from 'react';
+import { createMarkup } from '@/lib/utils';
 
 type Key = 'country' | 'sex' | 'birthDate';
 
 type Question = {
   key: Key;
   text?: string;
+  description?: string;
   component: React.FC<{ value: string; onChange: (value: string) => void }>;
 };
 
@@ -17,9 +20,12 @@ const questions: Question[] = [
   {
     key: 'country',
     component: CountrySelector,
+    description:
+      'Choose your country to get a more accurate life expectancy. Source: <a href="https://www.who.int/" class="underline">World Health Organization</a>.',
   },
   {
     key: 'sex',
+    description: 'Gender affects life expectancy.',
     component: SexSelect,
   },
   {
@@ -56,6 +62,12 @@ export function Questions() {
             value={userData[question.key]}
             onChange={(value: string) => handleInputChange(question.key, value)}
           />
+          {question.description && (
+            <p
+              className="text-sm text-muted"
+              dangerouslySetInnerHTML={createMarkup(question.description)}
+            ></p>
+          )}
         </div>
       ))}
     </section>
