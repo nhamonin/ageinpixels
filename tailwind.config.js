@@ -66,8 +66,8 @@ module.exports = {
           to: { height: 0 },
         },
         levitate: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(6px)' },
+          '0%, 100%': { top: '2rem' },
+          '50%': { top: 'calc(2rem + 6px)' },
         },
       },
       animation: {
