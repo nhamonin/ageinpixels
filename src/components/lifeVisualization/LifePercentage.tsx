@@ -63,6 +63,13 @@ export const LifePercentage = () => {
 
   const displayPercentage = isNaN(lifePercentage) ? 0 : Math.min(lifePercentage, 100);
 
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--footer-height',
+      lifePercentage > 0 ? '123px' : '75px'
+    );
+  }, [lifePercentage]);
+
   return (
     <div className="flex flex-col tabular-nums transition ease-in-out delay-50">
       <p className="mb-2">{currentTime}</p>
