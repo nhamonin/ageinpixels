@@ -16,7 +16,7 @@ const defaultUserData: UserData = {
   country: '',
   sex: 'MLE',
   birthDate: '',
-  lifeExpectancy: 64,
+  lifeExpectancy: 72.27,
 };
 
 const UserDataContext = createContext<UserDataContextType>({
