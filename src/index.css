@@ -40,7 +40,7 @@
     --footer-max-height: 88px;
     --footer-height: var(--footer-min-height);
 
-    --gradient-line-min-height: 80px;
+    --gradient-line-min-height: 9px;
     --gradient-line-max-height: calc(var(--gradient-line-min-height) - 20px);
     --gradient-line-height: var(--gradient-line-min-height);
 

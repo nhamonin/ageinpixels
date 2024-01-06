@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-
+import { Button } from '@/components/ui/button';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import {
   Command,
@@ -10,11 +11,14 @@ import {
 } from '@/components/ui/command';
 import { useCountries } from '@/hooks/useCountries';
 import { QuestionsInputProps } from '@/types';
+import { ChevronDown } from 'lucide-react';
 
-export function CountrySelector({ value, onChange }: QuestionsInputProps) {
+export function Country({ value, onChange }: QuestionsInputProps) {
   const { countries, isLoading, error } = useCountries();
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [chosenCountry, setChosenCountry] = useState('');
+  const [popoverOpen, setPopoverOpen] = useState(false);
 
   useEffect(() => {
     if (value && !isTyping) {
@@ -25,14 +29,14 @@ export function CountrySelector({ value, onChange }: QuestionsInputProps) {
   }, [value, isTyping, countries]);
 
   const filteredCountries = inputValue
-    ? countries?.filter((country) =>
-        country.Title.toLowerCase().startsWith(inputValue.toLowerCase())
-      )
-    : [];
+    ? countries?.filter((country) => country.Title.toLowerCase().includes(inputValue.toLowerCase()))
+    : countries;
 
   const handleSelectCountry = (countryCode: string) => {
     onChange(countryCode);
+    setChosenCountry(countries?.find((country) => country.Code === countryCode)?.Title || '');
     setIsTyping(false);
+    setPopoverOpen(false);
   };
 
   const handleInputChange = (newValue: string) => {
@@ -45,28 +49,46 @@ export function CountrySelector({ value, onChange }: QuestionsInputProps) {
   };
 
   return (
-    <Command className="relative overflow-visible">
-      <CommandInput placeholder="Country" value={inputValue} onValueChange={handleInputChange} />
-      <CommandList className="absolute top-full left-0 w-full">
-        {isLoading && <LoadingSpinner className="text-gray-500" size={20} />}
-        {error && <CommandEmpty>Error loading countries. Please try again.</CommandEmpty>}
-        {!isLoading && !error && isTyping && inputValue.length > 0 && (
-          <>
-            {filteredCountries?.length
-              ? filteredCountries.map((country) => (
+    <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+      <PopoverTrigger className="text-lg overflow-hidden" asChild>
+        <Button
+          className="w-full justify-between"
+          role="combobox"
+          variant="outline"
+          onClick={() => setPopoverOpen(true)}
+        >
+          {chosenCountry || 'Select or search country...'}
+          <ChevronDown className="h-4 w-4 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[300px] p-0">
+        <Command>
+          <CommandInput
+            className="h-10"
+            value={inputValue}
+            onValueChange={handleInputChange}
+            onFocus={() => setPopoverOpen(true)}
+          />
+          {isLoading && <LoadingSpinner className="text-gray-500" size={20} />}
+          {error && <CommandEmpty>Error loading countries. Please try again.</CommandEmpty>}
+          {!isLoading && !error && (
+            <CommandList>
+              {filteredCountries?.length ? (
+                filteredCountries.map((country) => (
                   <CommandItem
-                    className="bg-background relative z-50"
                     key={country.Code}
                     onSelect={() => handleSelectCountry(country.Code)}
-                    value={country.Title}
                   >
                     {country.Title}
                   </CommandItem>
                 ))
-              : null}
-          </>
-        )}
-      </CommandList>
-    </Command>
+              ) : (
+                <CommandEmpty>No country found.</CommandEmpty>
+              )}
+            </CommandList>
+          )}
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
 }

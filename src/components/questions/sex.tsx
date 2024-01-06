@@ -1,15 +1,10 @@
 import { useState } from 'react';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { QuestionsInputProps } from '@/types';
 
-export function SexSelect({ value, onChange }: QuestionsInputProps) {
+export function Sex({ value, onChange }: QuestionsInputProps) {
   const [selectedSex, setSelectedSex] = useState(value);
 
   const handleSexChange = (newValue: string) => {
@@ -18,14 +13,19 @@ export function SexSelect({ value, onChange }: QuestionsInputProps) {
   };
 
   return (
-    <Select value={selectedSex} onValueChange={handleSexChange}>
-      <SelectTrigger>
-        <SelectValue placeholder="Select Sex" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="MLE">Male</SelectItem>
-        <SelectItem value="FMLE">Female</SelectItem>
-      </SelectContent>
-    </Select>
+    <RadioGroup value={selectedSex} onValueChange={handleSexChange} className="flex space-x-4">
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="MLE" id="sex-male" />
+        <Label htmlFor="sex-male" className="cursor-pointer">
+          Male
+        </Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="FMLE" id="sex-female" />
+        <Label htmlFor="sex-female" className="cursor-pointer">
+          Female
+        </Label>
+      </div>
+    </RadioGroup>
   );
 }

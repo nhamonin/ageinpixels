@@ -12,6 +12,7 @@ export const useCountries = () => {
   } = useQuery<Country[], Error>({
     queryKey: ['countries'],
     queryFn: fetchCountries,
+    select: (data) => data.sort((a, b) => a.Title.localeCompare(b.Title)),
   });
 
   return {

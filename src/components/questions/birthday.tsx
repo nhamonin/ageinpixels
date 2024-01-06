@@ -24,12 +24,17 @@ const months = [
   'December',
 ];
 
-export const BirthdayInput = ({ value, onChange }: QuestionsInputProps) => {
+export const Birthday = ({ value, onChange }: QuestionsInputProps) => {
   const [day, month, year] = value ? value.split('-') : ['', '', ''];
 
   const [localDay, setLocalDay] = useState(day);
   const [localMonth, setLocalMonth] = useState(month);
   const [localYear, setLocalYear] = useState(year);
+
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth() + 1;
+  const currentDay = currentDate.getDate();
 
   useEffect(() => {
     setLocalDay(day);
@@ -75,32 +80,69 @@ export const BirthdayInput = ({ value, onChange }: QuestionsInputProps) => {
 
   const generateDaysOptions = (selectedMonth: string) => {
     const daysInMonth = new Date(Number(localYear), Number(selectedMonth), 0).getDate();
-    const daysOptions = Array.from({ length: daysInMonth }, (_, index) =>
-      String(index + 1).padStart(2, '0')
-    );
+    const isCurrentYearAndMonth =
+      Number(localYear) === currentYear && Number(selectedMonth) === currentMonth;
 
-    return daysOptions.map((dayOption) => (
-      <SelectItem key={dayOption} value={dayOption}>
-        {dayOption}
-      </SelectItem>
-    ));
+    return Array.from({ length: daysInMonth }, (_, index) => {
+      const day = index + 1;
+      const isFutureDay = isCurrentYearAndMonth && day > currentDay;
+      const dayOption = String(day).padStart(2, '0');
+
+      return (
+        <SelectItem key={dayOption} value={dayOption} disabled={isFutureDay}>
+          {dayOption}
+        </SelectItem>
+      );
+    });
   };
 
   const daysOptions = generateDaysOptions(localMonth);
 
+  const generateMonthsOptions = () => {
+    const isCurrentYear = Number(localYear) === currentYear;
+    const selectedDay = parseInt(localDay, 10);
+
+    return months.map((month, index) => {
+      const monthIndex = index + 1;
+      const monthValue = monthIndex.toString().padStart(2, '0');
+      const isFutureMonth = monthIndex > currentMonth;
+      const isCurrentMonthWithFutureDay = monthIndex === currentMonth && selectedDay > currentDay;
+
+      const isDisabled = isCurrentYear && (isFutureMonth || isCurrentMonthWithFutureDay);
+
+      return (
+        <SelectItem key={month} value={monthValue} disabled={isDisabled}>
+          {month}
+        </SelectItem>
+      );
+    });
+  };
+
+  const monthsOptions = generateMonthsOptions();
+
   const generateYearsOptions = () => {
-    const currentYear = new Date().getFullYear();
-    const yearsOptions = [];
+    const daySelected = parseInt(localDay, 10);
+    const monthSelected = parseInt(localMonth, 10);
 
-    for (let year = currentYear; year >= 1900; year--) {
-      yearsOptions.push(year.toString());
-    }
+    const isFutureMonth = monthSelected > currentMonth;
+    const isFutureDay = monthSelected === currentMonth && daySelected > currentDay;
 
-    return yearsOptions.map((yearOption) => (
-      <SelectItem key={yearOption} value={yearOption}>
-        {yearOption}
-      </SelectItem>
-    ));
+    const shouldDisableCurrentYear = (year: number) => {
+      return year === currentYear && (isFutureMonth || isFutureDay);
+    };
+
+    return Array.from({ length: currentYear - 1899 }, (_, index) => {
+      const yearValue = (currentYear - index).toString();
+      return (
+        <SelectItem
+          key={yearValue}
+          value={yearValue}
+          disabled={shouldDisableCurrentYear(currentYear - index)}
+        >
+          {yearValue}
+        </SelectItem>
+      );
+    });
   };
 
   const yearOptions = generateYearsOptions();
@@ -108,25 +150,19 @@ export const BirthdayInput = ({ value, onChange }: QuestionsInputProps) => {
   return (
     <div className="grid grid-cols-3 gap-[2px]">
       <Select value={localDay} onValueChange={(newValue) => handleInputChange('day', newValue)}>
-        <SelectTrigger>
+        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground">
           <SelectValue placeholder="DD" />
         </SelectTrigger>
         <SelectContent>{daysOptions}</SelectContent>
       </Select>
       <Select value={localMonth} onValueChange={(newValue) => handleInputChange('month', newValue)}>
-        <SelectTrigger>
+        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground">
           <SelectValue placeholder="MM">{months[Number(localMonth) - 1]?.slice(0, 3)}</SelectValue>
         </SelectTrigger>
-        <SelectContent>
-          {months.map((monthOption, index) => (
-            <SelectItem key={monthOption} value={String(index + 1).padStart(2, '0')}>
-              {monthOption}
-            </SelectItem>
-          ))}
-        </SelectContent>
+        <SelectContent>{monthsOptions}</SelectContent>
       </Select>
       <Select value={localYear} onValueChange={(newValue) => handleInputChange('year', newValue)}>
-        <SelectTrigger>
+        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground">
           <SelectValue placeholder="YYYY" />
         </SelectTrigger>
         <SelectContent>{yearOptions}</SelectContent>

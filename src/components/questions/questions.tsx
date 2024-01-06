@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 
-import { CountrySelector } from '@/components/questions/country';
-import { SexSelect } from '@/components/questions/sex';
-import { BirthdayInput } from '@/components/questions/birthday';
+import { Country } from '@/components/questions/country';
+import { Sex } from '@/components/questions/sex';
+import { Birthday } from '@/components/questions/birthday';
 import { useUserData } from '@/contexts/UserDataContext';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
 import { createMarkup } from '@/lib/utils';
+import { DEFAULT_LIFE_EXPECTANCY } from '@/constants/defaultLifeExpectancy';
 
 type Key = 'country' | 'sex' | 'birthDate';
 
@@ -19,19 +20,20 @@ type Question = {
 const questions: Question[] = [
   {
     key: 'country',
-    component: CountrySelector,
+    component: Country,
     description:
-      'Choose your country to get a more accurate life expectancy. Source: <a href="https://www.who.int/" class="underline">World Health Organization</a>.',
+      'Choose your <b>country</b> for life expectancy figures based on data from the <a href="https://www.who.int/" class="underline">World Health Organization</a>.',
   },
   {
     key: 'sex',
-    description: 'Gender affects life expectancy.',
-    component: SexSelect,
+    component: Sex,
+    description: 'Your <b>sex</b> is needed for more accurate statistics.',
   },
   {
     key: 'birthDate',
-    text: 'Date of birth',
-    component: BirthdayInput,
+    component: Birthday,
+    description:
+      'Fill in your <b>birthdate</b> to see your age and the time you have lived compared to expected lifespan.',
   },
 ];
 
@@ -52,6 +54,14 @@ export function Questions() {
       updateUserData({ ...userData, lifeExpectancy });
     }
   }, [lifeExpectancy, userData, updateUserData, lifeExpectancyUnavailable]);
+
+  useEffect(() => {
+    if (userData.sex && !userData.country) {
+      const newLifeExpectancy = DEFAULT_LIFE_EXPECTANCY[userData.sex || 'BOTH'];
+
+      updateUserData({ lifeExpectancy: newLifeExpectancy });
+    }
+  }, [userData.sex, userData.country, updateUserData]);
 
   return (
     <section className="flex flex-col gap-10 items-center justify-center w-[300px]">
