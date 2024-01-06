@@ -1,3 +1,5 @@
+import { UserData } from '@/contexts/UserDataContext';
+
 export type LifeExpectancy = {
   Id: number;
   IndicatorCode: string;
@@ -27,5 +29,5 @@ export type LifeExpectancy = {
 
 export type LifeExpectancyParams = {
   countryCode: string;
-  sex: 'MLE' | 'FMLE' | '';
+  sex: UserData['sex'];
 };

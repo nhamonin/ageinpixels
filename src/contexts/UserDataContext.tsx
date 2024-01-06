@@ -4,7 +4,7 @@ import { DEFAULT_LIFE_EXPECTANCY } from '@/constants/defaultLifeExpectancy';
 
 export type UserData = {
   country: string;
-  sex: 'MLE' | 'FMLE' | '';
+  sex: 'MLE' | 'FMLE' | 'BTSX';
   birthDate: string;
   lifeExpectancy: number;
 };
@@ -16,9 +16,9 @@ type UserDataContextType = {
 
 const defaultUserData: UserData = {
   country: '',
-  sex: '',
+  sex: 'BTSX',
   birthDate: '',
-  lifeExpectancy: DEFAULT_LIFE_EXPECTANCY.BOTH,
+  lifeExpectancy: DEFAULT_LIFE_EXPECTANCY.BTSX,
 };
 
 const UserDataContext = createContext<UserDataContextType>({

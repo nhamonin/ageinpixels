@@ -56,12 +56,15 @@ export function Questions() {
   }, [lifeExpectancy, userData, updateUserData, lifeExpectancyUnavailable]);
 
   useEffect(() => {
-    if (userData.sex && !userData.country) {
-      const newLifeExpectancy = DEFAULT_LIFE_EXPECTANCY[userData.sex || 'BOTH'];
-
-      updateUserData({ lifeExpectancy: newLifeExpectancy });
+    if (
+      userData.sex &&
+      !userData.country &&
+      userData.lifeExpectancy !== DEFAULT_LIFE_EXPECTANCY[userData.sex]
+    ) {
+      const newLifeExpectancy = DEFAULT_LIFE_EXPECTANCY[userData.sex];
+      updateUserData({ ...userData, lifeExpectancy: newLifeExpectancy });
     }
-  }, [userData.sex, userData.country, updateUserData]);
+  }, [userData, updateUserData]);
 
   return (
     <section className="flex flex-col gap-10 items-center justify-center w-[300px]">

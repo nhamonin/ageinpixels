@@ -7,7 +7,7 @@ export const fetchLifeExpectancy = async ({
   sex,
 }: LifeExpectancyParams): Promise<number | null> => {
   const url = proxify(
-    `${URLS.LIFE_EXPECTANCY}?$filter=SpatialDim eq '${countryCode}' and Dim1 eq '${sex}'`
+    `${URLS.LIFE_EXPECTANCY}?$filter=SpatialDim eq '${countryCode}' and Dim1 eq '${sex || 'BTSX'}'`
   );
   const response = await fetch(url);
 
