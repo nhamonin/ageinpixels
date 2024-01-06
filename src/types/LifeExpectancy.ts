@@ -27,5 +27,5 @@ export type LifeExpectancy = {
 
 export type LifeExpectancyParams = {
   countryCode: string;
-  sex: 'MLE' | 'FMLE';
+  sex: 'MLE' | 'FMLE' | '';
 };
