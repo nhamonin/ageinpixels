@@ -55,7 +55,7 @@ export function Questions() {
   }, [lifeExpectancy, userData, updateUserData, lifeExpectancyUnavailable]);
 
   return (
-    <section className="flex flex-col gap-10 items-center justify-center w-[300px]">
+    <section className="hidden sm:flex flex-col gap-10 items-center justify-center w-[300px]">
       {questions.map((question) => (
         <div key={question.key} className="w-full flex flex-col gap-2.5">
           {question.text && <h2 className="font-bold text-muted">{question.text}</h2>}

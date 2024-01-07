@@ -13,7 +13,7 @@ export const Layout = ({ children }: LayoutProps) => {
       <Header />
 
       <main
-        className="grid grid-cols-[300px_1fr_300px] items-center justify-items-center h-[var(--content-height)]
+        className="grid sm:grid-cols-[300px_1fr_300px] items-center justify-items-center h-[var(--content-height)]
       overflow-auto mt-[var(--header-height)] mb-[var(--footer-height)] px-[var(--padding-x)]"
       >
         {children}

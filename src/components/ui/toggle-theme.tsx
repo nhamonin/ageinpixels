@@ -1,5 +1,5 @@
-import sunIcon from '@/assets/images/themes/sun.svg';
-import moonIcon from '@/assets/images/themes/moon.svg';
+import sunIcon from '@/assets/images/themes/light/sun.svg';
+import moonIcon from '@/assets/images/themes/dark/moon.svg';
 
 type ToggleThemeProps = {
   checked?: boolean;
@@ -8,7 +8,7 @@ type ToggleThemeProps = {
 
 export const ToggleTheme = ({ checked, onCheckedChange }: ToggleThemeProps) => (
   <button
-    className="flex items-center justify-center cursor-pointer w-8 h-8"
+    className="hidden sm:flex items-center justify-center cursor-pointer w-8 h-8"
     onClick={onCheckedChange}
     aria-label={checked ? 'Activate light mode' : 'Activate dark mode'}
   >

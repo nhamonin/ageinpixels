@@ -7,6 +7,7 @@ import { Controls } from '@/components/lifeVisualization/Controls';
 import { useUserData } from '@/contexts/UserDataContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useHoverTransform } from '@/hooks/useHoverTransform';
+import { useResponsiveCanvasWidth } from '@/hooks/useResponsiveCanvasWidth';
 import { useAgeCubes } from '@/hooks/useAgeCubes';
 import { formatNumber, calculateAge } from '@/lib/utils';
 
@@ -19,11 +20,12 @@ export const AgeVisualization = () => {
   const layerSize = Math.round(Math.cbrt(lifeExpectancy));
   const cubesPerLayer = layerSize * layerSize;
   const totalLayers = Math.ceil(lifeExpectancy / cubesPerLayer);
+  const canvasWidth = useResponsiveCanvasWidth();
 
   const cubes = useAgeCubes({ lifeExpectancy, isDarkMode, currentAge });
 
   return (
-    <section className="flex flex-col justify-center overflow-hidden items-center sm:min-w-auto sm:min-h-auto relative">
+    <section className="flex flex-col justify-center overflow-hidden items-center max-h-[var(--content-height)] sm:min-w-auto sm:min-h-auto relative">
       {lifeExpectancy > 0 && (
         <p
           className="text-xl animate-levitate absolute top-2"
@@ -42,7 +44,7 @@ export const AgeVisualization = () => {
         className="cursor-pointer"
         style={{
           height: 'var(--content-height)',
-          width: 'calc(100vw - 600px - 2 * var(--padding-x))',
+          width: canvasWidth,
           transform,
           transition: 'transform 0.2s ease-out',
         }}
