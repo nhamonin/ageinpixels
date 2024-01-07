@@ -2,7 +2,6 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import * as THREE from 'three';
 
-import { CubeWithEdges } from '@/components/lifeVisualization/CubeWithEdges';
 import { MutableRefObject } from 'react';
 
 export function cn(...inputs: ClassValue[]) {
@@ -37,56 +36,6 @@ export const calculateAge = (birthDateString: string) => {
   const ageInYears = diffInMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
 
   return ageInYears;
-};
-
-export const generateCubes = ({
-  lifeExpectancy,
-  isDarkMode,
-  currentAge,
-}: {
-  lifeExpectancy: number;
-  isDarkMode: boolean;
-  currentAge: number;
-}) => {
-  const layerSize = Math.round(Math.cbrt(lifeExpectancy));
-  const cubesPerLayer = layerSize * layerSize;
-  const totalLayers = Math.ceil(lifeExpectancy / cubesPerLayer);
-  const cubes = [];
-
-  for (let layer = 0; layer < totalLayers; layer++) {
-    const isLastLayer = layer === totalLayers - 1;
-    const remainingCubes = lifeExpectancy - layer * cubesPerLayer;
-    const layerCubes = isLastLayer ? Math.min(remainingCubes, cubesPerLayer) : cubesPerLayer;
-
-    for (let i = 0; i < layerCubes; i++) {
-      const x = (i % layerSize) - Math.floor(layerSize / 2) + 0.5;
-      const y = layer - 1.2;
-      const z = Math.floor(i / layerSize) - Math.floor(layerSize / 2) + 0.5;
-      const cubeIndex = layer * cubesPerLayer + i;
-      const isLived = cubeIndex < currentAge;
-      const isCurrentYear = cubeIndex === Math.floor(currentAge);
-      const fractionalInnerWidth = cubeIndex === Math.ceil(currentAge) - 1 ? currentAge % 1 : 1;
-      const fractionalOuterWidth =
-        cubeIndex === Math.ceil(lifeExpectancy) - 1
-          ? lifeExpectancy - Math.trunc(lifeExpectancy)
-          : 1;
-      const adjustX = (1 - (isCurrentYear ? fractionalInnerWidth : fractionalOuterWidth)) / 2;
-
-      cubes.push(
-        <CubeWithEdges
-          key={`cube-${cubeIndex}`}
-          position={[x - adjustX, y, z]}
-          innerWidth={fractionalInnerWidth}
-          outerWidth={fractionalOuterWidth}
-          isLived={isLived}
-          isDarkMode={isDarkMode}
-          isCurrentYear={isCurrentYear}
-        />
-      );
-    }
-  }
-
-  return cubes;
 };
 
 export const createMarkup = (htmlContent: string) => {
@@ -134,4 +83,19 @@ export const smoothThreeTransition = (
   };
 
   requestAnimationFrame(step);
+};
+
+export const interpolateValue = (start: number, end: number, duration: number) => {
+  let startTime: number | null = null;
+
+  return (timestamp: number) => {
+    startTime = startTime || timestamp;
+    const elapsed = timestamp - startTime;
+    if (elapsed < duration) {
+      const fraction = elapsed / duration;
+      return start + (end - start) * fraction;
+    } else {
+      return end;
+    }
+  };
 };

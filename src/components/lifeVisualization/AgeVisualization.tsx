@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 
 import { CameraLogger } from '@/components/lifeVisualization/CameraLogger';
@@ -8,7 +7,8 @@ import { Controls } from '@/components/lifeVisualization/Controls';
 import { useUserData } from '@/contexts/UserDataContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useHoverTransform } from '@/hooks/useHoverTransform';
-import { formatNumber, calculateAge, generateCubes } from '@/lib/utils';
+import { useAgeCubes } from '@/hooks/useAgeCubes';
+import { formatNumber, calculateAge } from '@/lib/utils';
 
 export const AgeVisualization = () => {
   const { isDarkMode } = useTheme();
@@ -20,10 +20,7 @@ export const AgeVisualization = () => {
   const cubesPerLayer = layerSize * layerSize;
   const totalLayers = Math.ceil(lifeExpectancy / cubesPerLayer);
 
-  const cubes = useMemo(
-    () => generateCubes({ lifeExpectancy, isDarkMode, currentAge }),
-    [lifeExpectancy, isDarkMode, currentAge]
-  );
+  const cubes = useAgeCubes({ lifeExpectancy, isDarkMode, currentAge });
 
   return (
     <section className="flex flex-col justify-center overflow-hidden items-center sm:min-w-auto sm:min-h-auto relative">
