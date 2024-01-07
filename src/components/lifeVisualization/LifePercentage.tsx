@@ -19,24 +19,23 @@ export const LifePercentage = () => {
 
   const [currentTime, setCurrentTime] = useState(formatTime);
 
-  const calculateLifePercentage = () => {
-    if (!birthDate || lifeExpectancy === null) return 0;
-    const birthDateObj = parseDate(birthDate);
-    const currentDate = new Date();
-    const expectedEndDate = new Date(
-      birthDateObj.getFullYear() + lifeExpectancy,
-      birthDateObj.getMonth(),
-      birthDateObj.getDate()
-    );
-    const livedMilliseconds = currentDate.getTime() - birthDateObj.getTime();
-    const totalLifeMilliseconds = expectedEndDate.getTime() - birthDateObj.getTime();
-    return (livedMilliseconds / totalLifeMilliseconds) * 100;
-  };
-
-  // Update life percentage and current time every second
   useEffect(() => {
+    const calculateLifePercentage = () => {
+      if (!birthDate || lifeExpectancy === null) return 0;
+      const birthDateObj = parseDate(birthDate);
+      const currentDate = new Date();
+      const expectedEndDate = new Date(
+        birthDateObj.getFullYear() + lifeExpectancy,
+        birthDateObj.getMonth(),
+        birthDateObj.getDate()
+      );
+      const livedMilliseconds = currentDate.getTime() - birthDateObj.getTime();
+      const totalLifeMilliseconds = expectedEndDate.getTime() - birthDateObj.getTime();
+      return (livedMilliseconds / totalLifeMilliseconds) * 100;
+    };
+
     const intervalId = setInterval(() => {
-      setCurrentTime(formatTime(!!birthDate)); // Show seconds if birthDate is set
+      setCurrentTime(formatTime(!!birthDate));
       if (birthDate && lifeExpectancy !== null) {
         setLifePercentage(calculateLifePercentage());
       }

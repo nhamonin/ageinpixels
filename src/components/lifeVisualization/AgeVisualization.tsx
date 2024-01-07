@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 
 import { CameraLogger } from '@/components/lifeVisualization/CameraLogger';
@@ -18,7 +19,10 @@ export const AgeVisualization = () => {
   const cubesPerLayer = layerSize * layerSize;
   const totalLayers = Math.ceil(lifeExpectancy / cubesPerLayer);
 
-  const cubes = generateCubes({ lifeExpectancy, isDarkMode, currentAge });
+  const cubes = useMemo(
+    () => generateCubes({ lifeExpectancy, isDarkMode, currentAge }),
+    [lifeExpectancy, isDarkMode, currentAge]
+  );
 
   return (
     <section className="flex flex-col justify-center overflow-hidden items-center sm:min-w-auto sm:min-h-auto relative">

@@ -65,7 +65,9 @@ export const generateCubes = ({
       const isCurrentYear = cubeIndex === Math.floor(currentAge);
       const fractionalInnerWidth = cubeIndex === Math.ceil(currentAge) - 1 ? currentAge % 1 : 1;
       const fractionalOuterWidth =
-        isLastLayer && i === layerCubes - 1 ? lifeExpectancy % 1 || 1 : 1;
+        cubeIndex === Math.ceil(lifeExpectancy) - 1
+          ? lifeExpectancy - Math.trunc(lifeExpectancy)
+          : 1;
       const adjustX = (1 - (isCurrentYear ? fractionalInnerWidth : fractionalOuterWidth)) / 2;
 
       cubes.push(
