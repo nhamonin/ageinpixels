@@ -49,7 +49,7 @@
 
     --padding-x: 60px;
 
-    --progress: 0 0% 50%;
+    --progress: 0 0% 75%;
   }
 
   .dark {
@@ -81,7 +81,7 @@
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
 
-    --progress: 0 0% 75%;
+    --progress: 0 0% 50%;
   }
 
   .grid-background {
