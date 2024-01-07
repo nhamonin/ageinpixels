@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import App from './App';
-import { UserDataProvider } from '@/contexts/UserDataContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { UserDataProvider } from '@/contexts/UserDataContext';
+import { CameraProvider } from '@/contexts/CameraContext';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -20,7 +21,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <UserDataProvider>
-          <App />
+          <CameraProvider>
+            <App />
+          </CameraProvider>
         </UserDataProvider>
       </ThemeProvider>
     </QueryClientProvider>

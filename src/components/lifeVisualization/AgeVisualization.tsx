@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { CameraLogger } from '@/components/lifeVisualization/CameraLogger';
 import { CameraSetter } from '@/components/lifeVisualization/CameraSetter';
 import { RotatingGrid } from '@/components/lifeVisualization/RotatingGrid';
+import { Controls } from '@/components/lifeVisualization/Controls';
 import { useUserData } from '@/contexts/UserDataContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useHoverTransform } from '@/hooks/useHoverTransform';
@@ -65,6 +66,7 @@ export const AgeVisualization = () => {
         />
         <RotatingGrid cubes={cubes} />
       </Canvas>
+      <Controls />
     </section>
   );
 };

@@ -1,5 +1,5 @@
-import sunIcon from '@/assets/images/sun.svg';
-import moonIcon from '@/assets/images/moon.svg';
+import sunIcon from '@/assets/images/themes/sun.svg';
+import moonIcon from '@/assets/images/themes/moon.svg';
 
 type ToggleThemeProps = {
   checked?: boolean;
