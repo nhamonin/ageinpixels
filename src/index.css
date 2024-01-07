@@ -153,14 +153,7 @@
     }
 
     .grid-background {
-      background-image: radial-gradient(
-          circle at center,
-          hsl(var(--background)) 10%,
-          hsl(var(--background)) 30%,
-          transparent 36%,
-          transparent 100%
-        ),
-        linear-gradient(
+      background-image: linear-gradient(
           to right,
           transparent calc(var(--padding-x) - 1px),
           hsl(var(--border)) var(--padding-x),
@@ -168,31 +161,10 @@
           transparent 100%
         ),
         linear-gradient(
-          to right,
-          transparent calc(var(--padding-x) + 180px - 1px),
-          hsl(var(--border)) calc(var(--padding-x) + 180px),
-          transparent calc(var(--padding-x) + 180px + 1px),
-          transparent 100%
-        ),
-        linear-gradient(
           to left,
           transparent calc(var(--padding-x) - 1px),
           hsl(var(--border)) var(--padding-x),
           transparent calc(var(--padding-x) + 1px),
-          transparent 100%
-        ),
-        linear-gradient(
-          to left,
-          transparent calc(var(--padding-x) + 94px - 1px),
-          hsl(var(--border)) calc(var(--padding-x) + 94px),
-          transparent calc(var(--padding-x) + 94px + 1px),
-          transparent 100%
-        ),
-        linear-gradient(
-          to top,
-          transparent calc(50svh - var(--gradient-line-height) - 1px),
-          hsl(var(--border)) calc(50svh - var(--gradient-line-height)),
-          transparent calc(50svh - var(--gradient-line-height) + 1px),
           transparent 100%
         );
     }
