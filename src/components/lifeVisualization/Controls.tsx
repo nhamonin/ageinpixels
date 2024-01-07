@@ -33,21 +33,21 @@ export const Controls = () => {
   return (
     <div className="flex gap-2 absolute bottom-0 right-0">
       <button
-        className="rounded-full border p-1 w-[26px] h-[26px] bg-background hover:bg-accent"
+        className="flex justify-center items-center rounded-full border w-[26px] h-[26px] bg-background hover:bg-accent"
         onClick={handleReset}
         aria-label="Reset Icon"
       >
         <img src={reset} alt="Reset" />
       </button>
       <button
-        className="rounded-full border p-1 w-[26px] h-[26px] bg-background hover:bg-accent"
+        className="flex justify-center items-center rounded-full border w-[26px] h-[26px] bg-background hover:bg-accent"
         onClick={handleZoomIn}
         aria-label="Zoom In Icon"
       >
         <img src={zoomIn} alt="Zoom In" />
       </button>
       <button
-        className="rounded-full border p-1 w-[26px] h-[26px] bg-background hover:bg-accent"
+        className="flex justify-center items-center rounded-full border w-[26px] h-[26px] bg-background hover:bg-accent"
         onClick={handleZoomOut}
         aria-label="Zoom Out Icon"
       >
