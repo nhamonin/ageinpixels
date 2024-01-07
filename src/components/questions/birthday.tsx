@@ -78,14 +78,19 @@ export const Birthday = ({ value, onChange }: QuestionsInputProps) => {
     }
   };
 
-  const generateDaysOptions = (selectedMonth: string) => {
-    const daysInMonth = new Date(Number(localYear), Number(selectedMonth), 0).getDate();
-    const isCurrentYearAndMonth =
-      Number(localYear) === currentYear && Number(selectedMonth) === currentMonth;
+  const generateDaysOptions = () => {
+    const selectedYear = Number(localYear);
+    const selectedMonth = Number(localMonth);
+    const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+
+    const isCurrentYear = selectedYear === currentYear;
+    const isCurrentMonth = selectedMonth === currentMonth + 1;
+    const isCurrentYearAndCurrentOrJanuaryMonth =
+      isCurrentYear && (isCurrentMonth || currentMonth === 1);
 
     return Array.from({ length: daysInMonth }, (_, index) => {
       const day = index + 1;
-      const isFutureDay = isCurrentYearAndMonth && day > currentDay;
+      const isFutureDay = isCurrentYearAndCurrentOrJanuaryMonth && day > currentDay;
       const dayOption = String(day).padStart(2, '0');
 
       return (
@@ -96,7 +101,7 @@ export const Birthday = ({ value, onChange }: QuestionsInputProps) => {
     });
   };
 
-  const daysOptions = generateDaysOptions(localMonth);
+  const daysOptions = generateDaysOptions();
 
   const generateMonthsOptions = () => {
     const isCurrentYear = Number(localYear) === currentYear;
