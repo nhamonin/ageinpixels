@@ -6,7 +6,6 @@ import { Birthday } from '@/components/questions/birthday';
 import { useUserData } from '@/contexts/UserDataContext';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
 import { createMarkup } from '@/lib/utils';
-import { DEFAULT_LIFE_EXPECTANCY } from '@/constants/defaultLifeExpectancy';
 
 type Key = 'country' | 'sex' | 'birthDate';
 
@@ -54,17 +53,6 @@ export function Questions() {
       updateUserData({ ...userData, lifeExpectancy });
     }
   }, [lifeExpectancy, userData, updateUserData, lifeExpectancyUnavailable]);
-
-  useEffect(() => {
-    if (
-      userData.sex &&
-      !userData.country &&
-      userData.lifeExpectancy !== DEFAULT_LIFE_EXPECTANCY[userData.sex]
-    ) {
-      const newLifeExpectancy = DEFAULT_LIFE_EXPECTANCY[userData.sex];
-      updateUserData({ ...userData, lifeExpectancy: newLifeExpectancy });
-    }
-  }, [userData, updateUserData]);
 
   return (
     <section className="flex flex-col gap-10 items-center justify-center w-[300px]">

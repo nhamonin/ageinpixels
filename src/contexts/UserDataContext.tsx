@@ -1,7 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-import { DEFAULT_LIFE_EXPECTANCY } from '@/constants/defaultLifeExpectancy';
-
 export type UserData = {
   country: string;
   sex: 'MLE' | 'FMLE' | 'BTSX';
@@ -18,7 +16,7 @@ const defaultUserData: UserData = {
   country: '',
   sex: 'BTSX',
   birthDate: '',
-  lifeExpectancy: DEFAULT_LIFE_EXPECTANCY.BTSX,
+  lifeExpectancy: 0,
 };
 
 const UserDataContext = createContext<UserDataContextType>({

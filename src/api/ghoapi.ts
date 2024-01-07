@@ -6,9 +6,14 @@ export const fetchLifeExpectancy = async ({
   countryCode,
   sex,
 }: LifeExpectancyParams): Promise<number | null> => {
-  const url = proxify(
-    `${URLS.LIFE_EXPECTANCY}?$filter=SpatialDim eq '${countryCode}' and Dim1 eq '${sex || 'BTSX'}'`
-  );
+  let filter = '';
+  if (countryCode) {
+    filter = `SpatialDim eq '${countryCode}' and Dim1 eq '${sex}'`;
+  } else {
+    filter = `SpatialDim eq 'GLOBAL' and Dim1 eq '${sex}'`;
+  }
+
+  const url = proxify(`${URLS.LIFE_EXPECTANCY}?$filter=${encodeURIComponent(filter)}`);
   const response = await fetch(url);
 
   if (!response.ok) {
