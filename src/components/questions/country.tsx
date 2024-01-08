@@ -13,6 +13,8 @@ import { useCountries } from '@/hooks/useCountries';
 import { QuestionsInputProps } from '@/types';
 import { ChevronDown } from 'lucide-react';
 
+const BANNED_COUNTRIES = ['RUS'];
+
 export function Country({ value, onChange }: QuestionsInputProps) {
   const { countries, isLoading, error } = useCountries();
   const [inputValue, setInputValue] = useState('');
@@ -78,6 +80,7 @@ export function Country({ value, onChange }: QuestionsInputProps) {
                   <CommandItem
                     key={country.Code}
                     onSelect={() => handleSelectCountry(country.Code)}
+                    disabled={BANNED_COUNTRIES.includes(country.Code)}
                   >
                     {country.Title}
                   </CommandItem>
