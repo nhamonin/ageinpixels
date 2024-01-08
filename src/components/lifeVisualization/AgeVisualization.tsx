@@ -15,12 +15,13 @@ export const AgeVisualization = () => {
   const { isDarkMode } = useTheme();
   const { userData } = useUserData();
   const { transform, handleMouseMove, handleMouseEnter, handleMouseLeave } = useHoverTransform();
+  const canvasWidth = useResponsiveCanvasWidth();
+
   const { birthDate, lifeExpectancy } = userData;
   const currentAge = birthDate ? calculateAge(birthDate) : 0;
   const layerSize = Math.round(Math.cbrt(lifeExpectancy));
   const cubesPerLayer = layerSize * layerSize;
   const totalLayers = Math.ceil(lifeExpectancy / cubesPerLayer);
-  const canvasWidth = useResponsiveCanvasWidth();
 
   const cubes = useAgeCubes({ lifeExpectancy, isDarkMode, currentAge });
 

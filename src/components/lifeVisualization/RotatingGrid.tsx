@@ -28,19 +28,19 @@ export const RotatingGrid = ({ cubes }: RotatingGridProps) => {
 
   useFrame(() => {
     const currentTime = performance.now();
-    const deltaTime = (currentTime - previousTimeRef.current) / 1000; // Convert to seconds
+    const deltaTime = (currentTime - previousTimeRef.current) / 1000;
     previousTimeRef.current = currentTime;
 
     if (groupRef.current && orbitingRef.current) {
       const rotationSpeed = 0.3;
-      groupRef.current.rotation.y += rotationSpeed * deltaTime; // Use deltaTime directly
+      groupRef.current.rotation.y += rotationSpeed * deltaTime;
     }
   });
 
   return (
     <group ref={groupRef}>
       {cubes}
-      <OrbitControls />
+      <OrbitControls enablePan={false} />
     </group>
   );
 };

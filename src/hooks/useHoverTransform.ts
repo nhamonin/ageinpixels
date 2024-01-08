@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const useHoverTransform = () => {
+  const [isTouch, setIsTouch] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
+  useEffect(() => {
+    setIsTouch(isTouchDevice());
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (isTouch) return;
+
     const rect = e.currentTarget.getBoundingClientRect();
     setMousePosition({
       x: e.clientX - rect.left - rect.width / 2,
@@ -12,8 +19,10 @@ export const useHoverTransform = () => {
     });
   };
 
-  const handleMouseEnter = () => setIsHovering(true);
+  const handleMouseEnter = () => isTouch || setIsHovering(true);
   const handleMouseLeave = () => {
+    if (isTouch) return;
+
     setIsHovering(false);
     setMousePosition({ x: 0, y: 0 });
   };
@@ -29,3 +38,7 @@ export const useHoverTransform = () => {
     handleMouseLeave,
   };
 };
+
+function isTouchDevice() {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.maxTouchPoints > 0;
+}
