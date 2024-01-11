@@ -31,7 +31,7 @@ export const Controls = () => {
   };
 
   return (
-    <div className="flex gap-2 absolute bottom-0 right-0">
+    <div className="flex gap-2 absolute bottom-0 right-0 z-[1]">
       <button
         className="flex justify-center items-center rounded-full border w-[26px] h-[26px] bg-background hover:bg-accent"
         onClick={handleReset}

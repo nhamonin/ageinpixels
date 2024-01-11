@@ -42,7 +42,7 @@ export const AgeVisualization = () => {
         </p>
       )}
       <Canvas
-        className="cursor-pointer"
+        className="cursor-pointer z-[1]"
         style={{
           height: 'var(--content-height)',
           width: canvasWidth,

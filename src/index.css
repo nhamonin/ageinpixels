@@ -84,7 +84,7 @@
     --progress: 0 0% 50%;
   }
 
-  .grid-background {
+  /* .grid-background {
     background-image: radial-gradient(
         circle at center,
         hsl(var(--background)) 10%,
@@ -144,7 +144,7 @@
 
     position: relative;
     z-index: 0;
-  }
+  } */
 
   @media (max-width: 640px) {
     :root {

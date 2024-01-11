@@ -8,7 +8,7 @@ export function useResponsiveCanvasWidth() {
       setCanvasWidth(
         window.innerWidth < 768
           ? 'calc(100vw - 2 * var(--padding-x))'
-          : 'calc(100vw - 600px - 2 * var(--padding-x))'
+          : 'calc(100vw - 602px - 2 * var(--padding-x))'
       );
     }
 

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { GridBackground } from '@/components/ui/grid-background';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -20,6 +21,8 @@ export const Layout = ({ children }: LayoutProps) => {
       </main>
 
       <Footer />
+
+      <GridBackground />
     </div>
   );
 };

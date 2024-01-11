@@ -155,19 +155,19 @@ export const Birthday = ({ value, onChange }: QuestionsInputProps) => {
   return (
     <div className="grid grid-cols-3 gap-[2px]">
       <Select value={localDay} onValueChange={(newValue) => handleInputChange('day', newValue)}>
-        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground">
+        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground z-[1]">
           <SelectValue placeholder="DD" />
         </SelectTrigger>
         <SelectContent>{daysOptions}</SelectContent>
       </Select>
       <Select value={localMonth} onValueChange={(newValue) => handleInputChange('month', newValue)}>
-        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground">
+        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground z-[1]">
           <SelectValue placeholder="MM">{months[Number(localMonth) - 1]?.slice(0, 3)}</SelectValue>
         </SelectTrigger>
         <SelectContent>{monthsOptions}</SelectContent>
       </Select>
       <Select value={localYear} onValueChange={(newValue) => handleInputChange('year', newValue)}>
-        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground">
+        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground z-[1]">
           <SelectValue placeholder="YYYY" />
         </SelectTrigger>
         <SelectContent>{yearOptions}</SelectContent>

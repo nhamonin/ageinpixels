@@ -52,7 +52,7 @@ export function Country({ value, onChange }: QuestionsInputProps) {
 
   return (
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
-      <PopoverTrigger className="text-lg overflow-hidden transition-none" asChild>
+      <PopoverTrigger className="text-lg overflow-hidden transition-none z-[1]" asChild>
         <Button
           className="w-full justify-between"
           role="combobox"
