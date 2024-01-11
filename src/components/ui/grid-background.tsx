@@ -2,6 +2,10 @@ import { useEffect } from 'react';
 
 import Line, { LineProps } from '@/components/ui/line';
 
+const FLASHES_AMOUNT_PER_LINE = 3;
+const ANIMATIONS_DURATION = 3500;
+const ANIMATION_DELAY = 100;
+
 export const GridBackground = () => {
   const lines: LineProps[] = [
     { orientation: 'horizontal', position: 'calc(var(--header-height) - 1px)' },
@@ -20,15 +24,15 @@ export const GridBackground = () => {
       const lineElements = document.querySelectorAll('.line');
 
       lineElements.forEach((line) => {
-        const numberOfFlashes = Math.floor(Math.random() * 3) + 1;
+        const numberOfFlashes = Math.floor(Math.random() * FLASHES_AMOUNT_PER_LINE) + 1;
 
         for (let i = 0; i < numberOfFlashes; i++) {
-          const randomDelay = Math.random() * 3500;
+          const randomDelay = Math.random() * ANIMATIONS_DURATION;
 
           setTimeout(() => {
             line.classList.add('animate-flash');
 
-            setTimeout(() => line.classList.remove('animate-flash'), 100);
+            setTimeout(() => line.classList.remove('animate-flash'), ANIMATION_DELAY);
           }, randomDelay);
         }
       });
