@@ -18,6 +18,7 @@ module.exports = {
     extend: {
       colors: {
         border: 'hsl(var(--border))',
+        'border-flashed': 'hsl(var(--border-flashed))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
@@ -75,7 +76,7 @@ module.exports = {
         },
         flash: {
           '0%, 100%': { backgroundColor: 'hsl(var(--border))' },
-          '50%': { backgroundColor: 'hsl(var(--foreground))' },
+          '50%': { backgroundColor: 'hsl(var(--border-flashed))' },
         },
       },
       animation: {
