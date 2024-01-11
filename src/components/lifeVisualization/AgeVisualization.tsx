@@ -56,13 +56,11 @@ export const AgeVisualization = () => {
       >
         <CameraSetter totalLayers={totalLayers} />
         <CameraLogger />
-        <ambientLight intensity={0.7} />
+        <ambientLight intensity={2} />
         <directionalLight
           position={[-5, 3, -2]}
-          intensity={0.5}
-          castShadow
-          shadow-mapSize-width={500}
-          shadow-mapSize-height={500}
+          intensity={15}
+          color={isDarkMode ? '#4656e0' : '#ffe187'}
         />
         <RotatingGrid cubes={cubes} />
       </Canvas>

@@ -18,7 +18,6 @@ export const RotatingGrid = ({ cubes }: RotatingGridProps) => {
 
   useEffect(() => {
     const controls = new OrbitControlsImpl(camera, gl.domElement);
-
     controls.addEventListener('start', () => (orbitingRef.current = false));
     controls.addEventListener('end', () => (orbitingRef.current = true));
     return () => {

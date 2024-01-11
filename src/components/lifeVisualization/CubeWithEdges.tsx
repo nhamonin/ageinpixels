@@ -11,8 +11,8 @@ type CubeProps = MeshProps & {
   outerWidth: number;
 };
 
-const lightColor = '#eee';
-const darkColor = '#666';
+const lightColor = '#808080';
+const darkColor = '#000';
 
 export const CubeWithEdges = ({
   position,
@@ -23,7 +23,7 @@ export const CubeWithEdges = ({
   outerWidth,
 }: CubeProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const animatedColor = new THREE.Color(isDarkMode ? lightColor : darkColor);
+  const animatedColor = new THREE.Color('#777');
 
   useFrame(({ clock }) => {
     if (isCurrentYear && meshRef.current) {
@@ -33,21 +33,25 @@ export const CubeWithEdges = ({
       material.emissiveIntensity = emissiveIntensity;
       material.emissive = animatedColor;
       material.needsUpdate = true;
+      material.roughness = 0.5;
+      material.metalness = 0.2;
     }
   });
 
   const opacity = isLived ? 1 : 0;
   const transparent = !isLived;
 
-  let fillColor = isDarkMode ? lightColor : darkColor;
+  let fillColor = lightColor;
   if (isCurrentYear) {
-    fillColor = isDarkMode ? darkColor : lightColor;
+    fillColor = lightColor;
   }
 
   const fillMaterial = new THREE.MeshStandardMaterial({
     color: fillColor,
     opacity: opacity,
     transparent,
+    roughness: 0.5,
+    metalness: 0.2,
   });
   const lineColor = isDarkMode ? lightColor : darkColor;
   const lineMaterial = new THREE.LineBasicMaterial({
