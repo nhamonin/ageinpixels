@@ -26,7 +26,7 @@ const questions: Question[] = [
   {
     key: 'sex',
     component: Sex,
-    description: 'Your <b>sex</b> is needed for more accurate statistics.',
+    description: 'Select your <b>sex</b> for more accurate life expectancy statistics.',
   },
   {
     key: 'birthDate',
