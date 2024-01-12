@@ -1,33 +1,48 @@
-import reset from '@/assets/images/controls/reset.svg';
-import zoomIn from '@/assets/images/controls/zoom-in.svg';
-import zoomOut from '@/assets/images/controls/zoom-out.svg';
+import { useState } from 'react';
+
 import { useCameraContext } from '@/contexts/CameraContext';
 import { basePosition, baseRotation } from '@/constants/cameraSettings';
 import { smoothThreeTransition } from '@/lib/utils';
+import reset from '@/assets/images/controls/reset.svg';
+import zoomIn from '@/assets/images/controls/zoom-in.svg';
+import zoomOut from '@/assets/images/controls/zoom-out.svg';
 
-const STEP = 0.2;
+const ZOOM_STEP_DISTANCE = 1;
 
 export const Controls = () => {
   const { cameraRef } = useCameraContext();
+  const [zoomLevel, setZoomLevel] = useState(0);
 
   const handleReset = () => {
     if (!cameraRef.current) return;
 
+    setZoomLevel(0);
     smoothThreeTransition(cameraRef, basePosition, baseRotation);
   };
 
   const handleZoomIn = () => {
     if (!cameraRef.current) return;
 
-    const targetPosition = cameraRef.current.position.clone().multiplyScalar(1 - STEP);
+    const newZoomLevel = zoomLevel - 1;
+    setZoomLevel(newZoomLevel);
+    const targetPosition = calculateZoomPosition(newZoomLevel);
     smoothThreeTransition(cameraRef, targetPosition);
   };
 
   const handleZoomOut = () => {
     if (!cameraRef.current) return;
 
-    const targetPosition = cameraRef.current.position.clone().multiplyScalar(1 + STEP);
+    const newZoomLevel = zoomLevel + 1;
+    setZoomLevel(newZoomLevel);
+    const targetPosition = calculateZoomPosition(newZoomLevel);
     smoothThreeTransition(cameraRef, targetPosition);
+  };
+
+  const calculateZoomPosition = (zoomLevel: number) => {
+    const direction = basePosition.clone().normalize();
+    const distance = ZOOM_STEP_DISTANCE * zoomLevel;
+
+    return basePosition.clone().add(direction.multiplyScalar(distance));
   };
 
   return (
