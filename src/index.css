@@ -52,6 +52,9 @@
     --padding-x: 60px;
 
     --progress: 0 0% 75%;
+
+    --rays-light: rgba(255, 227, 130, 0.1);
+    --rays-strong: rgba(255, 247, 138, 0.3);
   }
 
   .dark {
@@ -85,33 +88,37 @@
     --ring: 0 0% 83.1%;
 
     --progress: 0 0% 50%;
+
+    --rays-light: rgba(68, 0, 255, 0.14);
+    --rays-strong: rgba(68, 0, 255, 0.2);
   }
 
-  .grid-background {
-    background-image: radial-gradient(
-        circle at center,
-        hsl(var(--background)) 10%,
-        hsl(var(--background)) 25%,
-        transparent 31%,
-        transparent 100%
-      ),
-      linear-gradient(
-        to right,
-        transparent calc(50vw - 1px),
-        hsl(var(--border)) calc(50vw),
-        transparent calc(50vw + 1px),
-        transparent 100%
-      ),
-      linear-gradient(
-        to top,
-        transparent calc(50svh - var(--gradient-line-height) - 1px),
-        hsl(var(--border)) calc(50svh - var(--gradient-line-height)),
-        transparent calc(50svh - var(--gradient-line-height) + 1px),
-        transparent 100%
-      );
+  .grid-background::after {
+    content: '';
+    top: 0;
+    right: 0;
+    transform: translate(20%, -20%);
+    position: absolute;
+    width: 593px;
+    height: 593px;
+    border-radius: 593px;
+    background: var(--rays-light);
+    filter: blur(50px);
+    z-index: -1;
+  }
 
-    position: relative;
-    z-index: 0;
+  .grid-background::before {
+    content: '';
+    top: 0;
+    right: 0;
+    transform: translate(20%, -20%);
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: var(--rays-strong);
+    filter: blur(50px);
+    z-index: -1;
   }
 
   @media (max-width: 640px) {
@@ -135,6 +142,16 @@
           transparent calc(var(--padding-x) + 1px),
           transparent 100%
         );
+    }
+
+    .grid-background::after {
+      width: 300px;
+      height: 300px;
+    }
+
+    .grid-background::before {
+      width: 150px;
+      height: 150px;
     }
   }
 }
