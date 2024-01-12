@@ -43,12 +43,10 @@ export const fetchCountries = async (): Promise<Country[]> => {
 
   const data = await response.json();
   if (data && data.value) {
-    return data.value
-      .filter((country: Country) => !/\d/.test(country.Code))
-      .map((country: Country) => ({
-        ...country,
-        Title: country.Title.replace(/\s*\(.*?\)\s*/g, ''),
-      }));
+    return data.value.map((country: Country) => ({
+      ...country,
+      Title: country.Title.replace(/\s*\(.*?\)\s*/g, ''),
+    }));
   }
   return [];
 };

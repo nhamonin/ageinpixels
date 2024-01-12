@@ -31,7 +31,11 @@ export function Country({ value, onChange }: QuestionsInputProps) {
   }, [value, isTyping, countries]);
 
   const filteredCountries = inputValue
-    ? countries?.filter((country) => country.Title.toLowerCase().includes(inputValue.toLowerCase()))
+    ? countries?.filter(
+        (country) =>
+          country.Title.toLowerCase().includes(inputValue.toLowerCase()) ||
+          country.Code.toLowerCase().includes(inputValue.toLowerCase())
+      )
     : countries;
 
   const handleSelectCountry = (countryCode: string) => {
@@ -54,16 +58,16 @@ export function Country({ value, onChange }: QuestionsInputProps) {
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger className="text-lg overflow-hidden transition-none z-[1]" asChild>
         <Button
-          className="w-full justify-between"
+          className="w-full flex justify-between items-center overflow-hidden"
           role="combobox"
           variant="outline"
           onClick={() => setPopoverOpen(true)}
         >
-          {chosenCountry || 'Select or search country...'}
-          <ChevronDown className="h-4 w-4 opacity-50" />
+          <span className="truncate mr-2">{chosenCountry || 'Select or search country...'}</span>
+          <ChevronDown className="h-4 w-4 opacity-50 flex-shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0">
+      <PopoverContent className="w-[300px] p-0" sideOffset={0}>
         <Command>
           <CommandInput
             className="h-10"

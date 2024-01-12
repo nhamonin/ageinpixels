@@ -9,11 +9,11 @@ export const LifePercentage = () => {
   const { birthDate, lifeExpectancy } = userData;
   const [lifePercentage, setLifePercentage] = useState(0);
 
-  const formatTime = (includeSeconds = false) => {
+  const formatTime = () => {
     const date = new Date();
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = includeSeconds ? `:${date.getSeconds().toString().padStart(2, '0')}` : '';
+    const seconds = `:${date.getSeconds().toString().padStart(2, '0')}`;
     return `${hours}:${minutes}${seconds}`;
   };
 
@@ -35,7 +35,7 @@ export const LifePercentage = () => {
     };
 
     const intervalId = setInterval(() => {
-      setCurrentTime(formatTime(!!birthDate));
+      setCurrentTime(formatTime());
       if (birthDate && lifeExpectancy !== null) {
         setLifePercentage(calculateLifePercentage());
       }
