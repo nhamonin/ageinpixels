@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { ChevronDown } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
@@ -11,24 +13,22 @@ import {
 } from '@/components/ui/command';
 import { useCountries } from '@/hooks/useCountries';
 import { QuestionsInputProps } from '@/types';
-import { ChevronDown } from 'lucide-react';
 
 const BANNED_COUNTRIES = ['RUS'];
 
 export function Country({ value, onChange }: QuestionsInputProps) {
   const { countries, isLoading, error } = useCountries();
   const [inputValue, setInputValue] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
   const [chosenCountry, setChosenCountry] = useState('');
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   useEffect(() => {
-    if (value && !isTyping) {
+    if (value) {
       const selectedCountryTitle =
         countries?.find((country) => country.Code === value)?.Title || '';
-      setInputValue(selectedCountryTitle);
+      setChosenCountry(selectedCountryTitle);
     }
-  }, [value, isTyping, countries]);
+  }, [value, countries]);
 
   const filteredCountries = inputValue
     ? countries?.filter(
@@ -41,7 +41,6 @@ export function Country({ value, onChange }: QuestionsInputProps) {
   const handleSelectCountry = (countryCode: string) => {
     onChange(countryCode);
     setChosenCountry(countries?.find((country) => country.Code === countryCode)?.Title || '');
-    setIsTyping(false);
     setPopoverOpen(false);
   };
 
@@ -49,8 +48,6 @@ export function Country({ value, onChange }: QuestionsInputProps) {
     setInputValue(newValue);
     if (newValue === '') {
       onChange('');
-    } else {
-      setIsTyping(true);
     }
   };
 

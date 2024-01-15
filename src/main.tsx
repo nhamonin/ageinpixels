@@ -1,12 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { UserDataProvider } from '@/contexts/UserDataContext';
 import { CameraProvider } from '@/contexts/CameraContext';
 import './index.css';
+
+const BrowserRouter = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+  },
+]);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ThemeProvider>
         <UserDataProvider>
           <CameraProvider>
-            <App />
+            <RouterProvider router={BrowserRouter} />
           </CameraProvider>
         </UserDataProvider>
       </ThemeProvider>

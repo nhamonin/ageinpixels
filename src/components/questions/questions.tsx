@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { Country } from '@/components/questions/country';
 import { Sex } from '@/components/questions/sex';
 import { Birthday } from '@/components/questions/birthday';
-import { useUserData } from '@/contexts/UserDataContext';
+import { UserData, useUserData } from '@/contexts/UserDataContext';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
 import { createMarkup } from '@/lib/utils';
 
@@ -39,9 +40,29 @@ const questions: Question[] = [
 export function Questions() {
   const { userData, updateUserData } = useUserData();
   const { lifeExpectancy, lifeExpectancyUnavailable } = useLifeExpectancy();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleInputChange = (key: Key, value: string) => {
-    updateUserData({ [key]: value });
+  useEffect(() => {
+    console.log('searchParams');
+    const keys = Array.from(searchParams.keys()) as Key[];
+
+    const queryData = keys.reduce(
+      (acc, key) => {
+        acc[key] = searchParams.get(key) as string;
+        return acc;
+      },
+      {} as Record<Key, string>
+    );
+
+    updateUserData(queryData as Partial<UserData>);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  const updateQueryParams = (key: Key, value: string) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    newSearchParams.set(key, value);
+    setSearchParams(newSearchParams, { replace: true });
   };
 
   useEffect(() => {
@@ -61,7 +82,7 @@ export function Questions() {
           {question.text && <h2 className="font-bold text-muted">{question.text}</h2>}
           <question.component
             value={userData[question.key]}
-            onChange={(value: string) => handleInputChange(question.key, value)}
+            onChange={(value: string) => updateQueryParams(question.key, value)}
           />
           {question.description && (
             <p

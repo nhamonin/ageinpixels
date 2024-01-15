@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -6,6 +6,10 @@ import { QuestionsInputProps } from '@/types';
 
 export function Sex({ value, onChange }: QuestionsInputProps) {
   const [selectedSex, setSelectedSex] = useState(value);
+
+  useEffect(() => {
+    setSelectedSex(value);
+  }, [value]);
 
   const handleSexChange = (newValue: string) => {
     setSelectedSex(newValue);
