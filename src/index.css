@@ -93,32 +93,35 @@
     --rays-strong: rgba(68, 0, 255, 0.2);
   }
 
-  .grid-background::after {
-    content: '';
-    top: 0;
-    right: 0;
-    transform: translate(20%, -20%);
-    position: absolute;
-    width: 593px;
-    height: 593px;
-    border-radius: 593px;
-    background: var(--rays-light);
-    filter: blur(50px);
-    z-index: -1;
-  }
-
+  .grid-background::after,
   .grid-background::before {
     content: '';
     top: 0;
     right: 0;
-    transform: translate(20%, -20%);
+    transform-origin: top right;
+    transform: translate(20%, -20%) rotate(0deg);
+    transition: all 1s linear;
     position: absolute;
-    width: 300px;
-    height: 300px;
     border-radius: 50%;
-    background: var(--rays-strong);
     filter: blur(50px);
     z-index: -1;
+  }
+
+  .dark .grid-background::after,
+  .dark .grid-background::before {
+    transform: translate(20%, -20%) rotate(360deg);
+  }
+
+  .grid-background::after {
+    width: 593px;
+    height: 593px;
+    background: var(--rays-light);
+  }
+
+  .grid-background::before {
+    width: 300px;
+    height: 300px;
+    background: var(--rays-strong);
   }
 
   @media (max-width: 640px) {
