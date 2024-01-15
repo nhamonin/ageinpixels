@@ -18,24 +18,18 @@ export function Sex({ value, onChange }: QuestionsInputProps) {
 
   return (
     <RadioGroup value={selectedSex} onValueChange={handleSexChange} className="flex space-x-4">
-      <div className="flex items-center space-x-2 z-[1]">
+      <Label htmlFor="btsx" className="flex items-center space-x-2 z-[1] cursor-pointer">
         <RadioGroupItem value="SEX_BTSX" id="btsx" />
-        <Label htmlFor="btsx" className="cursor-pointer">
-          Both
-        </Label>
-      </div>
-      <div className="flex items-center space-x-2 z-[1]">
+        <span>Both</span>
+      </Label>
+      <Label htmlFor="mle" className="flex items-center space-x-2 z-[1] cursor-pointer">
         <RadioGroupItem value="SEX_MLE" id="mle" />
-        <Label htmlFor="mle" className="cursor-pointer">
-          Male
-        </Label>
-      </div>
-      <div className="flex items-center space-x-2 z-[1]">
+        <span>Male</span>
+      </Label>
+      <Label htmlFor="fmle" className="flex items-center space-x-2 z-[1] cursor-pointer">
         <RadioGroupItem value="SEX_FMLE" id="fmle" />
-        <Label htmlFor="fmle" className="cursor-pointer">
-          Female
-        </Label>
-      </div>
+        <span>Female</span>
+      </Label>
     </RadioGroup>
   );
 }
