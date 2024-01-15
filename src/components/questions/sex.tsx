@@ -21,7 +21,7 @@ export function Sex({ value, onChange }: QuestionsInputProps) {
       <div className="flex items-center space-x-2 z-[1]">
         <RadioGroupItem value="SEX_BTSX" id="btsx" />
         <Label htmlFor="btsx" className="cursor-pointer">
-          Both sexes
+          Both
         </Label>
       </div>
       <div className="flex items-center space-x-2 z-[1]">
