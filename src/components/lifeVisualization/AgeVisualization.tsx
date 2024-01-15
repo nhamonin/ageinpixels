@@ -10,6 +10,7 @@ import { useHoverTransform } from '@/hooks/useHoverTransform';
 import { useResponsiveCanvasWidth } from '@/hooks/useResponsiveCanvasWidth';
 import { useAgeCubes } from '@/hooks/useAgeCubes';
 import { formatNumber, calculateAge } from '@/lib/utils';
+import { basePosition, baseRotation } from '@/constants/lightSettings';
 
 export const AgeVisualization = () => {
   const { isDarkMode } = useTheme();
@@ -58,8 +59,9 @@ export const AgeVisualization = () => {
         <CameraLogger />
         <ambientLight intensity={2} />
         <directionalLight
-          position={[-5, 3, -2]}
-          intensity={15}
+          position={basePosition}
+          rotation={baseRotation}
+          intensity={10}
           color={isDarkMode ? '#4656e0' : '#ffe187'}
         />
         <RotatingGrid cubes={cubes} />
