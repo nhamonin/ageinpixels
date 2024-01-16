@@ -12,20 +12,29 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { useCountries } from '@/hooks/useCountries';
-import { QuestionsInputProps } from '@/types';
+import { Country as CountryType, QuestionsInputProps } from '@/types';
 
 const BANNED_COUNTRIES = ['RUS'];
 
 export function Country({ value, onChange }: QuestionsInputProps) {
-  const { countries, isLoading, error } = useCountries();
+  const { countries, isLoading, error } = useCountries() as {
+    countries: CountryType[];
+    isLoading: boolean;
+    error: boolean;
+  };
   const [inputValue, setInputValue] = useState('');
   const [chosenCountry, setChosenCountry] = useState('');
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   useEffect(() => {
-    if (value) {
+    if (!value) {
+      setChosenCountry('');
+    } else {
+      const lowerCaseValue = value.toLowerCase();
+
       const selectedCountryTitle =
-        countries?.find((country) => country.Code === value)?.Title || '';
+        countries?.find((country) => country.Code.toLowerCase() === lowerCaseValue)?.Title || '';
+
       setChosenCountry(selectedCountryTitle);
     }
   }, [value, countries]);

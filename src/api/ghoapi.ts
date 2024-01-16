@@ -42,6 +42,10 @@ export const fetchLifeExpectancy = async ({
   return null;
 };
 
+type CountriesResponse = {
+  value: Country[];
+};
+
 export const fetchCountries = async (): Promise<Country[]> => {
   const url = proxify(URLS.COUNTRIES);
   const response = await fetch(url);
@@ -50,11 +54,11 @@ export const fetchCountries = async (): Promise<Country[]> => {
     throw new Error('Network response was not ok');
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as CountriesResponse;
   if (data && data.value) {
     return data.value
-      .filter((country: Country) => !!country.Code)
-      .map((country: Country) => ({
+      .filter((country) => !!country.Code)
+      .map((country) => ({
         ...country,
         Title: country.Title.replace(/\s*\(.*?\)\s*/g, ''),
       }));

@@ -5,7 +5,7 @@ import { Country } from '@/types';
 
 export const useCountries = () => {
   const {
-    data: countries,
+    data: countries = [],
     isLoading,
     isError,
     error,
