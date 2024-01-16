@@ -16,10 +16,11 @@ const BrowserRouter = createBrowserRouter([
   },
 ]);
 
+const HOUR_IN_MILLISECONDS = 3600000;
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 0,
+      staleTime: HOUR_IN_MILLISECONDS,
     },
   },
 });

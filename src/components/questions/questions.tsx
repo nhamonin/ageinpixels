@@ -43,7 +43,6 @@ export function Questions() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    console.log('searchParams');
     const keys = Array.from(searchParams.keys()) as Key[];
 
     const queryData = keys.reduce(
