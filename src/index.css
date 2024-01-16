@@ -109,8 +109,8 @@
   .transition-enabled .grid-background::after,
   .transition-enabled .grid-background::before {
     transition:
-      transform 1s linear,
-      background 1s 0.1s linear;
+      transform 0.7s linear,
+      background 0.3s 0.2s linear;
   }
 
   .dark .grid-background::after,

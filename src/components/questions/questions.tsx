@@ -7,6 +7,12 @@ import { Birthday } from '@/components/questions/birthday';
 import { UserData, useUserData } from '@/contexts/UserDataContext';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
 import { createMarkup } from '@/lib/utils';
+import {
+  sexMapping,
+  reverseSexMapping,
+  SexInternal,
+  SexHumanReadable,
+} from '@/constants/sexQueryParamMapping';
 
 type Key = 'country' | 'sex' | 'birthDate';
 
@@ -45,22 +51,31 @@ export function Questions() {
   useEffect(() => {
     const keys = Array.from(searchParams.keys()) as Key[];
 
-    const queryData = keys.reduce(
-      (acc, key) => {
-        acc[key] = searchParams.get(key) as string;
-        return acc;
-      },
-      {} as Record<Key, string>
-    );
+    const queryData = keys.reduce((acc, key) => {
+      const value = searchParams.get(key) || '';
+      if (key === 'sex') {
+        const humanReadableValue = value as SexHumanReadable;
+        acc[key] = reverseSexMapping[humanReadableValue];
+      } else {
+        acc[key] = value;
+      }
+      return acc;
+    }, {} as Partial<UserData>);
 
-    updateUserData(queryData as Partial<UserData>);
+    updateUserData(queryData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   const updateQueryParams = (key: Key, value: string) => {
     const newSearchParams = new URLSearchParams(searchParams);
 
-    newSearchParams.set(key, value);
+    if (key === 'sex') {
+      const internalValue = value as SexInternal;
+      newSearchParams.set(key, sexMapping[internalValue]);
+    } else {
+      newSearchParams.set(key, value.toLowerCase());
+    }
+
     setSearchParams(newSearchParams, { replace: true });
   };
 
