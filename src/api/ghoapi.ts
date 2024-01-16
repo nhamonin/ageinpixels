@@ -6,31 +6,40 @@ export const fetchLifeExpectancy = async ({
   countryCode,
   sex,
 }: LifeExpectancyParams): Promise<number | null> => {
-  let filter = '';
-  if (countryCode) {
-    filter = `SpatialDim eq '${countryCode}' and Dim1 eq '${sex}'`;
-  } else {
-    filter = `SpatialDim eq 'GLOBAL' and Dim1 eq '${sex}'`;
+  const buildFilter = (countryCode: string, sex: string) => {
+    return `SpatialDim eq '${countryCode || 'GLOBAL'}' and Dim1 eq '${sex}'`;
+  };
+
+  const fetchData = async (filter: string) => {
+    console.log({ filter });
+    const url = proxify(`${URLS.LIFE_EXPECTANCY}?$filter=${encodeURIComponent(filter)}`);
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data: ApiResponse<LifeExpectancy> = await response.json();
+    return data.value;
+  };
+
+  const countryFilter = buildFilter(countryCode, sex);
+  let data = await fetchData(countryFilter);
+
+  if (data.length === 0 && countryCode) {
+    const globalFilter = buildFilter('GLOBAL', sex);
+    data = await fetchData(globalFilter);
   }
 
-  const url = proxify(`${URLS.LIFE_EXPECTANCY}?$filter=${encodeURIComponent(filter)}`);
-  const response = await fetch(url);
+  if (data.length > 0) {
+    const mostRecentData = data
+      .filter((entry) => entry.Dim1 === sex && entry.TimeDim)
+      .sort((a, b) => b.TimeDim - a.TimeDim)[0];
 
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
+    return mostRecentData.NumericValue;
   }
 
-  const data: ApiResponse<LifeExpectancy> = await response.json();
-
-  if (data.value.length === 0) {
-    return null;
-  }
-
-  const mostRecentData = data.value
-    .filter((entry) => entry.Dim1 === sex && entry.TimeDim)
-    .sort((a, b) => b.TimeDim - a.TimeDim)[0];
-
-  return mostRecentData.NumericValue;
+  return null;
 };
 
 export const fetchCountries = async (): Promise<Country[]> => {
