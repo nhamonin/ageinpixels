@@ -20,7 +20,7 @@ export function Country({ value, onChange }: QuestionsInputProps) {
   const { countries, isLoading, error } = useCountries() as {
     countries: CountryType[];
     isLoading: boolean;
-    error: boolean;
+    error: Error | null;
   };
   const [inputValue, setInputValue] = useState('');
   const [chosenCountry, setChosenCountry] = useState('');
