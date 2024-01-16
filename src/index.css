@@ -100,11 +100,17 @@
     right: 0;
     transform-origin: top right;
     transform: translate(20%, -20%) rotate(0deg);
-    transition: all 1s linear;
     position: absolute;
     border-radius: 50%;
     filter: blur(50px);
     z-index: -1;
+  }
+
+  .transition-enabled .grid-background::after,
+  .transition-enabled .grid-background::before {
+    transition:
+      transform 1s linear,
+      background 1s 0.1s linear;
   }
 
   .dark .grid-background::after,
