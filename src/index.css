@@ -55,7 +55,7 @@
 
     --radio: 0 0% 25%;
 
-    --rays-light: rgba(255, 227, 130, 0.1);
+    --rays-light: rgba(255, 227, 130, 0.15);
     --rays-strong: rgba(255, 247, 138, 0.3);
   }
 
@@ -108,6 +108,18 @@
     }
   }
 
+  @keyframes opacityPulse {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.85;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
   .grid-background::after,
   .grid-background::before {
     content: '';
@@ -125,7 +137,9 @@
 
   .grid-background.animate-rays::after,
   .grid-background.animate-rays::before {
-    animation: rayMoveAndFadeIn 1.5s forwards;
+    animation:
+      rayMoveAndFadeIn 1.5s forwards,
+      opacityPulse 1.5s infinite ease-in-out;
   }
 
   .grid-background::after {
