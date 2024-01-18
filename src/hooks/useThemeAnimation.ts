@@ -1,7 +1,7 @@
 import { RefObject, useEffect, useState } from 'react';
 import anime from 'animejs';
 
-import { moonPath, rays, sunPath } from '@/constants/iconPaths';
+import { sunPath, moonPath, raysPaths } from '@/constants/iconPaths';
 
 const white = '#fff';
 const black = '#000';
@@ -12,7 +12,7 @@ const ANIMATION_RAY_DELAY = 50;
 
 export function useThemeAnimation(checked: boolean | undefined, svgRef: RefObject<SVGSVGElement>) {
   const [currentPath, setCurrentPath] = useState(checked ? moonPath : sunPath);
-  const [currentRays, setCurrentRays] = useState(checked ? [] : rays);
+  const [currentRays, setCurrentRays] = useState(checked ? [] : raysPaths);
 
   useEffect(() => {
     setCurrentPath(checked ? moonPath : sunPath);
@@ -31,7 +31,7 @@ export function useThemeAnimation(checked: boolean | undefined, svgRef: RefObjec
   useEffect(() => {
     if (checked) return setCurrentRays([]);
 
-    const timeouts = rays.map((rayPath, index) =>
+    const timeouts = raysPaths.map((rayPath, index) =>
       setTimeout(
         () => {
           setCurrentRays((prevRays) => [...prevRays, rayPath]);
