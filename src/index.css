@@ -97,29 +97,35 @@
     --rays-strong: rgba(68, 0, 255, 0.2);
   }
 
+  @keyframes rayMoveAndFadeIn {
+    from {
+      opacity: 0;
+      transform: translate(100%, -100%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(20%, -20%);
+    }
+  }
+
   .grid-background::after,
   .grid-background::before {
     content: '';
     top: 0;
     right: 0;
     transform-origin: top right;
-    transform: translate(20%, -20%) rotate(0deg);
+    transform: translate(20%, -20%);
     position: absolute;
     border-radius: 50%;
     filter: blur(50px);
     z-index: -1;
+    opacity: 0;
+    animation: none;
   }
 
-  .transition-enabled .grid-background::after,
-  .transition-enabled .grid-background::before {
-    transition:
-      transform 0.7s linear,
-      background 0.3s 0.2s linear;
-  }
-
-  .dark .grid-background::after,
-  .dark .grid-background::before {
-    transform: translate(20%, -20%) rotate(360deg);
+  .grid-background.animate-rays::after,
+  .grid-background.animate-rays::before {
+    animation: rayMoveAndFadeIn 1.5s forwards;
   }
 
   .grid-background::after {

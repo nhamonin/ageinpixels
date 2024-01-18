@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 
-export function useThemeInitializer() {
+export function useThemeInitializer(checked: boolean | undefined) {
   useEffect(() => {
-    const html = document.documentElement;
+    const gridBackground = document.querySelector('body');
+
+    if (!gridBackground) return;
+
+    gridBackground.classList.remove('animate-rays');
 
     setTimeout(() => {
-      html.classList.add('transition-enabled');
-    }, 0);
-  }, []);
+      gridBackground.classList.add('animate-rays');
+    }, 10);
+  }, [checked]);
 }

@@ -6,11 +6,9 @@ import { Layout } from '@/components/layout/Layout';
 import { Questions } from '@/components/questions/questions';
 import { AgeVisualization } from '@/components/lifeVisualization/AgeVisualization';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
-import { useThemeInitializer } from '@/hooks/useThemeInitializer';
 
 function App() {
   useLifeExpectancy();
-  useThemeInitializer();
 
   return (
     <>

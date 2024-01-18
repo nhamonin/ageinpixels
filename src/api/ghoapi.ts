@@ -11,7 +11,6 @@ export const fetchLifeExpectancy = async ({
   };
 
   const fetchData = async (filter: string) => {
-    console.log({ filter });
     const url = proxify(`${URLS.LIFE_EXPECTANCY}?$filter=${encodeURIComponent(filter)}`);
     const response = await fetch(url);
 
