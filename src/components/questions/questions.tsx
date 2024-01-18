@@ -100,7 +100,7 @@ export function Questions() {
           />
           {question.description && (
             <p
-              className="text-sm text-muted z-[1]"
+              className="text-xs text-muted z-[1]"
               dangerouslySetInnerHTML={createMarkup(question.description)}
             ></p>
           )}
