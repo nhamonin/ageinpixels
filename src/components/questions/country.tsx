@@ -69,7 +69,9 @@ export function Country({ value, onChange }: QuestionsInputProps) {
           variant="outline"
           onClick={() => setPopoverOpen(true)}
         >
-          <span className="truncate mr-2">{chosenCountry || 'Select or search country...'}</span>
+          <span className={`truncate mr-2 ${!chosenCountry && 'text-muted'}`}>
+            {chosenCountry || 'Select or search country...'}
+          </span>
           <ChevronDown className="h-4 w-4 opacity-50 flex-shrink-0" />
         </Button>
       </PopoverTrigger>

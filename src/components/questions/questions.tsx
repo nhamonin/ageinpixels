@@ -18,7 +18,7 @@ type Key = 'country' | 'sex' | 'birthDate';
 
 type Question = {
   key: Key;
-  text?: string;
+  title: string;
   description?: string;
   component: React.FC<{ value: string; onChange: (value: string) => void }>;
 };
@@ -27,19 +27,19 @@ const questions: Question[] = [
   {
     key: 'country',
     component: Country,
+    title: 'Enter or select your country',
     description:
       'Choose your <b>country</b> for life expectancy figures based on data from the <a href="https://www.who.int/" class="underline">World Health Organization</a>.',
   },
   {
     key: 'sex',
+    title: 'Select your sex',
     component: Sex,
-    description: 'Select your <b>sex</b> for more accurate life expectancy statistics.',
   },
   {
     key: 'birthDate',
+    title: 'Select your birthdate',
     component: Birthday,
-    description:
-      'Fill in your <b>birthdate</b> to see your age and the time you have lived compared to expected lifespan.',
   },
 ];
 
@@ -90,10 +90,10 @@ export function Questions() {
   }, [lifeExpectancy, userData, updateUserData, lifeExpectancyUnavailable]);
 
   return (
-    <section className="hidden sm:flex flex-col gap-10 items-center justify-center w-[300px]">
+    <section className="hidden sm:flex flex-col gap-9 items-center justify-center w-[300px]">
       {questions.map((question) => (
-        <div key={question.key} className="w-full flex flex-col gap-2.5">
-          {question.text && <h2 className="font-bold text-muted">{question.text}</h2>}
+        <div key={question.key} className="w-full flex flex-col gap-3">
+          {question.title && <h2 className="font-bold font-inter">{question.title}</h2>}
           <question.component
             value={userData[question.key]}
             onChange={(value: string) => updateQueryParams(question.key, value)}

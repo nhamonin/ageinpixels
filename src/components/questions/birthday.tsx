@@ -9,21 +9,6 @@ import {
 } from '@/components/ui/select';
 import { QuestionsInputProps } from '@/types';
 
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
 export const Birthday = ({ value, onChange }: QuestionsInputProps) => {
   const [day, month, year] = value ? value.split('-') : ['', '', ''];
 
@@ -107,7 +92,7 @@ export const Birthday = ({ value, onChange }: QuestionsInputProps) => {
     const isCurrentYear = Number(localYear) === currentYear;
     const selectedDay = parseInt(localDay, 10);
 
-    return months.map((month, index) => {
+    return Array.from({ length: 12 }, (_, index) => {
       const monthIndex = index + 1;
       const monthValue = monthIndex.toString().padStart(2, '0');
       const isFutureMonth = monthIndex > currentMonth;
@@ -116,8 +101,8 @@ export const Birthday = ({ value, onChange }: QuestionsInputProps) => {
       const isDisabled = isCurrentYear && (isFutureMonth || isCurrentMonthWithFutureDay);
 
       return (
-        <SelectItem key={month} value={monthValue} disabled={isDisabled}>
-          {month}
+        <SelectItem key={monthValue} value={monthValue} disabled={isDisabled}>
+          {monthValue}
         </SelectItem>
       );
     });
@@ -155,19 +140,19 @@ export const Birthday = ({ value, onChange }: QuestionsInputProps) => {
   return (
     <div className="grid grid-cols-3 gap-[2px]">
       <Select value={localDay} onValueChange={(newValue) => handleInputChange('day', newValue)}>
-        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground z-[1]">
+        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground data-[placeholder]:text-muted z-[1]">
           <SelectValue placeholder="DD" />
         </SelectTrigger>
         <SelectContent>{daysOptions}</SelectContent>
       </Select>
       <Select value={localMonth} onValueChange={(newValue) => handleInputChange('month', newValue)}>
-        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground z-[1]">
-          <SelectValue placeholder="MM">{months[Number(localMonth) - 1]?.slice(0, 3)}</SelectValue>
+        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground data-[placeholder]:text-muted z-[1]">
+          <SelectValue placeholder="MM">{localMonth}</SelectValue>
         </SelectTrigger>
         <SelectContent>{monthsOptions}</SelectContent>
       </Select>
       <Select value={localYear} onValueChange={(newValue) => handleInputChange('year', newValue)}>
-        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground z-[1]">
+        <SelectTrigger className="hover:bg-accent hover:text-accent-foreground data-[placeholder]:text-muted z-[1]">
           <SelectValue placeholder="YYYY" />
         </SelectTrigger>
         <SelectContent>{yearOptions}</SelectContent>

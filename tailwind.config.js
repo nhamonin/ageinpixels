@@ -16,11 +16,15 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+      },
       colors: {
         border: 'hsl(var(--border))',
         'border-flashed': 'hsl(var(--border-flashed))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
+        radio: 'hsl(var(--radio))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {

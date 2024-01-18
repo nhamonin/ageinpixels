@@ -53,6 +53,8 @@
 
     --progress: 0 0% 75%;
 
+    --radio: 0 0% 25%;
+
     --rays-light: rgba(255, 227, 130, 0.1);
     --rays-strong: rgba(255, 247, 138, 0.3);
   }
@@ -88,6 +90,8 @@
     --ring: 0 0% 83.1%;
 
     --progress: 0 0% 50%;
+
+    --radio: 0 0% 90%;
 
     --rays-light: rgba(68, 0, 255, 0.14);
     --rays-strong: rgba(68, 0, 255, 0.2);
