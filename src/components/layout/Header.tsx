@@ -1,7 +1,5 @@
 import { useTheme } from '@/contexts/ThemeContext';
 import { ToggleTheme } from '@/components/ui/toggle-theme';
-import burgerLight from '@/assets/images/themes/light/burger.svg';
-import burgerDark from '@/assets/images/themes/dark/burger.svg';
 
 export const Header = () => {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -13,9 +11,6 @@ export const Header = () => {
     >
       <h1 className="text-lg font-semibold">Ageinpixels</h1>
       <ToggleTheme checked={isDarkMode} onCheckedChange={toggleTheme} />
-      <button className="sm:hidden" aria-label="Open menu">
-        <img src={isDarkMode ? burgerDark : burgerLight} alt="Burger Icon" />
-      </button>
     </header>
   );
 };

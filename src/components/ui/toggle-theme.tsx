@@ -8,7 +8,7 @@ type ToggleThemeProps = {
 
 export const ToggleTheme = ({ checked, onCheckedChange }: ToggleThemeProps) => (
   <button
-    className="hidden sm:flex items-center justify-center cursor-pointer w-8 h-8"
+    className="flex items-center justify-center cursor-pointer w-8 h-8"
     onClick={onCheckedChange}
     aria-label={checked ? 'Activate light mode' : 'Activate dark mode'}
   >
