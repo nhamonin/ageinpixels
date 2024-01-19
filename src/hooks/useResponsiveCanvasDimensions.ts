@@ -1,10 +1,19 @@
 import { useState, useEffect } from 'react';
 
-export function useResponsiveCanvasWidth() {
+export function useResponsiveCanvasDimensions() {
+  const [canvasHeight, setCanvasHeight] = useState(
+    'calc(var(--content-height) - var(--questions-height))'
+  );
   const [canvasWidth, setCanvasWidth] = useState('calc(100vw - 2 * var(--padding-x))');
 
   useEffect(() => {
     function handleResize() {
+      setCanvasHeight(
+        window.innerWidth < 768
+          ? 'calc(var(--content-height) - var(--questions-height))'
+          : 'var(--content-height)'
+      );
+
       setCanvasWidth(
         window.innerWidth < 768
           ? 'calc(100vw - 2 * var(--padding-x))'
@@ -19,5 +28,5 @@ export function useResponsiveCanvasWidth() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return canvasWidth;
+  return { canvasHeight, canvasWidth };
 }

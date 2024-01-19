@@ -26,7 +26,6 @@ export const ToggleTheme = ({
       className="flex items-center justify-center cursor-pointer w-8 h-8"
       onClick={handleCheckedChange}
       aria-label={checked ? 'Switch to dark mode' : 'Switch to light mode'}
-      style={{ WebkitTapHighlightColor: 'transparent' }}
     >
       <svg ref={svgRef} width="32" height="32" viewBox="0 0 32 32">
         <path className="main-path" d={currentPath} />

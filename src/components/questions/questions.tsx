@@ -90,10 +90,13 @@ export function Questions() {
   }, [lifeExpectancy, userData, updateUserData, lifeExpectancyUnavailable]);
 
   return (
-    <section className="hidden sm:flex flex-col gap-9 items-center justify-center w-[300px]">
+    <section
+      className="max-h-[var(--questions-height)] sm:max-h-auto overflow-hidden flex
+    flex-col gap-7 sm:gap-9 items-center justify-center sm:w-[300px] my-[var(--questions-my)] sm:my-0"
+    >
       {questions.map((question) => (
         <div key={question.key} className="w-full flex flex-col gap-3">
-          {question.title && <h2 className="font-bold font-inter">{question.title}</h2>}
+          {question.title && <h2 className="sm:font-bold font-inter">{question.title}</h2>}
           <question.component
             value={userData[question.key]}
             onChange={(value: string) => updateQueryParams(question.key, value)}

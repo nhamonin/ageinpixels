@@ -1,16 +1,23 @@
 import { useRef, useEffect } from 'react';
 import { useFrame, extend, useThree } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { OrbitControls as OrbitControlsImpl } from 'three/addons/controls/OrbitControls.js';
-import { OrbitControls } from '@react-three/drei';
+
+import { useAgeCubes } from '@/hooks/useAgeCubes';
+import { useTheme } from '@/contexts/ThemeContext';
 
 extend({ OrbitControlsImpl });
 
 type RotatingGridProps = {
-  cubes: JSX.Element[];
+  lifeExpectancy: number;
+  currentAge: number;
 };
 
-export const RotatingGrid = ({ cubes }: RotatingGridProps) => {
+export const RotatingGrid = ({ lifeExpectancy, currentAge }: RotatingGridProps) => {
+  const { isDarkMode } = useTheme();
+  const cubes = useAgeCubes({ lifeExpectancy, isDarkMode, currentAge });
+
   const groupRef = useRef<THREE.Group>(null);
   const orbitingRef = useRef(true);
   const { camera, gl } = useThree();
