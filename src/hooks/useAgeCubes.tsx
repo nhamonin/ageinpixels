@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useAnimatedValue } from '@/hooks/useAnimatedValue';
 import { CubeWithEdges } from '@/components/lifeVisualization/CubeWithEdges';
@@ -12,8 +12,14 @@ export const useAgeCubes = ({
   currentAge: number;
 }) => {
   const { isDarkMode } = useTheme();
-  const animatedCurrentAge = useAnimatedValue(currentAge, 300);
-  const animatedLifeExpectancy = useAnimatedValue(lifeExpectancy, 300);
+  const [startAnimation, setStartAnimation] = useState(false);
+
+  useEffect(() => {
+    setStartAnimation(true);
+  }, [lifeExpectancy, currentAge]);
+
+  const animatedCurrentAge = useAnimatedValue(startAnimation ? currentAge : 0, 300);
+  const animatedLifeExpectancy = useAnimatedValue(startAnimation ? lifeExpectancy : 0, 300);
 
   const cubes = useMemo(() => {
     const layerSize = 4;
