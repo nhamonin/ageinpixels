@@ -2,16 +2,16 @@ import { useMemo } from 'react';
 
 import { useAnimatedValue } from '@/hooks/useAnimatedValue';
 import { CubeWithEdges } from '@/components/lifeVisualization/CubeWithEdges';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export const useAgeCubes = ({
   lifeExpectancy,
-  isDarkMode,
   currentAge,
 }: {
   lifeExpectancy: number;
-  isDarkMode: boolean;
   currentAge: number;
 }) => {
+  const { isDarkMode } = useTheme();
   const animatedCurrentAge = useAnimatedValue(currentAge, 300);
   const animatedLifeExpectancy = useAnimatedValue(lifeExpectancy, 300);
 

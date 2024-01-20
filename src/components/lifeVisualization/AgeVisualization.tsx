@@ -1,4 +1,6 @@
 import { Canvas } from '@react-three/fiber';
+import { useRef } from 'react';
+import * as THREE from 'three';
 
 import { CameraLogger } from '@/components/lifeVisualization/CameraLogger';
 import { CameraSetter } from '@/components/lifeVisualization/CameraSetter';
@@ -9,7 +11,6 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useHoverTransform } from '@/hooks/useHoverTransform';
 import { useResponsiveCanvasDimensions } from '@/hooks/useResponsiveCanvasDimensions';
 import { formatNumber, calculateAge } from '@/lib/utils';
-import { basePosition, baseRotation } from '@/constants/lightSettings';
 
 export const AgeVisualization = () => {
   const { isDarkMode } = useTheme();
@@ -22,6 +23,7 @@ export const AgeVisualization = () => {
   const layerSize = Math.round(Math.cbrt(lifeExpectancy));
   const cubesPerLayer = layerSize * layerSize;
   const totalLayers = Math.ceil(lifeExpectancy / cubesPerLayer);
+  const light = useRef<THREE.DirectionalLight>(null);
 
   return (
     <section className="flex flex-col justify-center overflow-hidden items-center max-h-[var(--content-height)] sm:min-w-auto sm:min-h-auto relative">
@@ -55,13 +57,12 @@ export const AgeVisualization = () => {
         <CameraSetter totalLayers={totalLayers} />
         <CameraLogger />
         <ambientLight intensity={2} />
-        <directionalLight
-          position={basePosition}
-          rotation={baseRotation}
-          intensity={10}
-          color={isDarkMode ? '#4656e0' : '#ffe187'}
+        <directionalLight ref={light} intensity={10} color={isDarkMode ? '#4656e0' : '#ffe187'} />
+        <RotatingGrid
+          lifeExpectancy={lifeExpectancy}
+          currentAge={currentAge}
+          directionalLight={light}
         />
-        <RotatingGrid lifeExpectancy={lifeExpectancy} currentAge={currentAge} />
       </Canvas>
       <Controls />
     </section>
