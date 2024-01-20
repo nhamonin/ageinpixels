@@ -113,11 +113,36 @@
       opacity: 1;
     }
     50% {
-      opacity: 0.85;
+      opacity: 0.7;
     }
     100% {
       opacity: 1;
     }
+  }
+
+  .grid-background {
+    background-image: radial-gradient(
+        ellipse calc(100vw - 600px - 2 * var(--padding-x))
+          calc(100svh - var(--header-height) - var(--footer-height)) at center,
+        hsl(var(--background)) 10%,
+        hsl(var(--background)) 30%,
+        transparent 36%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to right,
+        transparent calc(50vw - 1px),
+        hsl(var(--border)) calc(50vw),
+        transparent calc(50vw + 1px),
+        transparent 100%
+      ),
+      linear-gradient(
+        to top,
+        transparent calc(50svh - var(--gradient-line-height) - 1px),
+        hsl(var(--border)) calc(50svh - var(--gradient-line-height)),
+        transparent calc(50svh - var(--gradient-line-height) + 1px),
+        transparent 100%
+      );
   }
 
   .grid-background::after,
