@@ -13,9 +13,20 @@ export const proxify = (url: string): string => {
   return `${proxyServerUrl}${encodeURIComponent(url)}`;
 };
 
-export const parseDate = (dateStr: string) => {
+export const stringToDate = (dateStr: string) => {
   const parts = dateStr.split('-');
   return new Date(+parts[2], +parts[1] - 1, +parts[0]);
+};
+
+export const dateToString = (date: Date) => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  const dayStr = day < 10 ? `0${day}` : `${day}`;
+  const monthStr = month < 10 ? `0${month}` : `${month}`;
+
+  return `${dayStr}-${monthStr}-${year}`;
 };
 
 export const formatNumber = (number: number) => {
@@ -25,7 +36,7 @@ export const formatNumber = (number: number) => {
 };
 
 export const calculateAge = (birthDateString: string) => {
-  const birthDate = parseDate(birthDateString);
+  const birthDate = stringToDate(birthDateString);
   const today = new Date();
 
   if (isNaN(birthDate.getTime())) {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { Progress } from '@/components/ui/progress';
 import { useUserData } from '@/contexts/UserDataContext';
-import { parseDate } from '@/lib/utils';
+import { stringToDate } from '@/lib/utils';
 
 export const LifePercentage = () => {
   const { userData } = useUserData();
@@ -22,7 +22,7 @@ export const LifePercentage = () => {
   useEffect(() => {
     const calculateLifePercentage = () => {
       if (!birthDate || lifeExpectancy === null) return 0;
-      const birthDateObj = parseDate(birthDate);
+      const birthDateObj = stringToDate(birthDate);
       const currentDate = new Date();
       const expectedEndDate = new Date(
         birthDateObj.getFullYear() + lifeExpectancy,
