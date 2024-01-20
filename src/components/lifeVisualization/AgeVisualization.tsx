@@ -1,6 +1,7 @@
 import { Canvas } from '@react-three/fiber';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { useSpring, animated } from '@react-spring/three';
 
 import { CameraLogger } from '@/components/lifeVisualization/CameraLogger';
 import { CameraSetter } from '@/components/lifeVisualization/CameraSetter';
@@ -11,6 +12,8 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useHoverTransform } from '@/hooks/useHoverTransform';
 import { useResponsiveCanvasDimensions } from '@/hooks/useResponsiveCanvasDimensions';
 import { formatNumber, calculateAge } from '@/lib/utils';
+
+const AnimatedDirectionalLight = animated.directionalLight;
 
 export const AgeVisualization = () => {
   const { isDarkMode } = useTheme();
@@ -24,6 +27,16 @@ export const AgeVisualization = () => {
   const cubesPerLayer = layerSize * layerSize;
   const totalLayers = Math.ceil(lifeExpectancy / cubesPerLayer);
   const light = useRef<THREE.DirectionalLight>(null);
+  const lightAnimation = useSpring({
+    loop: true,
+    to: [{ intensity: 10 }, { intensity: 7 }, { intensity: 10 }],
+    from: { intensity: 10 },
+    config: { duration: 750 },
+  });
+
+  useEffect(() => {
+    lightAnimation.intensity.start({ from: 0, to: 10 });
+  }, [isDarkMode, lightAnimation.intensity]);
 
   return (
     <section className="flex flex-col justify-center overflow-hidden items-center max-h-[var(--content-height)] sm:min-w-auto sm:min-h-auto relative">
@@ -57,7 +70,11 @@ export const AgeVisualization = () => {
         <CameraSetter totalLayers={totalLayers} />
         <CameraLogger />
         <ambientLight intensity={2} />
-        <directionalLight ref={light} intensity={10} color={isDarkMode ? '#4656e0' : '#ffe187'} />
+        <AnimatedDirectionalLight
+          ref={light}
+          color={isDarkMode ? '#4656e0' : '#ffe187'}
+          {...lightAnimation}
+        />
         <RotatingGrid
           lifeExpectancy={lifeExpectancy}
           currentAge={currentAge}
