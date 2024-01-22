@@ -1,55 +1,43 @@
 import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import { Country } from '@/components/questions/country';
 import { Sex } from '@/components/questions/sex';
 import { Birthday } from '@/components/questions/birthday';
 import { UserData, useUserData } from '@/contexts/UserDataContext';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
-import { createMarkup } from '@/lib/utils';
-import {
-  sexMapping,
-  reverseSexMapping,
-  SexInternal,
-  SexHumanReadable,
-} from '@/constants/sexQueryParamMapping';
-
-type Key = 'country' | 'sex' | 'birthDate';
-
-type Question = {
-  key: Key;
-  title: string;
-  description?: string;
-  component: React.FC<{ value: string; onChange: (value: string) => void }>;
-};
-
-const questions: Question[] = [
-  {
-    key: 'country',
-    component: Country,
-    title: 'Enter or select your country',
-    description:
-      'Choose your <b>country</b> for life expectancy figures based on data from the <a href="https://www.who.int/" class="underline">World Health Organization</a>.',
-  },
-  {
-    key: 'sex',
-    title: 'Select your sex',
-    component: Sex,
-  },
-  {
-    key: 'birthDate',
-    title: 'Select your birthdate',
-    component: Birthday,
-  },
-];
+import { createMarkup, formatNumber } from '@/lib/utils';
+import { reverseSexMapping, SexHumanReadable } from '@/constants/sexQueryParamMapping';
+import { Question, QuestionKey } from '@/types';
+import { useQueryParams } from '@/hooks/useQueryParams';
 
 export function Questions() {
   const { userData, updateUserData } = useUserData();
   const { lifeExpectancy, lifeExpectancyUnavailable } = useLifeExpectancy();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { searchParams, setQueryParam } = useQueryParams();
+
+  const questions: Question[] = [
+    {
+      key: 'country',
+      component: Country,
+      title: 'Enter or select your country',
+      description: `Age in pixels is based on data from the <a href="https://www.who.int/" class="underline">World Health Organization</a>. Globally, the average life expectancy is <b>${formatNumber(
+        userData.lifeExpectancy
+      )}</b> years.`,
+    },
+    {
+      key: 'sex',
+      title: 'Select your sex',
+      component: Sex,
+    },
+    {
+      key: 'birthDate',
+      title: 'Select your birthdate',
+      component: Birthday,
+    },
+  ];
 
   useEffect(() => {
-    const keys = Array.from(searchParams.keys()) as Key[];
+    const keys = Array.from(searchParams.keys()) as QuestionKey[];
 
     const queryData = keys.reduce((acc, key) => {
       const value = searchParams.get(key) || '';
@@ -65,19 +53,6 @@ export function Questions() {
     updateUserData(queryData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
-
-  const updateQueryParams = (key: Key, value: string) => {
-    const newSearchParams = new URLSearchParams(searchParams);
-
-    if (key === 'sex') {
-      const internalValue = value as SexInternal;
-      newSearchParams.set(key, sexMapping[internalValue]);
-    } else {
-      newSearchParams.set(key, value.toLowerCase());
-    }
-
-    setSearchParams(newSearchParams, { replace: true });
-  };
 
   useEffect(() => {
     if (
@@ -99,11 +74,11 @@ export function Questions() {
           {question.title && <h2 className="sm:font-bold font-inter">{question.title}</h2>}
           <question.component
             value={userData[question.key]}
-            onChange={(value: string) => updateQueryParams(question.key, value)}
+            onChange={(value: string) => setQueryParam(question.key, value)}
           />
           {question.description && (
             <p
-              className="text-xs text-muted z-[1]"
+              className="text-xs text-muted text-justify z-[1]"
               dangerouslySetInnerHTML={createMarkup(question.description)}
             ></p>
           )}

@@ -42,7 +42,7 @@ export const AgeVisualization = () => {
     <section className="flex flex-col justify-center overflow-hidden items-center max-h-[var(--content-height)] sm:min-w-auto sm:min-h-auto relative">
       {lifeExpectancy > 0 && (
         <p
-          className="hidden sm:block absolute text-xl animate-levitate top-2"
+          className="hidden sm:block absolute text-xl tabular-nums animate-levitate top-2"
           style={{
             transform,
             transition: 'transform 0.2s ease-out',
@@ -51,7 +51,7 @@ export const AgeVisualization = () => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          {formatNumber(currentAge)} / {formatNumber(lifeExpectancy)} years
+          {currentAge.toFixed(2)} / {lifeExpectancy.toFixed(2)}
         </p>
       )}
       <Canvas
