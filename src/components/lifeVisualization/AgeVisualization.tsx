@@ -11,7 +11,7 @@ import { useUserData } from '@/contexts/UserDataContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useHoverTransform } from '@/hooks/useHoverTransform';
 import { useResponsiveCanvasDimensions } from '@/hooks/useResponsiveCanvasDimensions';
-import { formatNumber, calculateAge } from '@/lib/utils';
+import { calculateAge } from '@/lib/utils';
 
 const AnimatedDirectionalLight = animated.directionalLight;
 
