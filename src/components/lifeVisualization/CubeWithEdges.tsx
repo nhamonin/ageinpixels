@@ -28,7 +28,7 @@ export const CubeWithEdges = ({
   useFrame(({ clock }) => {
     if (isCurrentYear && meshRef.current) {
       const material = meshRef.current.material as THREE.MeshStandardMaterial;
-      const emissiveIntensity = Math.sin(clock.elapsedTime * 5) * 0.2 + 0.8;
+      const emissiveIntensity = Math.sin(clock.elapsedTime * 3.5) * 0.2 + 0.8;
 
       material.emissiveIntensity = emissiveIntensity;
       material.emissive = animatedColor;

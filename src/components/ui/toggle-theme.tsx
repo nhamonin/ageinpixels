@@ -19,7 +19,7 @@ export const ToggleTheme = ({
 
   const svgRef = useRef<SVGSVGElement>(null);
   const handleCheckedChange = useDebouncedCallback(onCheckedChange, DEBOUNCE_DELAY);
-  const { currentPath, currentRays } = useThemeAnimation(checked, svgRef);
+  const { currentPath, currentRays, rotation } = useThemeAnimation(checked, svgRef);
 
   return (
     <button
@@ -28,7 +28,7 @@ export const ToggleTheme = ({
       aria-label={checked ? 'Switch to dark mode' : 'Switch to light mode'}
     >
       <svg ref={svgRef} width="32" height="32" viewBox="0 0 32 32">
-        <path className="main-path" d={currentPath} />
+        <path className={`main-path rotate-[${rotation}] origin-center`} d={currentPath} />
         {currentRays.map((d: string, index: number) => (
           <path key={index} className="ray" d={d} fill={black} />
         ))}

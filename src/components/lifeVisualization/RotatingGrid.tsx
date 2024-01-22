@@ -46,7 +46,7 @@ export const RotatingGrid = ({
     previousTimeRef.current = currentTime;
 
     if (groupRef.current && orbitingRef.current) {
-      const rotationSpeed = 0.3;
+      const rotationSpeed = 0.2;
       groupRef.current.rotation.y += rotationSpeed * deltaTime;
     }
 
