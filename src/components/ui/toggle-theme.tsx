@@ -28,7 +28,11 @@ export const ToggleTheme = ({
       aria-label={checked ? 'Switch to dark mode' : 'Switch to light mode'}
     >
       <svg ref={svgRef} width="32" height="32" viewBox="0 0 32 32">
-        <path className={`main-path rotate-[${rotation}] origin-center`} d={currentPath} />
+        <path
+          className="main-path origin-center"
+          d={currentPath}
+          style={{ transform: `rotate(${rotation}deg)` }}
+        />
         {currentRays.map((d: string, index: number) => (
           <path key={index} className="ray" d={d} fill={black} />
         ))}

@@ -6,3 +6,5 @@ export type Country = {
   ParentCode: string;
   ParentTitle: string;
 };
+
+export type CountrySource = 'country' | 'global';

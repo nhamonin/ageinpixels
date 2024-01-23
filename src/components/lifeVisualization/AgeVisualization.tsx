@@ -21,11 +21,12 @@ export const AgeVisualization = () => {
   const { transform, handleMouseMove, handleMouseEnter, handleMouseLeave } = useHoverTransform();
   const { canvasHeight, canvasWidth } = useResponsiveCanvasDimensions();
 
-  const { birthDate, lifeExpectancy } = userData;
+  const { birthDate, lifeExpectancy, globalLifeExpectancy } = userData;
+  const lifeExpectancyToUse = lifeExpectancy || globalLifeExpectancy;
   const currentAge = birthDate ? calculateAge(birthDate) : 0;
-  const layerSize = Math.round(Math.cbrt(lifeExpectancy));
+  const layerSize = Math.round(Math.cbrt(lifeExpectancyToUse));
   const cubesPerLayer = layerSize * layerSize;
-  const totalLayers = Math.ceil(lifeExpectancy / cubesPerLayer);
+  const totalLayers = Math.ceil(lifeExpectancyToUse / cubesPerLayer);
   const light = useRef<THREE.DirectionalLight>(null);
   const lightAnimation = useSpring({
     loop: true,
@@ -40,7 +41,7 @@ export const AgeVisualization = () => {
 
   return (
     <section className="flex flex-col justify-center overflow-hidden items-center max-h-[var(--content-height)] sm:min-w-auto sm:min-h-auto relative">
-      {lifeExpectancy > 0 && (
+      {lifeExpectancyToUse > 0 && (
         <p
           className="hidden sm:block absolute text-xl tabular-nums animate-levitate top-2"
           style={{
@@ -51,7 +52,7 @@ export const AgeVisualization = () => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          {currentAge.toFixed(2)} / {lifeExpectancy.toFixed(2)}
+          {currentAge.toFixed(2)} / {lifeExpectancyToUse.toFixed(2)}
         </p>
       )}
       <Canvas
@@ -76,7 +77,7 @@ export const AgeVisualization = () => {
           {...lightAnimation}
         />
         <RotatingGrid
-          lifeExpectancy={lifeExpectancy}
+          lifeExpectancy={lifeExpectancyToUse}
           currentAge={currentAge}
           directionalLight={light}
         />

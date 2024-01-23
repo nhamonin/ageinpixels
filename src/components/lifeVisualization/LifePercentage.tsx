@@ -6,7 +6,8 @@ import { stringToDate } from '@/lib/utils';
 
 export const LifePercentage = () => {
   const { userData } = useUserData();
-  const { birthDate, lifeExpectancy } = userData;
+  const { birthDate, lifeExpectancy, globalLifeExpectancy } = userData;
+  const lifeExpectancyToUse = lifeExpectancy || globalLifeExpectancy;
   const [lifePercentage, setLifePercentage] = useState(0);
 
   const formatTime = () => {
@@ -21,11 +22,11 @@ export const LifePercentage = () => {
 
   useEffect(() => {
     const calculateLifePercentage = () => {
-      if (!birthDate || lifeExpectancy === null) return 0;
+      if (!birthDate || lifeExpectancyToUse === null) return 0;
       const birthDateObj = stringToDate(birthDate);
       const currentDate = new Date();
       const expectedEndDate = new Date(
-        birthDateObj.getFullYear() + lifeExpectancy,
+        birthDateObj.getFullYear() + lifeExpectancyToUse,
         birthDateObj.getMonth(),
         birthDateObj.getDate()
       );
@@ -36,13 +37,13 @@ export const LifePercentage = () => {
 
     const intervalId = setInterval(() => {
       setCurrentTime(formatTime());
-      if (birthDate && lifeExpectancy !== null) {
+      if (birthDate && lifeExpectancyToUse !== null) {
         setLifePercentage(calculateLifePercentage());
       }
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [birthDate, lifeExpectancy]);
+  }, [birthDate, lifeExpectancyToUse]);
 
   useEffect(() => {
     document.documentElement.style.setProperty(

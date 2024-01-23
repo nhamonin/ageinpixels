@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { fetchLifeExpectancy } from '@/api/ghoapi';
 import { useUserData, UserData } from '@/contexts/UserDataContext';
+import { CountrySource } from '@/types';
 
 export const useLifeExpectancy = () => {
   const queryClient = useQueryClient();
@@ -13,7 +14,7 @@ export const useLifeExpectancy = () => {
     isLoading,
     isError,
     error,
-  } = useQuery<number | null, Error>({
+  } = useQuery<{ value: number | null; source: CountrySource } | null, Error>({
     queryKey: ['lifeExpectancy', userData.country, userData.sex],
     queryFn: () => fetchLifeExpectancy({ countryCode: userData.country, sex: userData.sex }),
   });
@@ -31,7 +32,6 @@ export const useLifeExpectancy = () => {
 
   return {
     lifeExpectancy,
-    lifeExpectancyUnavailable: lifeExpectancy === null,
     isLoading,
     error: isError ? error : null,
   };

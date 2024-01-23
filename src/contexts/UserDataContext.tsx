@@ -5,6 +5,7 @@ export type UserData = {
   sex: 'SEX_MLE' | 'SEX_FMLE' | 'SEX_BTSX';
   birthDate: string;
   lifeExpectancy: number;
+  globalLifeExpectancy: number;
 };
 
 type UserDataContextType = {
@@ -17,6 +18,7 @@ const defaultUserData: UserData = {
   sex: 'SEX_BTSX',
   birthDate: '',
   lifeExpectancy: 0,
+  globalLifeExpectancy: 0,
 };
 
 const UserDataContext = createContext<UserDataContextType>({

@@ -5,29 +5,29 @@ import { Sex } from '@/components/questions/sex';
 import { Birthday } from '@/components/questions/birthday';
 import { UserData, useUserData } from '@/contexts/UserDataContext';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
-import { createMarkup, formatNumber } from '@/lib/utils';
+import { createMarkup, getCountrySexDescriptionText } from '@/lib/utils';
 import { reverseSexMapping, SexHumanReadable } from '@/constants/sexQueryParamMapping';
 import { Question, QuestionKey } from '@/types';
 import { useQueryParams } from '@/hooks/useQueryParams';
+import { useCountry } from '@/hooks/useCountry';
 
 export function Questions() {
   const { userData, updateUserData } = useUserData();
-  const { lifeExpectancy, lifeExpectancyUnavailable } = useLifeExpectancy();
+  const { lifeExpectancy } = useLifeExpectancy();
   const { searchParams, setQueryParam } = useQueryParams();
+  const { country } = useCountry(userData.country);
 
   const questions: Question[] = [
     {
       key: 'country',
       component: Country,
       title: 'Enter or select your country',
-      description: `Age in pixels is based on data from the <a href="https://www.who.int/" class="underline">World Health Organization</a>. Globally, the average life expectancy is <b>${formatNumber(
-        userData.lifeExpectancy
-      )}</b> years.`,
     },
     {
       key: 'sex',
       title: 'Select your sex',
       component: Sex,
+      description: getCountrySexDescriptionText(userData, country?.Title),
     },
     {
       key: 'birthDate',
@@ -55,14 +55,32 @@ export function Questions() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (
-      !lifeExpectancyUnavailable &&
-      lifeExpectancy &&
-      lifeExpectancy !== userData.lifeExpectancy
-    ) {
-      updateUserData({ ...userData, lifeExpectancy });
+    if (!lifeExpectancy?.value) return;
+
+    const shouldUpdateCountryLifeExpectancy =
+      userData.country &&
+      lifeExpectancy.source === 'country' &&
+      userData.lifeExpectancy !== lifeExpectancy.value;
+    const shouldUpdateGlobalLifeExpectancy =
+      userData.country &&
+      lifeExpectancy.source !== 'country' &&
+      userData.globalLifeExpectancy !== lifeExpectancy.value;
+    const shouldUpdateGlobalLifeExpectancyNoCountry =
+      !userData.country && userData.globalLifeExpectancy !== lifeExpectancy.value;
+
+    if (shouldUpdateCountryLifeExpectancy) {
+      updateUserData({ lifeExpectancy: lifeExpectancy.value });
+    } else if (shouldUpdateGlobalLifeExpectancy || shouldUpdateGlobalLifeExpectancyNoCountry) {
+      updateUserData({ globalLifeExpectancy: lifeExpectancy.value, lifeExpectancy: 0 });
     }
-  }, [lifeExpectancy, userData, updateUserData, lifeExpectancyUnavailable]);
+  }, [
+    lifeExpectancy?.value,
+    lifeExpectancy?.source,
+    userData.country,
+    userData.lifeExpectancy,
+    userData.globalLifeExpectancy,
+    updateUserData,
+  ]);
 
   return (
     <section

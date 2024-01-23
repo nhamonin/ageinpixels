@@ -2,6 +2,7 @@ import { MutableRefObject } from 'react';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import * as THREE from 'three';
+import { UserData } from '@/contexts/UserDataContext';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -108,4 +109,42 @@ export const interpolateValue = (start: number, end: number, duration: number) =
       return end;
     }
   };
+};
+
+export const getCountrySexDescriptionText = (userData: UserData, countryName?: string) => {
+  const { sex, lifeExpectancy, globalLifeExpectancy } = userData;
+
+  const useGlobalLifeExpectancy = !lifeExpectancy;
+  const formattedLifeExpectancy = formatNumber(
+    useGlobalLifeExpectancy ? globalLifeExpectancy : lifeExpectancy
+  );
+
+  const sexText = sex === 'SEX_FMLE' ? 'females' : 'males';
+  const whoLink = '<a href="https://www.who.int/" class="underline">World Health Organization</a>';
+
+  let result = `Age in pixels is based on data from the ${whoLink}.`;
+
+  if (!countryName) {
+    if (sex !== 'SEX_BTSX') {
+      result += ` Globally, the average life expectancy for ${sexText} is <b>${formattedLifeExpectancy}</b> years.`;
+    } else {
+      result += ` Globally, the average life expectancy is <b>${formattedLifeExpectancy}</b> years.`;
+    }
+  } else {
+    if (useGlobalLifeExpectancy) {
+      result += ` Since WHO doesn't have data on average life expectancy in ${countryName}, we use the global life expectancy`;
+      if (sex !== 'SEX_BTSX') {
+        result += ` for ${sexText}`;
+      }
+      result += ` — <b>${formattedLifeExpectancy}</b>.`;
+    } else {
+      if (sex === 'SEX_BTSX') {
+        result += ` In ${countryName}, the average life expectancy is <b>${formattedLifeExpectancy}</b> years.`;
+      } else {
+        result += ` In ${countryName}, the average life expectancy for ${sexText} is <b>${formattedLifeExpectancy}</b>.`;
+      }
+    }
+  }
+
+  return result;
 };
