@@ -45,27 +45,15 @@ export const LifePercentage = () => {
     return () => clearInterval(intervalId);
   }, [birthDate, lifeExpectancyToUse]);
 
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      '--footer-height',
-      lifePercentage > 0 ? 'var(--footer-max-height)' : 'var(--footer-min-height)'
-    );
-    document.documentElement.style.setProperty(
-      '--gradient-line-height',
-      lifePercentage > 0 ? 'var(--gradient-line-max-height)' : 'var(--gradient-line-min-height)'
-    );
-  }, [lifePercentage]);
-
   const displayPercentage = isNaN(lifePercentage) ? 0 : Math.min(lifePercentage, 100);
+  const lifePercentageToDisplay = lifePercentage === 0 ? 0 : lifePercentage.toFixed(8);
 
   return (
     <div className="flex flex-col tabular-nums transition ease-in-out delay-50">
       <p className="text-muted mb-0">{currentTime}</p>
-      {lifePercentage > 0 && (
-        <p className="text-lg mb-2">
-          <span className="font-bold">{lifePercentage.toFixed(8)}%</span> Lived
-        </p>
-      )}
+      <p className="text-lg mb-2">
+        <span className="font-bold">{lifePercentageToDisplay}%</span> Lived
+      </p>
       <Progress
         className="h-[2px] rounded-full transition-all duration-1000 ease-out w-full"
         value={displayPercentage}

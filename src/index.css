@@ -37,10 +37,7 @@
     --radius: 0rem;
 
     --header-height: 80px;
-
-    --footer-min-height: 52px;
-    --footer-max-height: 88px;
-    --footer-height: var(--footer-min-height);
+    --footer-height: 88px;
 
     --gradient-line-min-height: 0px;
     --gradient-line-max-height: calc(var(--gradient-line-min-height) - 20px);
@@ -138,9 +135,9 @@
       ),
       linear-gradient(
         to top,
-        transparent calc(50svh - var(--gradient-line-height) - 40px - 1px),
-        hsl(var(--border)) calc(50svh - var(--gradient-line-height) - 40px),
-        transparent calc(50svh - var(--gradient-line-height) - 40px + 1px),
+        transparent calc(50svh - var(--gradient-line-height) - 25px - 1px),
+        hsl(var(--border)) calc(50svh - var(--gradient-line-height) - 25px),
+        transparent calc(50svh - var(--gradient-line-height) - 25px + 1px),
         transparent 100%
       );
   }
