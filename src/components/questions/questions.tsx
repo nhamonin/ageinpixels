@@ -21,11 +21,10 @@ export function Questions() {
     {
       key: 'country',
       component: Country,
-      title: 'Enter or select your country',
+      title: 'Select your country and sex',
     },
     {
       key: 'sex',
-      title: 'Select your sex',
       component: Sex,
       description: getCountrySexDescriptionText(userData, country?.Title),
     },

@@ -153,13 +153,12 @@ export const getAgeDescriptionText = (birthdate: string) => {
   let result = '';
 
   if (!birthdate) {
-    result =
-      'To visualize your age in relation to an average lifespan, please select your birthdate.';
+    result = 'Pick your birthdate to compare your age against the expected lifespan.';
   } else {
     const ageInYears = calculateAge(birthdate);
     const formattedAge = formatNumber(ageInYears);
 
-    result = `The filled cubes here signify that you are <b>${formattedAge}</b> years old, illustrating your age as a portion of the average expected lifespan.`;
+    result = `You are <b>${formattedAge}</b> years old. The cubes filled in represent this compared to expected lifespan.`;
   }
 
   return result;

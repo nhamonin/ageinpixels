@@ -28,7 +28,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89.8%;
+    --border: 0 0% 95%;
     --border-flashed: 0 0% 50%;
 
     --input: 0 0% 89.8%;
@@ -138,9 +138,9 @@
       ),
       linear-gradient(
         to top,
-        transparent calc(50svh - var(--gradient-line-height) - 60px - 1px),
-        hsl(var(--border)) calc(50svh - var(--gradient-line-height) - 60px),
-        transparent calc(50svh - var(--gradient-line-height) - 60px + 1px),
+        transparent calc(50svh - var(--gradient-line-height) - 40px - 1px),
+        hsl(var(--border)) calc(50svh - var(--gradient-line-height) - 40px),
+        transparent calc(50svh - var(--gradient-line-height) - 40px + 1px),
         transparent 100%
       );
   }

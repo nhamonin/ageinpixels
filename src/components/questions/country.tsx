@@ -64,7 +64,7 @@ export function Country({ value, onChange }: QuestionsInputProps) {
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger className="overflow-hidden transition-none z-[1]" asChild>
         <Button
-          className="w-full flex justify-between items-center overflow-hidden"
+          className="w-full flex justify-between items-center overflow-hidden text-base"
           role="combobox"
           variant="outline"
           onClick={() => setPopoverOpen(true)}
