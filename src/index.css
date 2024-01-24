@@ -176,7 +176,7 @@
     background: var(--rays-strong);
   }
 
-  @media (max-width: 1280px) {
+  @media (max-width: 1279px) {
     :root {
       --padding-x: 30px;
     }
