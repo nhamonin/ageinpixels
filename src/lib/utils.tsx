@@ -136,14 +136,30 @@ export const getCountrySexDescriptionText = (userData: UserData, countryName?: s
       if (sex !== 'SEX_BTSX') {
         result += ` for ${sexText}`;
       }
-      result += ` — <b>${formattedLifeExpectancy}</b>.`;
+      result += ` — <b>${formattedLifeExpectancy}</b> years.`;
     } else {
       if (sex === 'SEX_BTSX') {
         result += ` In ${countryName}, the average life expectancy is <b>${formattedLifeExpectancy}</b> years.`;
       } else {
-        result += ` In ${countryName}, the average life expectancy for ${sexText} is <b>${formattedLifeExpectancy}</b>.`;
+        result += ` In ${countryName}, the average life expectancy for ${sexText} is <b>${formattedLifeExpectancy}</b> years.`;
       }
     }
+  }
+
+  return result;
+};
+
+export const getAgeDescriptionText = (birthdate: string) => {
+  let result = '';
+
+  if (!birthdate) {
+    result =
+      'To visualize your age in relation to an average lifespan, please select your birthdate.';
+  } else {
+    const ageInYears = calculateAge(birthdate);
+    const formattedAge = formatNumber(ageInYears);
+
+    result = `The filled cubes here signify that you are <b>${formattedAge}</b> years old, illustrating your age as a portion of the average expected lifespan.`;
   }
 
   return result;

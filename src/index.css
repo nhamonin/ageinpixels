@@ -138,9 +138,9 @@
       ),
       linear-gradient(
         to top,
-        transparent calc(50svh - var(--gradient-line-height) - 1px),
-        hsl(var(--border)) calc(50svh - var(--gradient-line-height)),
-        transparent calc(50svh - var(--gradient-line-height) + 1px),
+        transparent calc(50svh - var(--gradient-line-height) - 60px - 1px),
+        hsl(var(--border)) calc(50svh - var(--gradient-line-height) - 60px),
+        transparent calc(50svh - var(--gradient-line-height) - 60px + 1px),
         transparent 100%
       );
   }

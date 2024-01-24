@@ -10,4 +10,5 @@ export type Question = {
   title: string;
   description?: string;
   component: React.FC<{ value: string; onChange: (value: string) => void }>;
+  class?: string;
 };

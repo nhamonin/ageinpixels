@@ -5,7 +5,7 @@ import { Sex } from '@/components/questions/sex';
 import { Birthday } from '@/components/questions/birthday';
 import { UserData, useUserData } from '@/contexts/UserDataContext';
 import { useLifeExpectancy } from '@/hooks/useLifeExpectancy';
-import { createMarkup, getCountrySexDescriptionText } from '@/lib/utils';
+import { createMarkup, getAgeDescriptionText, getCountrySexDescriptionText } from '@/lib/utils';
 import { reverseSexMapping, SexHumanReadable } from '@/constants/sexQueryParamMapping';
 import { Question, QuestionKey } from '@/types';
 import { useQueryParams } from '@/hooks/useQueryParams';
@@ -33,6 +33,8 @@ export function Questions() {
       key: 'birthDate',
       title: 'Select your birthdate',
       component: Birthday,
+      description: getAgeDescriptionText(userData.birthDate),
+      class: 'mt-4',
     },
   ];
 
@@ -85,10 +87,10 @@ export function Questions() {
   return (
     <section
       className="max-h-[var(--questions-height)] sm:max-h-auto overflow-visible flex
-    flex-col gap-7 sm:gap-9 items-center justify-center sm:w-[300px] my-[var(--questions-my)] sm:my-0"
+    flex-col gap-3 sm:gap-5 items-center justify-center sm:w-[300px] my-[var(--questions-my)] sm:my-0"
     >
       {questions.map((question) => (
-        <div key={question.key} className="w-full flex flex-col gap-3">
+        <div key={question.key} className={`w-full flex flex-col gap-3 ${question.class || ''}`}>
           {question.title && <h2 className="sm:font-bold font-inter">{question.title}</h2>}
           <question.component
             value={userData[question.key]}
