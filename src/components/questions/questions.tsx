@@ -85,7 +85,7 @@ export function Questions() {
 
   return (
     <section
-      className="max-h-[var(--questions-height)] sm:max-h-auto overflow-visible flex
+      className="sm:max-h-auto overflow-visible flex
     flex-col gap-3 sm:gap-5 items-center justify-center sm:w-[300px] my-[var(--questions-my)] sm:my-0"
     >
       {questions.map((question) => (

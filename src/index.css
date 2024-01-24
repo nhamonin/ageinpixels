@@ -176,6 +176,37 @@
     background: var(--rays-strong);
   }
 
+  @media (max-width: 1280px) {
+    :root {
+      --padding-x: 30px;
+    }
+
+    .grid-background {
+      background-image: radial-gradient(
+          ellipse calc(100vw - 600px - 2 * var(--padding-x))
+            calc(100svh - var(--header-height) - var(--footer-height)) at center,
+          hsl(var(--background)) 10%,
+          hsl(var(--background)) 30%,
+          transparent 36%,
+          transparent 100%
+        ),
+        linear-gradient(
+          to left,
+          transparent calc((100vw - 2 * var(--padding-x) - 240px) / 2 - 1px),
+          hsl(var(--border)) calc((100vw - 2 * var(--padding-x) - 240px) / 2),
+          transparent calc((100vw - 2 * var(--padding-x) - 240px) / 2 + 1px),
+          transparent 100%
+        ),
+        linear-gradient(
+          to top,
+          transparent calc(50svh - var(--gradient-line-height) - 25px - 1px),
+          hsl(var(--border)) calc(50svh - var(--gradient-line-height) - 25px),
+          transparent calc(50svh - var(--gradient-line-height) - 25px + 1px),
+          transparent 100%
+        );
+    }
+  }
+
   @media (max-width: 640px) {
     :root {
       --header-height: 65px;

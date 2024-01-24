@@ -15,8 +15,16 @@ export const GridBackground = () => {
     { orientation: 'vertical', position: 'calc(100vw - var(--padding-x))' },
 
     { orientation: 'vertical', position: 'calc(300px + var(--padding-x))' },
-    { orientation: 'vertical', position: 'calc(100svw - 150px - var(--padding-x))' },
-    { orientation: 'vertical', position: 'calc(100svw - 301px - var(--padding-x))' },
+    {
+      orientation: 'vertical',
+      position: 'calc(100svw - 150px - var(--padding-x))',
+      customClass: 'hidden xl:block',
+    },
+    {
+      orientation: 'vertical',
+      position: 'calc(100svw - 301px - var(--padding-x))',
+      customClass: 'hidden xl:block',
+    },
   ];
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 export const Authors = () => {
   return (
-    <section className="w-full h-full flex justify-end items-end justify-self-end gap-1 text-muted text-xs underline pr-[2px]">
+    <section className="absolute top-[var(--header-height)] left-[var(--padding-x)] pt-1 xl:pt-0 xl:w-full xl:h-full flex xl:static xl:justify-end xl:items-end justify-self-end gap-1 text-muted text-xs underline pr-[2px]">
       <a href="https://www.linkedin.com/in/nhamonin/" target="_blank">
         Development
       </a>

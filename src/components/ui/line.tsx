@@ -3,9 +3,10 @@ import { CSSProperties } from 'react';
 export type LineProps = {
   orientation: 'horizontal' | 'vertical';
   position: string;
+  customClass?: string;
 };
 
-const Line = ({ orientation, position }: LineProps) => {
+const Line = ({ orientation, position, customClass }: LineProps) => {
   const lineStyle: CSSProperties = {
     position: 'absolute',
   };
@@ -20,7 +21,7 @@ const Line = ({ orientation, position }: LineProps) => {
     lineStyle.top = position;
   }
 
-  return <div style={lineStyle} className="line bg-border hidden sm:block" />;
+  return <div style={lineStyle} className={`line bg-border hidden ${customClass || 'sm:block'}`} />;
 };
 
 export default Line;
