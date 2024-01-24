@@ -158,7 +158,7 @@ export const getAgeDescriptionText = (birthdate: string) => {
     const ageInYears = calculateAge(birthdate);
     const formattedAge = formatNumber(ageInYears);
 
-    result = `You are <b>${formattedAge}</b> years old. The cubes filled in represent this compared to expected lifespan.`;
+    result = `You are <b>${formattedAge}</b> years old. The cubes filled in represent this compared to the expected lifespan.`;
   }
 
   return result;
