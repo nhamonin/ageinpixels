@@ -4,6 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import { Layout } from '@/components/layout/Layout';
 import { Questions } from '@/components/questions/questions';
+import { Authors } from '@/components/authors/Authors';
 import { AgeVisualization } from '@/components/lifeVisualization/AgeVisualization';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Layout>
         <Questions />
         <AgeVisualization />
+        <Authors />
       </Layout>
 
       <ReactQueryDevtools initialIsOpen={false} />
