@@ -163,3 +163,33 @@ export const getAgeDescriptionText = (birthdate: string) => {
 
   return result;
 };
+
+export const updateMaterialEmission = (mesh: THREE.Mesh, elapsedTime: number) => {
+  const material = mesh.material as THREE.MeshStandardMaterial;
+  const emissiveIntensity = Math.sin(elapsedTime * 3.5) * 0.2 + 0.8;
+
+  material.emissiveIntensity = emissiveIntensity;
+  material.emissive = new THREE.Color('#777');
+  material.needsUpdate = true;
+  material.roughness = 0.5;
+  material.metalness = 0.2;
+};
+
+export const getCubeMaterial = ({
+  isLived,
+  fillColor,
+}: {
+  isLived: boolean;
+  fillColor: string;
+}) => {
+  const opacity = isLived ? 1 : 0;
+  const transparent = !isLived;
+
+  return new THREE.MeshStandardMaterial({
+    color: fillColor,
+    opacity: opacity,
+    transparent,
+    roughness: 0.5,
+    metalness: 0.2,
+  });
+};
