@@ -86,7 +86,7 @@ export function Questions() {
   return (
     <section
       id="questions"
-      className="py-6 sm:py-9 md:py-0 md:max-h-auto overflow-visible flex
+      className="pt-6 sm:pt-9 md:pt-0 pb-3.5 sm:pb-5 md:pb-0 md:max-h-auto overflow-visible flex
     flex-col gap-3 md:gap-5 items-center justify-center w-full lg:w-[300px] md:my-0"
     >
       {questions.map((question) => (

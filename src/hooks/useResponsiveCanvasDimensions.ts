@@ -7,11 +7,12 @@ const MEDIUM_SCREEN_CANVAS_WIDTH_OFFSET = 302;
 const LARGE_SCREEN_CANVAS_WIDTH_OFFSET = 602;
 const PADDING_X = 'var(--padding-x)';
 const CONTENT_HEIGHT = 'var(--content-height)';
+const CONTENT_WIDTH = 'var(--content-width)';
 
 export function useResponsiveCanvasDimensions() {
   const [dimensions, setDimensions] = useState({
     canvasHeight: `calc(${CONTENT_HEIGHT} - var(--questions-height))`,
-    canvasWidth: `calc(100vw - 2 * ${PADDING_X})`,
+    canvasWidth: CONTENT_WIDTH,
   });
 
   const questionsRef = useRef<HTMLDivElement | null>(null);
@@ -30,7 +31,7 @@ export function useResponsiveCanvasDimensions() {
       : isMediumScreen
       ? MEDIUM_SCREEN_CANVAS_WIDTH_OFFSET
       : LARGE_SCREEN_CANVAS_WIDTH_OFFSET;
-    const newCanvasWidth = `calc(100vw - ${canvasWidthOffset}px - 2 * ${PADDING_X})`;
+    const newCanvasWidth = `calc(${CONTENT_WIDTH} - ${canvasWidthOffset}px)`;
 
     setDimensions({ canvasHeight: newCanvasHeight, canvasWidth: newCanvasWidth });
   };

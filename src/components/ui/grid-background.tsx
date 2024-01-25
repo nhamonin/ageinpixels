@@ -20,7 +20,7 @@ export const GridBackground = () => {
     },
     {
       orientation: 'horizontal',
-      position: `calc(100svh - var(--footer-height) - ${canvasHeight} - 155px)`,
+      position: `calc(100svh - var(--footer-height) - ${canvasHeight} - 140px)`,
     },
 
     { orientation: 'vertical', position: 'calc(var(--padding-x) - 1px)' },

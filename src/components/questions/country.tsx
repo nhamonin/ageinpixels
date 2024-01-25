@@ -75,7 +75,7 @@ export function Country({ value, onChange }: QuestionsInputProps) {
           <ChevronDown className="h-4 w-4 opacity-50 flex-shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0" sideOffset={0}>
+      <PopoverContent className="w-[var(--content-width)] md:w-[300px] p-0" sideOffset={0}>
         <Command>
           <CommandInput
             className="h-10"

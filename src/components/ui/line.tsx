@@ -21,7 +21,7 @@ const Line = ({ orientation, position, customClass }: LineProps) => {
     lineStyle.top = position;
   }
 
-  return <div style={lineStyle} className={`line bg-border hidden ${customClass || 'sm:block'}`} />;
+  return <div style={lineStyle} className={`line bg-border ${customClass || 'hidden sm:block'}`} />;
 };
 
 export default Line;

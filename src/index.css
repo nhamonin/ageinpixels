@@ -45,6 +45,7 @@
 
     --content-height: calc(100vh - var(--header-height) - var(--footer-height));
     --content-height: calc(100svh - var(--header-height) - var(--footer-height));
+    --content-width: calc(100vw - 2 * var(--padding-x));
 
     --padding-x: 60px;
 
@@ -119,7 +120,7 @@
 
   .grid-background {
     background-image: radial-gradient(
-        ellipse calc(100vw - 600px - 2 * var(--padding-x))
+        ellipse calc(var(--content-width) - 600px)
           calc(100svh - var(--header-height) - var(--footer-height)) at center,
         hsl(var(--background)) 10%,
         hsl(var(--background)) 30%,
@@ -183,7 +184,7 @@
 
     .grid-background {
       background-image: radial-gradient(
-          ellipse calc(100vw - 600px - 2 * var(--padding-x))
+          ellipse calc(var(--content-width) - 600px)
             calc(100svh - var(--header-height) - var(--footer-height)) at center,
           hsl(var(--background)) 10%,
           hsl(var(--background)) 30%,
@@ -192,9 +193,9 @@
         ),
         linear-gradient(
           to left,
-          transparent calc((100vw - 2 * var(--padding-x) - 240px) / 2 - 1px),
-          hsl(var(--border)) calc((100vw - 2 * var(--padding-x) - 240px) / 2),
-          transparent calc((100vw - 2 * var(--padding-x) - 240px) / 2 + 1px),
+          transparent calc((var(--content-width) - 240px) / 2 - 1px),
+          hsl(var(--border)) calc((var(--content-width) - 240px) / 2),
+          transparent calc((var(--content-width) - 240px) / 2 + 1px),
           transparent 100%
         ),
         linear-gradient(
