@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useCameraContext } from '@/contexts/CameraContext';
 import { basePosition, baseRotation } from '@/constants/cameraSettings';
+import { useFullScreen } from '@/hooks/useFullScreen';
 import { smoothThreeTransition } from '@/lib/utils';
 import reset from '@/assets/images/controls/reset.svg';
 import zoomIn from '@/assets/images/controls/zoom-in.svg';
@@ -14,7 +15,7 @@ const ZOOM_STEP_DISTANCE = 1;
 export const Controls = () => {
   const { cameraRef } = useCameraContext();
   const [zoomLevel, setZoomLevel] = useState(0);
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const { isFullScreen, toggleFullScreen } = useFullScreen();
 
   const handleReset = () => {
     setZoomLevel(0);
@@ -34,42 +35,6 @@ export const Controls = () => {
     const targetPosition = calculateZoomPosition(newZoomLevel);
     smoothThreeTransition(cameraRef, targetPosition);
   };
-
-  const toggleFullScreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement
-        .requestFullscreen()
-        .then(() => {
-          setIsFullScreen(true);
-        })
-        .catch((err) => {
-          console.error(`Error attempting to enable full-screen mode: ${err.message}`);
-        });
-    } else {
-      if (document.exitFullscreen) {
-        document
-          .exitFullscreen()
-          .then(() => {
-            setIsFullScreen(false);
-          })
-          .catch((err) => {
-            console.error(`Error attempting to exit full-screen mode: ${err.message}`);
-          });
-      }
-    }
-  };
-
-  useEffect(() => {
-    const handleFullScreenChange = () => {
-      setIsFullScreen(!!document.fullscreenElement);
-    };
-
-    document.addEventListener('fullscreenchange', handleFullScreenChange);
-
-    return () => {
-      document.removeEventListener('fullscreenchange', handleFullScreenChange);
-    };
-  }, []);
 
   const calculateZoomPosition = (zoomLevel: number) => {
     const direction = basePosition.clone().normalize();

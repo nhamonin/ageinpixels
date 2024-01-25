@@ -25,6 +25,7 @@ module.exports = {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         radio: 'hsl(var(--radio))',
+        authors: 'hsl(var(--authors))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {

@@ -1,8 +1,14 @@
+import { useFullScreen } from '@/hooks/useFullScreen';
+
 export const Authors = () => {
+  const { isFullScreen } = useFullScreen();
+
   return (
     <section
-      className="hidden absolute top-[var(--header-height)] left-[var(--padding-x)] pt-1 xl:pt-0 xl:w-full xl:h-full md:flex xl:static
-    xl:justify-end xl:items-end justify-self-end gap-1 text-muted text-xs underline pr-[2px]"
+      className={`${
+        isFullScreen ? 'flex' : 'hidden'
+      } absolute top-[var(--header-height)] left-[var(--padding-x)] pt-1 xl:pt-0 xl:w-full xl:h-full md:flex
+      xl:static xl:justify-end xl:items-end justify-self-end gap-1 text-authors text-xs underline pr-[2px] z-20`}
     >
       <a href="https://www.linkedin.com/in/nhamonin/" target="_blank">
         Development

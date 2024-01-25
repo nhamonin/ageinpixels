@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import Line, { LineProps } from '@/components/ui/line';
 import { useResponsiveCanvasDimensions } from '@/hooks/useResponsiveCanvasDimensions';
+import { useFullScreen } from '@/hooks/useFullScreen';
 
 const FLASHES_AMOUNT_PER_LINE = 3;
 const ANIMATIONS_DURATION = 3500;
@@ -9,6 +10,7 @@ const ANIMATION_DELAY = 100;
 
 export const GridBackground = () => {
   const { canvasHeight } = useResponsiveCanvasDimensions();
+  const { isFullScreen } = useFullScreen();
 
   const lines: LineProps[] = [
     { orientation: 'horizontal', position: 'calc(var(--header-height) - 1px)' },
@@ -16,7 +18,7 @@ export const GridBackground = () => {
     {
       orientation: 'horizontal',
       position: `calc(100svh - var(--footer-height) - ${canvasHeight})`,
-      customClass: 'block md:hidden',
+      customClass: `${isFullScreen ? 'hidden' : 'block md:hidden'}`,
     },
     {
       orientation: 'horizontal',
