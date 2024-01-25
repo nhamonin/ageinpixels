@@ -23,8 +23,8 @@ export const GridBackground = () => {
       position: `calc(100svh - var(--footer-height) - ${canvasHeight} - 140px)`,
     },
 
-    { orientation: 'vertical', position: 'calc(var(--padding-x) - 1px)' },
-    { orientation: 'vertical', position: 'calc(100vw - var(--padding-x))' },
+    { orientation: 'vertical', position: 'calc(var(--padding-x) - 1px)', customClass: 'block' },
+    { orientation: 'vertical', position: 'calc(100vw - var(--padding-x))', customClass: 'block' },
     {
       orientation: 'vertical',
       position: 'calc(300px + var(--padding-x))',

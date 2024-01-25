@@ -234,23 +234,6 @@
       --padding-x: 18px;
     }
 
-    .grid-background {
-      background-image: linear-gradient(
-          to right,
-          transparent calc(var(--padding-x) - 1px),
-          hsl(var(--border)) var(--padding-x),
-          transparent calc(var(--padding-x) + 1px),
-          transparent 100%
-        ),
-        linear-gradient(
-          to left,
-          transparent calc(var(--padding-x) - 1px),
-          hsl(var(--border)) var(--padding-x),
-          transparent calc(var(--padding-x) + 1px),
-          transparent 100%
-        );
-    }
-
     .grid-background::after {
       width: 300px;
       height: 300px;
