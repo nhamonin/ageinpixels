@@ -17,15 +17,11 @@ export const Controls = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const handleReset = () => {
-    if (!cameraRef.current) return;
-
     setZoomLevel(0);
     smoothThreeTransition(cameraRef, basePosition, baseRotation);
   };
 
   const handleZoomIn = () => {
-    if (!cameraRef.current) return;
-
     const newZoomLevel = zoomLevel - 1;
     setZoomLevel(newZoomLevel);
     const targetPosition = calculateZoomPosition(newZoomLevel);
@@ -33,8 +29,6 @@ export const Controls = () => {
   };
 
   const handleZoomOut = () => {
-    if (!cameraRef.current) return;
-
     const newZoomLevel = zoomLevel + 1;
     setZoomLevel(newZoomLevel);
     const targetPosition = calculateZoomPosition(newZoomLevel);
@@ -42,8 +36,6 @@ export const Controls = () => {
   };
 
   const toggleFullScreen = () => {
-    if (!cameraRef.current) return;
-
     setIsFullScreen((isFullScreen) => !isFullScreen);
   };
 

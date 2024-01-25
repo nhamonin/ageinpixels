@@ -21,6 +21,7 @@ export const GridBackground = () => {
     {
       orientation: 'horizontal',
       position: `calc(100svh - var(--footer-height) - ${canvasHeight} - 140px)`,
+      customClass: 'block md:hidden',
     },
 
     { orientation: 'vertical', position: 'calc(var(--padding-x) - 1px)', customClass: 'block' },
