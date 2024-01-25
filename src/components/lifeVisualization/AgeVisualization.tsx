@@ -40,10 +40,10 @@ export const AgeVisualization = () => {
   }, [isDarkMode, lightAnimation.intensity]);
 
   return (
-    <section className="flex flex-col justify-center overflow-hidden items-center max-h-[var(--content-height)] sm:min-w-auto sm:min-h-auto relative">
+    <section className="flex flex-col justify-center overflow-hidden items-center max-h-[var(--content-height)] md:min-w-auto md:min-h-auto relative">
       {lifeExpectancyToUse > 0 && (
         <p
-          className="hidden sm:block absolute text-xl tabular-nums animate-levitate top-2"
+          className="hidden md:block absolute text-xl tabular-nums animate-levitate top-2"
           style={{
             transform,
             transition: 'transform 0.2s ease-out',

@@ -56,7 +56,7 @@ export const Controls = () => {
 
   return (
     <>
-      <div className="flex gap-2 absolute bottom-0 left-0 sm:right-0 sm:left-auto z-[1]">
+      <div className="flex gap-2 absolute bottom-0 left-0 md:right-0 md:left-auto z-[1]">
         <button
           className="flex justify-center items-center rounded-full border w-[26px] h-[26px] bg-background hover:bg-accent"
           onClick={handleReset}
@@ -79,7 +79,7 @@ export const Controls = () => {
           <img src={zoomOut} alt="Zoom Out" />
         </button>
       </div>
-      <div className="flex gap-2 absolute bottom-0 right-0 sm:hidden z-[1]">
+      <div className="flex gap-2 absolute bottom-0 right-0 md:hidden z-[1]">
         <button
           className="flex justify-center items-center rounded-full border w-[26px] h-[26px] bg-background hover:bg-accent"
           onClick={toggleFullScreen}

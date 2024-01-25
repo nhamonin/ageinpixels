@@ -85,12 +85,13 @@ export function Questions() {
 
   return (
     <section
-      className="sm:max-h-auto overflow-visible flex
-    flex-col gap-3 sm:gap-5 items-center justify-center sm:w-[300px] my-[var(--questions-my)] sm:my-0"
+      id="questions"
+      className="py-6 sm:py-9 md:py-0 md:max-h-auto overflow-visible flex
+    flex-col gap-3 md:gap-5 items-center justify-center w-full lg:w-[300px] md:my-0"
     >
       {questions.map((question) => (
         <div key={question.key} className={`w-full flex flex-col gap-3 ${question.class || ''}`}>
-          {question.title && <h2 className="sm:font-bold font-inter">{question.title}</h2>}
+          {question.title && <h2 className="md:font-bold font-inter">{question.title}</h2>}
           <question.component
             value={userData[question.key]}
             onChange={(value: string) => setQueryParam(question.key, value)}

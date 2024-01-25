@@ -1,40 +1,63 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+const SMALL_SCREEN_WIDTH = 768;
+const MEDIUM_SCREEN_WIDTH = 1280;
+const SMALL_SCREEN_WIDTH_OFFSET = 0;
+const MEDIUM_SCREEN_CANVAS_WIDTH_OFFSET = 302;
+const LARGE_SCREEN_CANVAS_WIDTH_OFFSET = 602;
+const PADDING_X = 'var(--padding-x)';
+const CONTENT_HEIGHT = 'var(--content-height)';
 
 export function useResponsiveCanvasDimensions() {
-  const [canvasHeight, setCanvasHeight] = useState(
-    'calc(var(--content-height) - var(--questions-height))'
-  );
-  const [canvasWidth, setCanvasWidth] = useState('calc(100vw - 2 * var(--padding-x))');
+  const [dimensions, setDimensions] = useState({
+    canvasHeight: `calc(${CONTENT_HEIGHT} - var(--questions-height))`,
+    canvasWidth: `calc(100vw - 2 * ${PADDING_X})`,
+  });
+
+  const questionsRef = useRef<HTMLDivElement | null>(null);
+
+  const updateDimensions = () => {
+    const width = window.innerWidth;
+    const isSmallScreen = width < SMALL_SCREEN_WIDTH;
+    const isMediumScreen = width < MEDIUM_SCREEN_WIDTH;
+    const questionsHeight = questionsRef.current ? `${questionsRef.current.clientHeight}px` : '0px';
+
+    const newCanvasHeight = isSmallScreen
+      ? `calc(${CONTENT_HEIGHT} - ${questionsHeight})`
+      : CONTENT_HEIGHT;
+    const canvasWidthOffset = isSmallScreen
+      ? SMALL_SCREEN_WIDTH_OFFSET
+      : isMediumScreen
+      ? MEDIUM_SCREEN_CANVAS_WIDTH_OFFSET
+      : LARGE_SCREEN_CANVAS_WIDTH_OFFSET;
+    const newCanvasWidth = `calc(100vw - ${canvasWidthOffset}px - 2 * ${PADDING_X})`;
+
+    setDimensions({ canvasHeight: newCanvasHeight, canvasWidth: newCanvasWidth });
+  };
 
   useEffect(() => {
-    function handleResize() {
-      setCanvasHeight(
-        window.innerWidth < 768
-          ? 'calc(var(--content-height) - var(--questions-height))'
-          : 'var(--content-height)'
-      );
+    questionsRef.current = document.getElementById('questions') as HTMLDivElement;
 
-      setCanvasWidth(
-        window.innerWidth < 768
-          ? 'calc(100vw - 2 * var(--padding-x))'
-          : 'calc(100vw - 302px - 2 * var(--padding-x))'
-      );
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === questionsRef.current) {
+          updateDimensions();
+        }
+      }
+    });
 
-      setCanvasHeight(window.innerWidth < 1280 ? 'var(--content-height)' : 'var(--content-height)');
-
-      setCanvasWidth(
-        window.innerWidth < 1280
-          ? 'calc(100vw - 302px - 2 * var(--padding-x))'
-          : 'calc(100vw - 602px - 2 * var(--padding-x))'
-      );
+    if (questionsRef.current) {
+      resizeObserver.observe(questionsRef.current);
     }
 
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('resize', updateDimensions);
+    return () => {
+      if (questionsRef.current) {
+        resizeObserver.unobserve(questionsRef.current);
+      }
+      window.removeEventListener('resize', updateDimensions);
+    };
   }, []);
 
-  return { canvasHeight, canvasWidth };
+  return { ...dimensions };
 }

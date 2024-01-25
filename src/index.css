@@ -205,9 +205,29 @@
           transparent 100%
         );
     }
+
+    .grid-background::after {
+      width: 300px;
+      height: 400px;
+    }
+
+    .grid-background::before {
+      width: 150px;
+      height: 150px;
+    }
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 767px) {
+    :root {
+      --padding-x: 60px;
+    }
+
+    .grid-background {
+      background-image: none;
+    }
+  }
+
+  @media (max-width: 376px) {
     :root {
       --header-height: 65px;
       --padding-x: 18px;
