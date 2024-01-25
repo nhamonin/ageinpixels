@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useCameraContext } from '@/contexts/CameraContext';
 import { basePosition, baseRotation } from '@/constants/cameraSettings';
@@ -36,8 +36,40 @@ export const Controls = () => {
   };
 
   const toggleFullScreen = () => {
-    setIsFullScreen((isFullScreen) => !isFullScreen);
+    if (!document.fullscreenElement) {
+      document.documentElement
+        .requestFullscreen()
+        .then(() => {
+          setIsFullScreen(true);
+        })
+        .catch((err) => {
+          console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+        });
+    } else {
+      if (document.exitFullscreen) {
+        document
+          .exitFullscreen()
+          .then(() => {
+            setIsFullScreen(false);
+          })
+          .catch((err) => {
+            console.error(`Error attempting to exit full-screen mode: ${err.message}`);
+          });
+      }
+    }
   };
+
+  useEffect(() => {
+    const handleFullScreenChange = () => {
+      setIsFullScreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullScreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullScreenChange);
+    };
+  }, []);
 
   const calculateZoomPosition = (zoomLevel: number) => {
     const direction = basePosition.clone().normalize();
