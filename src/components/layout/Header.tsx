@@ -7,7 +7,7 @@ export const Header = () => {
   return (
     <header
       className="fixed flex items-center justify-between top-0 left-0 w-full text-center
-    px-[var(--padding-x)] pt-[36px] sm:pt-[47px] border-b sm:border-none"
+    px-[var(--padding-x)] pt-[31px] sm:pt-[47px] border-b sm:border-none"
     >
       <h1 className="text-lg font-semibold">Ageinpixels</h1>
       <ToggleTheme checked={isDarkMode} onCheckedChange={toggleTheme} />

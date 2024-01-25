@@ -5,7 +5,6 @@ const MEDIUM_SCREEN_WIDTH = 1280;
 const SMALL_SCREEN_WIDTH_OFFSET = 0;
 const MEDIUM_SCREEN_CANVAS_WIDTH_OFFSET = 302;
 const LARGE_SCREEN_CANVAS_WIDTH_OFFSET = 602;
-const PADDING_X = 'var(--padding-x)';
 const CONTENT_HEIGHT = 'var(--content-height)';
 const CONTENT_WIDTH = 'var(--content-width)';
 

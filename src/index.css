@@ -228,9 +228,9 @@
     }
   }
 
-  @media (max-width: 376px) {
+  @media (max-width: 640px) {
     :root {
-      --header-height: 65px;
+      --header-height: 60px;
       --padding-x: 18px;
     }
 
