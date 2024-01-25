@@ -234,7 +234,7 @@
 
   @media (max-width: 640px) {
     :root {
-      --header-height: 60px;
+      --header-height: 64px;
       --padding-x: 18px;
     }
 
