@@ -23,9 +23,9 @@ export const Authors = () => {
 
   return (
     <section
-      style={{ opacity: opacity, transition: 'opacity 0.3s' }}
+      style={{ transition: 'opacity 0.3s' }}
       className={`${display} absolute top-[var(--header-height)] left-[var(--padding-x)] pt-1 xl:pt-0 xl:w-full xl:h-full md:flex
-      xl:static xl:justify-end xl:items-end justify-self-end gap-1 text-authors text-xs underline pr-[2px] z-20`}
+      opacity-${opacity} md:opacity-100 xl:static xl:justify-end xl:items-end justify-self-end gap-1 text-authors text-xs underline pr-[2px] z-20`}
     >
       <a href="https://www.linkedin.com/in/nhamonin/" target="_blank">
         Development
