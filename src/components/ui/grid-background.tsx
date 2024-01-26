@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Line, { LineProps } from '@/components/ui/line';
 import { useResponsiveCanvasDimensions } from '@/hooks/useResponsiveCanvasDimensions';
@@ -11,6 +11,18 @@ const ANIMATION_DELAY = 100;
 export const GridBackground = () => {
   const { canvasHeight } = useResponsiveCanvasDimensions();
   const { isFullScreen } = useFullScreen();
+  const [hidden, setHidden] = useState(!isFullScreen);
+
+  useEffect(() => {
+    if (isFullScreen) {
+      setHidden(true);
+    } else {
+      const timer = setTimeout(() => {
+        setHidden(false);
+      }, 1300);
+      return () => clearTimeout(timer);
+    }
+  }, [isFullScreen]);
 
   const lines: LineProps[] = [
     { orientation: 'horizontal', position: 'calc(var(--header-height) - 1px)' },
@@ -18,12 +30,12 @@ export const GridBackground = () => {
     {
       orientation: 'horizontal',
       position: `calc(100svh - var(--footer-height) - ${canvasHeight})`,
-      customClass: `${isFullScreen ? 'hidden' : 'block md:hidden'}`,
+      customClass: `${hidden ? 'hidden' : 'block'}`,
     },
     {
       orientation: 'horizontal',
       position: `calc(100svh - var(--footer-height) - ${canvasHeight} - 140px)`,
-      customClass: 'block md:hidden',
+      customClass: `${hidden ? 'hidden' : 'block'}`,
     },
 
     { orientation: 'vertical', position: 'calc(var(--padding-x) - 1px)', customClass: 'block' },
@@ -65,7 +77,7 @@ export const GridBackground = () => {
     };
 
     triggerFlash();
-  }, []);
+  }, [isFullScreen]);
 
   return (
     <>
