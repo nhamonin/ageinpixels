@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useSpring, animated } from '@react-spring/three';
 
@@ -12,6 +12,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useHoverTransform } from '@/hooks/useHoverTransform';
 import { useResponsiveCanvasDimensions } from '@/hooks/useResponsiveCanvasDimensions';
 import { calculateAge } from '@/lib/utils';
+import { useFullScreen } from '@/hooks/useFullScreen';
 
 const AnimatedDirectionalLight = animated.directionalLight;
 
@@ -20,6 +21,14 @@ export const AgeVisualization = () => {
   const { userData } = useUserData();
   const { transform, handleMouseMove, handleMouseEnter, handleMouseLeave } = useHoverTransform();
   const { canvasHeight, canvasWidth } = useResponsiveCanvasDimensions();
+  const { isFullScreen } = useFullScreen();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsMounted(true);
+    }, 300);
+  }, []);
 
   const { birthDate, lifeExpectancy, globalLifeExpectancy } = userData;
   const lifeExpectancyToUse = lifeExpectancy || globalLifeExpectancy;
@@ -43,10 +52,14 @@ export const AgeVisualization = () => {
     <section className="flex flex-col justify-center overflow-hidden items-center max-h-[var(--content-height)] md:min-w-auto md:min-h-auto relative">
       {lifeExpectancyToUse > 0 && (
         <p
-          className="hidden md:block absolute text-xl tabular-nums animate-levitate top-2"
+          className={`${
+            isFullScreen ? 'opacity-100' : 'opacity-0'
+          } md:opacity-100 md:block absolute text-xl tabular-nums animate-levitate-sm md:animate-levitate top-2`}
           style={{
             transform,
-            transition: 'transform 0.2s ease-out',
+            transition: `transform 0.2s ease-out, opacity 0.2s ${
+              isFullScreen ? '1s' : ''
+            } ease-out`,
           }}
           onMouseMove={handleMouseMove}
           onMouseEnter={handleMouseEnter}
@@ -61,7 +74,9 @@ export const AgeVisualization = () => {
           height: canvasHeight,
           width: canvasWidth,
           transform,
-          transition: 'transform .2s ease-out, height .6s .3s ease-out, width .6s ease-out',
+          transition: `transform .2s ease-out, ${
+            isMounted && `height .6s ${isFullScreen ? '.3s' : ''} ease-out`
+          }`,
           transformOrigin: 'bottom',
         }}
         onMouseMove={handleMouseMove}

@@ -79,6 +79,10 @@ module.exports = {
           '0%, 100%': { top: '2rem' },
           '50%': { top: 'calc(2rem + 6px)' },
         },
+        'levitate-sm': {
+          '0%, 100%': { top: '5rem' },
+          '50%': { top: 'calc(5rem + 6px)' },
+        },
         flash: {
           '0%, 100%': { backgroundColor: 'hsl(var(--border))' },
           '50%': { backgroundColor: 'hsl(var(--border-flashed))' },
@@ -88,6 +92,7 @@ module.exports = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         levitate: 'levitate 1.5s ease-in-out infinite',
+        'levitate-sm': 'levitate-sm 1.5s ease-in-out infinite',
         flash: 'flash .1s ease-out infinite',
       },
     },

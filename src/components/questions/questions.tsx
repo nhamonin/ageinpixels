@@ -19,6 +19,7 @@ export function Questions() {
   const { country } = useCountry(userData.country);
   const { isFullScreen } = useFullScreen();
   const [opacity, setOpacity] = useState(isFullScreen ? 1 : 0);
+  const [isMounted, setIsMounted] = useState(false);
 
   const questions: Question[] = [
     {
@@ -87,23 +88,32 @@ export function Questions() {
   ]);
 
   useEffect(() => {
+    setTimeout(() => {
+      setIsMounted(true);
+    }, 300);
+  }, []);
+
+  useEffect(() => {
     let timer: NodeJS.Timeout;
     if (!isFullScreen) {
-      timer = setTimeout(() => {
-        setOpacity(1);
-      }, 700);
+      timer = setTimeout(
+        () => {
+          setOpacity(1);
+        },
+        isMounted ? 700 : 0
+      );
     } else {
       setOpacity(0);
     }
     return () => clearTimeout(timer);
-  }, [isFullScreen]);
+  }, [isFullScreen, isMounted]);
 
   return (
     <section
       id="questions"
       className="pt-6 sm:pt-9 md:pt-0 pb-3.5 sm:pb-5 md:pb-0 md:max-h-auto overflow-visible flex
     flex-col gap-3 md:gap-5 items-center justify-center w-full lg:w-[300px] md:my-0 z-0 md:z-[1]"
-      style={{ opacity, transition: 'opacity 0.3s' }}
+      style={{ opacity, transition: `${isMounted ? 'opacity 0.3s' : ''}` }}
     >
       {questions.map((question) => (
         <div key={question.key} className={`w-full flex flex-col gap-3 ${question.class || ''}`}>

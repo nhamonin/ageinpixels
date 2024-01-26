@@ -1,7 +1,7 @@
 import { useFullScreen } from '@/hooks/useFullScreen';
 import { useEffect, useState } from 'react';
 
-const FULL_SCREEN_ANIMATION_DURATION = 900;
+const FULL_SCREEN_ANIMATION_DURATION = 1200;
 
 export const Authors = () => {
   const { isFullScreen } = useFullScreen();
