@@ -165,8 +165,8 @@
   .grid-background.animate-rays::after,
   .grid-background.animate-rays::before {
     animation:
-      rayMoveAndFadeIn 1.5s forwards,
-      opacityPulse 1.5s infinite ease-in-out;
+      rayMoveAndFadeIn 2.5s forwards,
+      opacityPulse 2.5s infinite ease-in-out;
   }
 
   .grid-background::after {

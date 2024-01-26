@@ -98,7 +98,7 @@ module.exports = {
         levitate: 'levitate 1.5s ease-in-out infinite',
         'levitate-sm': 'levitate-sm 1.5s ease-in-out infinite',
         flash: 'flash .1s ease-out infinite',
-        'expand-width': 'expand-width 4s ease-out',
+        'expand-width': 'expand-width 3s ease-out',
       },
     },
   },
