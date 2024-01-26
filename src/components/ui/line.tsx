@@ -4,12 +4,16 @@ export type LineProps = {
   orientation: 'horizontal' | 'vertical';
   position: string;
   customClass?: string;
+  initialAnimation?: boolean;
 };
 
-const Line = ({ orientation, position, customClass }: LineProps) => {
+const Line = ({ orientation, position, customClass, initialAnimation }: LineProps) => {
   const lineStyle: CSSProperties = {
     position: 'absolute',
   };
+
+  const animationClass = initialAnimation ? 'animate-expand-width origin-left overflow-hidden' : '';
+  const customClasses = customClass || 'hidden sm:block';
 
   if (orientation === 'vertical') {
     lineStyle.width = '1px';
@@ -21,7 +25,7 @@ const Line = ({ orientation, position, customClass }: LineProps) => {
     lineStyle.top = position;
   }
 
-  return <div style={lineStyle} className={`line bg-border ${customClass || 'hidden sm:block'}`} />;
+  return <div style={lineStyle} className={`line bg-border ${customClasses} ${animationClass}`} />;
 };
 
 export default Line;

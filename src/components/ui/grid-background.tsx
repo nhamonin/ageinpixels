@@ -23,12 +23,20 @@ export const GridBackground = () => {
   }, [isFullScreen]);
 
   const lines: LineProps[] = [
-    { orientation: 'horizontal', position: 'calc(var(--header-height) - 1px)' },
-    { orientation: 'horizontal', position: 'calc(100svh - var(--footer-height))' },
+    {
+      orientation: 'horizontal',
+      position: 'calc(var(--header-height) - 1px)',
+      initialAnimation: true,
+    },
+    {
+      orientation: 'horizontal',
+      position: 'calc(100svh - var(--footer-height))',
+      initialAnimation: true,
+    },
     {
       orientation: 'horizontal',
       position: `calc(100svh - var(--footer-height) - ${canvasHeight})`,
-      customClass: `${hidden ? 'hidden' : 'block'}`,
+      customClass: `${hidden ? 'hidden' : 'block md:hidden'}`,
     },
     {
       orientation: 'horizontal',

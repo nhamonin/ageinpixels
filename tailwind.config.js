@@ -87,6 +87,10 @@ module.exports = {
           '0%, 100%': { backgroundColor: 'hsl(var(--border))' },
           '50%': { backgroundColor: 'hsl(var(--border-flashed))' },
         },
+        'expand-width': {
+          from: { transform: 'scaleX(0)' },
+          to: { transform: 'scaleX(1)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -94,6 +98,7 @@ module.exports = {
         levitate: 'levitate 1.5s ease-in-out infinite',
         'levitate-sm': 'levitate-sm 1.5s ease-in-out infinite',
         flash: 'flash .1s ease-out infinite',
+        'expand-width': 'expand-width 4s ease-out',
       },
     },
   },
