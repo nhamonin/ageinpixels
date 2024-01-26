@@ -14,8 +14,8 @@ export const Layout = ({ children }: LayoutProps) => {
       <Header />
 
       <main
-        className="grid md:grid-cols-[300px_1fr] xl:grid-cols-[300px_1fr_300px] items-center justify-items-center h-[var(--content-height)]
-        overflow-auto mt-[var(--header-height)] mb-[var(--footer-height)] px-[var(--padding-x)]"
+        className="grid md:grid-cols-[300px_1fr] xl:grid-cols-[300px_1fr_300px] items-end md:items-center md:justify-items-center
+        h-[var(--content-height)] overflow-hidden mt-[var(--header-height)] mb-[var(--footer-height)] px-[var(--padding-x)]"
       >
         {children}
       </main>

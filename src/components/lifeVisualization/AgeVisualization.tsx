@@ -61,12 +61,13 @@ export const AgeVisualization = () => {
           height: canvasHeight,
           width: canvasWidth,
           transform,
-          transition: 'transform 0.2s ease-out',
+          transition: 'transform .2s ease-out, height .6s .3s ease-out, width .6s ease-out',
+          transformOrigin: 'bottom',
         }}
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        shadows
+        resize={{ debounce: { scroll: 0, resize: 0 } }}
       >
         <CameraSetter totalLayers={totalLayers} />
         <CameraLogger />

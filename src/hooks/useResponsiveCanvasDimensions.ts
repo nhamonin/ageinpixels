@@ -30,7 +30,7 @@ export function useResponsiveCanvasDimensions() {
       }
 
       const questionsElement = document.querySelector(QUESTIONS_SELECTOR);
-      const questionsHeight = `${questionsElement?.clientHeight || 0}px`;
+      const questionsHeight = isFullScreen ? '0px' : `${questionsElement?.clientHeight || 0}px`;
 
       const newCanvasHeight = isSmallScreen
         ? `calc(${CONTENT_HEIGHT} - ${questionsHeight})`

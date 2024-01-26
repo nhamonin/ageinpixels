@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Country } from '@/components/questions/country';
 import { Sex } from '@/components/questions/sex';
@@ -18,6 +18,7 @@ export function Questions() {
   const { searchParams, setQueryParam } = useQueryParams();
   const { country } = useCountry(userData.country);
   const { isFullScreen } = useFullScreen();
+  const [opacity, setOpacity] = useState(isFullScreen ? 1 : 0);
 
   const questions: Question[] = [
     {
@@ -85,12 +86,24 @@ export function Questions() {
     updateUserData,
   ]);
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (!isFullScreen) {
+      timer = setTimeout(() => {
+        setOpacity(1);
+      }, 700);
+    } else {
+      setOpacity(0);
+    }
+    return () => clearTimeout(timer);
+  }, [isFullScreen]);
+
   return (
     <section
       id="questions"
       className="pt-6 sm:pt-9 md:pt-0 pb-3.5 sm:pb-5 md:pb-0 md:max-h-auto overflow-visible flex
-    flex-col gap-3 md:gap-5 items-center justify-center w-full lg:w-[300px] md:my-0"
-      style={{ display: isFullScreen ? 'none' : 'flex' }}
+    flex-col gap-3 md:gap-5 items-center justify-center w-full lg:w-[300px] md:my-0 z-0 md:z-[1]"
+      style={{ opacity, transition: 'opacity 0.3s' }}
     >
       {questions.map((question) => (
         <div key={question.key} className={`w-full flex flex-col gap-3 ${question.class || ''}`}>
