@@ -8,7 +8,7 @@ export const useCanvasWidthMultiplier = (width: number) => {
       const minCanvasWidth = 300;
       const maxCanvasWidth = 1500;
       const minMultiplier = 0.7;
-      const maxMultiplier = 1.3;
+      const maxMultiplier = 1;
 
       const clampedWidth = Math.max(minCanvasWidth, Math.min(width, maxCanvasWidth));
       return (
