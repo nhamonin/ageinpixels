@@ -50,8 +50,8 @@ export const LifePercentage = () => {
 
   return (
     <div className="flex flex-col tabular-nums transition ease-in-out delay-50">
-      <p className="text-muted mb-0">{currentTime}</p>
-      <p className="text-lg mb-2">
+      <p className="text-muted mb-0 pt-1">{currentTime}</p>
+      <p className="text-lg mb-2 leading-tight">
         <span className="font-bold">{lifePercentageToDisplay}%</span> Lived
       </p>
       <Progress

@@ -39,7 +39,7 @@
     --radius: 0rem;
 
     --header-height: 80px;
-    --footer-height: 88px;
+    --footer-height: 86.5px;
 
     --gradient-line-min-height: 0px;
     --gradient-line-max-height: calc(var(--gradient-line-min-height) - 20px);
