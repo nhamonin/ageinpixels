@@ -4,9 +4,7 @@ import Line, { LineProps } from '@/components/ui/line';
 import { useResponsiveCanvasDimensions } from '@/hooks/useResponsiveCanvasDimensions';
 import { useFullScreen } from '@/hooks/useFullScreen';
 
-const FLASHES_AMOUNT_PER_LINE = 3;
-const ANIMATIONS_DURATION = 3500;
-const ANIMATION_DELAY = 100;
+const ANIMATION_DELAY = 1300;
 
 export const GridBackground = () => {
   const { canvasHeight } = useResponsiveCanvasDimensions();
@@ -19,7 +17,7 @@ export const GridBackground = () => {
     } else {
       const timer = setTimeout(() => {
         setHidden(false);
-      }, 1300);
+      }, ANIMATION_DELAY);
       return () => clearTimeout(timer);
     }
   }, [isFullScreen]);
@@ -56,28 +54,6 @@ export const GridBackground = () => {
       customClass: 'hidden xl:block',
     },
   ];
-
-  useEffect(() => {
-    const triggerFlash = () => {
-      const lineElements = document.querySelectorAll('.line');
-
-      lineElements.forEach((line) => {
-        const numberOfFlashes = Math.floor(Math.random() * FLASHES_AMOUNT_PER_LINE) + 1;
-
-        for (let i = 0; i < numberOfFlashes; i++) {
-          const randomDelay = Math.random() * ANIMATIONS_DURATION;
-
-          setTimeout(() => {
-            line.classList.add('animate-flash');
-
-            setTimeout(() => line.classList.remove('animate-flash'), ANIMATION_DELAY);
-          }, randomDelay);
-        }
-      });
-    };
-
-    triggerFlash();
-  }, [isFullScreen]);
 
   return (
     <>
