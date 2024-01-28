@@ -83,8 +83,10 @@ export function Country({ value, onChange }: QuestionsInputProps) {
             onValueChange={handleInputChange}
             onFocus={() => setPopoverOpen(true)}
           />
-          {isLoading && <LoadingSpinner className="text-gray-500" size={20} />}
-          {error && <CommandEmpty>Error loading countries. Please try again.</CommandEmpty>}
+          {isLoading && (
+            <LoadingSpinner className="text-gray-500" size={10} width={'100%'} height={'20px'} />
+          )}
+          {error && <CommandEmpty>Error loading countries. Please try again later.</CommandEmpty>}
           {!isLoading && !error && (
             <CommandList>
               {filteredCountries?.length ? (
