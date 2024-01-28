@@ -49,66 +49,66 @@ export const AgeVisualization = () => {
   }, [isDarkMode, lightAnimation.intensity]);
 
   return (
-    <section className="flex flex-col justify-center overflow-hidden items-center max-h-[var(--content-height)] h-[var(--content-height)] md:min-w-auto md:min-h-auto relative">
-      {lifeExpectancyToUse > 0 && (
-        <>
-          <p
-            className={`${
-              isFullScreen ? 'opacity-100' : 'opacity-0'
-            } md:opacity-100 md:block absolute text-xl tabular-nums animate-levitate-sm md:animate-levitate top-2`}
-            style={{
-              transform,
-              transition: `transform 0.2s ease-out, opacity 0.2s ${
-                isFullScreen ? '1s' : ''
-              } ease-out`,
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            {currentAge.toFixed(2)} / {lifeExpectancyToUse.toFixed(2)}
+    <section className="flex flex-col justify-center overflow-hidden items-center max-h-[var(--content-height)] md:min-w-auto md:min-h-auto relative">
+      {isMounted ? (
+        lifeExpectancyToUse > 0 ? (
+          <>
+            <p
+              className={`${
+                isFullScreen ? 'opacity-100' : 'opacity-0'
+              } md:opacity-100 md:block absolute text-xl tabular-nums animate-levitate-sm md:animate-levitate top-2`}
+              style={{
+                transform,
+                transition: `transform 0.2s ease-out, opacity 0.2s ${
+                  isFullScreen ? '1s' : ''
+                } ease-out`,
+              }}
+              onMouseMove={handleMouseMove}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              {currentAge.toFixed(2)} / {lifeExpectancyToUse.toFixed(2)}
+            </p>
+
+            <Canvas
+              className="cursor-pointer z-[1]"
+              style={{
+                height: canvasHeight,
+                width: canvasWidth,
+                transform,
+                transition: `transform .2s ease-out, ${
+                  isMounted && `height .6s ${isFullScreen ? '.3s' : ''} ease-out`
+                }`,
+                transformOrigin: 'bottom',
+              }}
+              onMouseMove={handleMouseMove}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              resize={{ debounce: { scroll: 0, resize: 0 } }}
+            >
+              <CameraSetter totalLayers={totalLayers} />
+              <CameraLogger />
+              <ambientLight intensity={2} />
+              <AnimatedDirectionalLight
+                ref={light}
+                color={isDarkMode ? '#4656e0' : '#ffe187'}
+                {...lightAnimation}
+              />
+              <RotatingGrid
+                lifeExpectancy={lifeExpectancyToUse}
+                currentAge={currentAge}
+                directionalLight={light}
+              />
+            </Canvas>
+            <Controls />
+          </>
+        ) : (
+          <p className="text-center text-lg px-12">
+            Oops, we're having trouble retrieving data from the World Health Organization at the
+            moment. Check back soon!
           </p>
-
-          <Canvas
-            className="cursor-pointer z-[1]"
-            style={{
-              height: canvasHeight,
-              width: canvasWidth,
-              transform,
-              transition: `transform .2s ease-out, ${
-                isMounted && `height .6s ${isFullScreen ? '.3s' : ''} ease-out`
-              }`,
-              transformOrigin: 'bottom',
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            resize={{ debounce: { scroll: 0, resize: 0 } }}
-          >
-            <CameraSetter totalLayers={totalLayers} />
-            <CameraLogger />
-            <ambientLight intensity={2} />
-            <AnimatedDirectionalLight
-              ref={light}
-              color={isDarkMode ? '#4656e0' : '#ffe187'}
-              {...lightAnimation}
-            />
-            <RotatingGrid
-              lifeExpectancy={lifeExpectancyToUse}
-              currentAge={currentAge}
-              directionalLight={light}
-            />
-          </Canvas>
-          <Controls />
-        </>
-      )}
-
-      {isMounted && !lifeExpectancyToUse && (
-        <p className="text-center text-lg px-12">
-          Oops, we're having trouble retrieving data from the World Health Organization at the
-          moment. Check back soon!
-        </p>
-      )}
+        )
+      ) : null}
     </section>
   );
 };
