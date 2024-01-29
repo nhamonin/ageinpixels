@@ -4,6 +4,8 @@ import { Progress } from '@/components/ui/progress';
 import { useUserData } from '@/contexts/UserDataContext';
 import { stringToDate } from '@/lib/utils';
 
+const MILLISECONDS_IN_A_YEAR = 31556952000;
+
 export const LifePercentage = () => {
   const { userData } = useUserData();
   const { birthDate, lifeExpectancy, globalLifeExpectancy } = userData;
@@ -25,14 +27,11 @@ export const LifePercentage = () => {
       if (!birthDate || lifeExpectancyToUse === null) return 0;
       const birthDateObj = stringToDate(birthDate);
       const currentDate = new Date();
-      const expectedEndDate = new Date(
-        birthDateObj.getFullYear() + lifeExpectancyToUse,
-        birthDateObj.getMonth(),
-        birthDateObj.getDate()
-      );
       const livedMilliseconds = currentDate.getTime() - birthDateObj.getTime();
-      const totalLifeMilliseconds = expectedEndDate.getTime() - birthDateObj.getTime();
-      return (livedMilliseconds / totalLifeMilliseconds) * 100;
+      const totalLifeMilliseconds = lifeExpectancyToUse * MILLISECONDS_IN_A_YEAR;
+      const lifePercentage = (livedMilliseconds / totalLifeMilliseconds) * 100;
+
+      return lifePercentage;
     };
 
     const intervalId = setInterval(() => {
