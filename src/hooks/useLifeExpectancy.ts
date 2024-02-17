@@ -17,6 +17,7 @@ export const useLifeExpectancy = () => {
   } = useQuery<{ value: number | null; source: CountrySource } | null, Error>({
     queryKey: ['lifeExpectancy', userData.country, userData.sex],
     queryFn: () => fetchLifeExpectancy({ countryCode: userData.country, sex: userData.sex }),
+    retry: false,
   });
 
   useEffect(() => {

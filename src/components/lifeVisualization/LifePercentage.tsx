@@ -44,8 +44,10 @@ export const LifePercentage = () => {
     return () => clearInterval(intervalId);
   }, [birthDate, lifeExpectancyToUse]);
 
-  const displayPercentage = isNaN(lifePercentage) ? 0 : Math.min(lifePercentage, 100);
-  const lifePercentageToDisplay = lifePercentage === 0 ? 0 : lifePercentage.toFixed(8);
+  const displayPercentage =
+    !isFinite(lifePercentage) || isNaN(lifePercentage) ? 0 : Math.min(lifePercentage, 100);
+  const lifePercentageToDisplay =
+    !isFinite(lifePercentage) || lifePercentage === 0 ? '0' : lifePercentage.toFixed(8);
 
   return (
     <div className="flex flex-col tabular-nums transition ease-in-out delay-50">
