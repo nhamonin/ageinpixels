@@ -25,7 +25,6 @@ export const RotatingGrid = ({
   directionalLight,
 }: RotatingGridProps) => {
   const cubes = useAgeCubes({ lifeExpectancy, currentAge });
-
   const groupRef = useRef<THREE.Group>(null);
   const orbitingRef = useRef(true);
   const { camera, gl } = useThree();

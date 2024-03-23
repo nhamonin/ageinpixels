@@ -28,18 +28,22 @@ export const AgeVisualization = () => {
 
   const { birthDate, lifeExpectancy, globalLifeExpectancy } = userData;
   const lifeExpectancyToUse = lifeExpectancy || globalLifeExpectancy;
-  const currentAge = birthDate ? calculateAge(birthDate) : 0;
   const layerSize = Math.round(Math.cbrt(lifeExpectancyToUse));
   const cubesPerLayer = layerSize * layerSize;
   const totalLayers = Math.ceil(lifeExpectancyToUse / cubesPerLayer);
   const light = useRef<THREE.DirectionalLight>(null);
+
+  const currentAge = useRef(birthDate ? calculateAge(birthDate) : 0);
+  useEffect(() => {
+    currentAge.current = birthDate ? calculateAge(birthDate) : 0;
+  }, [birthDate]);
+
   const lightAnimation = useSpring({
     loop: true,
     to: [{ intensity: 10 }, { intensity: 7 }, { intensity: 10 }],
     from: { intensity: 10 },
     config: { duration: 750 },
   });
-
   useEffect(() => {
     lightAnimation.intensity.start({ from: 0, to: 10 });
   }, [isDarkMode, lightAnimation.intensity]);
@@ -83,7 +87,7 @@ export const AgeVisualization = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {currentAge.toFixed(2)} / {lifeExpectancyToUse.toFixed(2)}
+        {currentAge.current.toFixed(2)} / {lifeExpectancyToUse.toFixed(2)}
       </p>
 
       <Canvas
@@ -110,7 +114,7 @@ export const AgeVisualization = () => {
         />
         <RotatingGrid
           lifeExpectancy={lifeExpectancyToUse}
-          currentAge={currentAge}
+          currentAge={currentAge.current}
           directionalLight={light}
         />
       </Canvas>

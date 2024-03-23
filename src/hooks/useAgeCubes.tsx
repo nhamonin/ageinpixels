@@ -8,8 +8,8 @@ export const useAgeCubes = ({
   lifeExpectancy: number;
   currentAge: number;
 }) => {
-  const animatedCurrentAge = useAnimatedValue(currentAge, 2000);
   const animatedLifeExpectancy = useAnimatedValue(lifeExpectancy, 2000);
+  const animatedCurrentAge = useAnimatedValue(currentAge, 2000);
   const cubes = [];
 
   const layerSize = 4;
