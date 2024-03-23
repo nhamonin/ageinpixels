@@ -1,8 +1,9 @@
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 
 import { useCanvasWidthMultiplier } from '@/hooks/useCanvasWidthMultiplier';
+import { useTheme } from '@/contexts/ThemeContext';
 import { getCubeMaterial, updateMaterialEmission } from '@/lib/utils';
 import { CubeProps } from '@/types';
 
@@ -12,24 +13,27 @@ const darkColor = '#000';
 export const CubeWithEdges = ({
   position,
   isLived,
-  isDarkMode,
   isCurrentYear,
   innerWidth,
   outerWidth,
 }: CubeProps) => {
+  const { isDarkMode } = useTheme();
   const meshRef = useRef<THREE.Mesh>(null);
   const { size } = useThree();
   const canvasWidthMultiplier = useCanvasWidthMultiplier(size.width);
 
   useFrame(({ clock }) => {
-    if (isCurrentYear && meshRef.current) {
-      updateMaterialEmission(meshRef.current, clock.elapsedTime);
-    }
+    if (!isCurrentYear || !meshRef.current) return;
+
+    updateMaterialEmission(meshRef.current, clock.elapsedTime);
   });
 
   const fillMaterial = getCubeMaterial({ isLived, fillColor: lightColor });
   const lineColor = isDarkMode ? lightColor : darkColor;
-  const lineMaterial = new THREE.LineBasicMaterial({ color: lineColor });
+  const lineMaterial = useMemo(
+    () => new THREE.LineBasicMaterial({ color: lineColor }),
+    [lineColor]
+  );
 
   return (
     <mesh

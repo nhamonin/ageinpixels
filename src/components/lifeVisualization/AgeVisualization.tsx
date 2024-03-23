@@ -47,7 +47,7 @@ export const AgeVisualization = () => {
   if (isLoading) {
     return (
       <section
-        className="flex items-center pt-12 justify-center h-[var(--content-height)]"
+        className="flex items-center pt-14 justify-center h-[var(--content-height)]"
         style={{
           height: canvasHeight,
           width: canvasWidth,
