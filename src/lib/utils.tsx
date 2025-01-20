@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const proxify = (url: string): string => {
-  const proxyServerUrl = 'https://corsproxy.io/?';
+  const proxyServerUrl = 'https://corsproxy.io/?url=';
   return `${proxyServerUrl}${encodeURIComponent(url)}`;
 };
 
