@@ -34,12 +34,14 @@ const fetchWithProxy = async <T>(url: string, retries = 0): Promise<T> => {
       }
       
       try {
-        return JSON.parse(text) as T;
+        const parsed = JSON.parse(text) as T;
+        return parsed;
       } catch (parseError) {
         if (attempt < retries) {
           await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
           continue;
         }
+        console.error('JSON parse error:', parseError, 'Response text:', text.substring(0, 200));
         throw new Error(`Failed to parse JSON response: ${text.substring(0, 100)}`);
       }
     } catch (error) {
@@ -100,16 +102,26 @@ type CountriesResponse = {
 };
 
 export const fetchCountries = async (): Promise<Country[]> => {
-  const data = await fetchWithProxy<CountriesResponse>(URLS.COUNTRIES);
-  if (data && data.value) {
-    return data.value
-      .filter((country) => !!country.Code)
-      .map((country) => ({
-        ...country,
-        Title: country.Title.replace(/\s*\(.*?\)\s*/g, ''),
-      }));
+  try {
+    const data = await fetchWithProxy<CountriesResponse>(URLS.COUNTRIES);
+    console.log('fetchCountries response:', { hasData: !!data, hasValue: !!(data as any)?.value, valueType: typeof (data as any)?.value, isArray: Array.isArray((data as any)?.value) });
+    
+    if (data && (data as any).value && Array.isArray((data as any).value)) {
+      const countries = (data as any).value
+        .filter((country: any) => !!country.Code)
+        .map((country: any) => ({
+          ...country,
+          Title: country.Title.replace(/\s*\(.*?\)\s*/g, ''),
+        }));
+      console.log('fetchCountries: returning', countries.length, 'countries');
+      return countries;
+    }
+    console.warn('fetchCountries: Invalid response structure', data);
+    return [];
+  } catch (error) {
+    console.error('fetchCountries error:', error);
+    throw error;
   }
-  return [];
 };
 
 export const fetchCountry = async (countryCode: string): Promise<Country | null> => {

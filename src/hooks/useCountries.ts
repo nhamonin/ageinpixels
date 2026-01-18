@@ -28,14 +28,33 @@ export const useCountries = () => {
     error,
   } = useQuery<Country[], Error>({
     queryKey: ['countries'],
-    queryFn: fetchCountries,
+    queryFn: async () => {
+      try {
+        const result = await fetchCountries();
+        console.log('useCountries queryFn: received', result.length, 'countries');
+        return result;
+      } catch (err) {
+        console.error('useCountries queryFn error:', err);
+        throw err;
+      }
+    },
     initialData: cachedCountries,
     initialDataUpdatedAt: cachedCountries ? Date.now() : 0,
     staleTime: 1000 * 60 * 60,
     retry: 1,
     refetchOnWindowFocus: false,
-    select: (data: Country[]) => data.sort((a, b) => a.Title.localeCompare(b.Title)),
+    select: (data: Country[]) => {
+      if (!Array.isArray(data)) {
+        console.warn('useCountries select: data is not an array', data);
+        return [];
+      }
+      const sorted = data.sort((a, b) => a.Title.localeCompare(b.Title));
+      console.log('useCountries select: returning', sorted.length, 'sorted countries');
+      return sorted;
+    },
   });
+
+  console.log('useCountries hook state:', { countriesCount: countries.length, isLoading, isError, hasError: !!error });
 
   useEffect(() => {
     if (typeof window === 'undefined') {

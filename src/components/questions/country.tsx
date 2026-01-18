@@ -97,7 +97,12 @@ export function Country({ value, onChange }: QuestionsInputProps) {
           {isLoading && (
             <LoadingSpinner className="text-gray-500" size={10} width={'100%'} height={'20px'} />
           )}
-          {error && <CommandEmpty>Error loading countries. Please try again later.</CommandEmpty>}
+          {error && (
+            <CommandEmpty>
+              Error loading countries. Please try again later.
+              {process.env.NODE_ENV === 'development' && error.message && ` (${error.message})`}
+            </CommandEmpty>
+          )}
           {!isLoading && !error && (
             <CommandList>
               {filteredCountries?.length ? (
@@ -111,7 +116,9 @@ export function Country({ value, onChange }: QuestionsInputProps) {
                   </CommandItem>
                 ))
               ) : (
-                <CommandEmpty>No country found.</CommandEmpty>
+                <CommandEmpty>
+                  {countries.length === 0 ? 'No countries available.' : 'No country found.'}
+                </CommandEmpty>
               )}
             </CommandList>
           )}
