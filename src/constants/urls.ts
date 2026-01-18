@@ -1,4 +1,4 @@
 export const URLS = {
-  COUNTRIES: 'https://ghoapi.azureedge.net/api/DIMENSION/COUNTRY/DimensionValues',
+  COUNTRIES: '/api/countries',
   LIFE_EXPECTANCY: 'https://ghoapi.azureedge.net/api/WHOSIS_000001',
 };
