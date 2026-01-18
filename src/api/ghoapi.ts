@@ -8,13 +8,13 @@ const FALLBACK_LIFE_EXPECTANCY: Record<string, number> = {
   SEX_FMLE: 76.0,
 };
 
-const fetchWithProxy = async <T>(url: string, retries = 0): Promise<T> => {
+const fetchWithProxy = async <T>(url: string, retries = 0, timeoutMs = 20000): Promise<T> => {
   const proxiedUrl = proxify(url);
   
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
       const response = await fetch(proxiedUrl, { signal: controller.signal });
       clearTimeout(timeoutId);
       const contentType = response.headers.get('content-type') || '';
@@ -100,7 +100,7 @@ type CountriesResponse = {
 };
 
 export const fetchCountries = async (): Promise<Country[]> => {
-  const data = await fetchWithProxy<CountriesResponse>(URLS.COUNTRIES);
+  const data = await fetchWithProxy<CountriesResponse>(URLS.COUNTRIES, 1, 30000);
   if (data && data.value && Array.isArray(data.value)) {
     return data.value
       .filter((country) => !!country.Code)
