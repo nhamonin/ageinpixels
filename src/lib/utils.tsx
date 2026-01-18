@@ -9,8 +9,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const proxify = (url: string): string => {
-  const proxyServerUrl = 'https://corsproxy.io/?url=';
-  return `${proxyServerUrl}${encodeURIComponent(url)}`;
+  const isDev = import.meta.env.DEV;
+
+  if (isDev) {
+    return url.replace('https://ghoapi.azureedge.net/api', '/api/gho');
+  }
+
+  return `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
 };
 
 export const stringToDate = (dateStr: string) => {

@@ -29,13 +29,20 @@ export function Country({ value, onChange }: QuestionsInputProps) {
   useEffect(() => {
     if (!value) {
       setChosenCountry('');
+      return;
+    }
+    
+    if (!countries || countries.length === 0) {
+      return;
+    }
+
+    const lowerCaseValue = value.toLowerCase();
+    const selectedCountry = countries.find((country) => country.Code.toLowerCase() === lowerCaseValue);
+    
+    if (selectedCountry) {
+      setChosenCountry(selectedCountry.Title);
     } else {
-      const lowerCaseValue = value.toLowerCase();
-
-      const selectedCountryTitle =
-        countries?.find((country) => country.Code.toLowerCase() === lowerCaseValue)?.Title || '';
-
-      setChosenCountry(selectedCountryTitle);
+      setChosenCountry('');
     }
   }, [value, countries]);
 
@@ -48,9 +55,13 @@ export function Country({ value, onChange }: QuestionsInputProps) {
     : countries;
 
   const handleSelectCountry = (countryCode: string) => {
-    onChange(countryCode);
-    setChosenCountry(countries?.find((country) => country.Code === countryCode)?.Title || '');
-    setPopoverOpen(false);
+    const selectedCountry = countries?.find((country) => country.Code === countryCode);
+    if (selectedCountry) {
+      onChange(countryCode);
+      setChosenCountry(selectedCountry.Title);
+      setPopoverOpen(false);
+      setInputValue('');
+    }
   };
 
   const handleInputChange = (newValue: string) => {

@@ -10,4 +10,13 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api/gho': {
+        target: 'https://ghoapi.azureedge.net',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/gho/, '/api'),
+      },
+    },
+  },
 });
