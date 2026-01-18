@@ -9,13 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const proxify = (url: string): string => {
-  const isDev = import.meta.env.DEV;
-
-  if (isDev) {
-    return url.replace('https://ghoapi.azureedge.net/api', '/api/gho');
-  }
-
-  return `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+  return url.replace('https://ghoapi.azureedge.net/api', '/api/gho');
 };
 
 export const stringToDate = (dateStr: string) => {

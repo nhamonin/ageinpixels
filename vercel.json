@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/gho/:path*",
+      "destination": "https://ghoapi.azureedge.net/api/:path*"
+    }
+  ]
+}
