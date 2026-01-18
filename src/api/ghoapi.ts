@@ -2,8 +2,6 @@ import { proxify } from '@/lib/utils';
 import { URLS } from '@/constants/urls';
 import { ApiResponse, LifeExpectancyParams, LifeExpectancy, Country, CountrySource } from '@/types';
 
-const isDev = import.meta.env.DEV;
-
 const FALLBACK_LIFE_EXPECTANCY: Record<string, number> = {
   SEX_BTSX: 73.0,
   SEX_MLE: 70.0,
@@ -22,63 +20,27 @@ const fetchWithProxy = async <T>(url: string, retries = 0): Promise<T> => {
       const contentType = response.headers.get('content-type') || '';
       const isHtmlResponse = contentType.includes('text/html');
       
-      if (isDev) {
-        const text = await response.text();
-        
-        if (!response.ok || isHtmlResponse || text.startsWith('<html>')) {
-          if (text.startsWith('<html>')) {
-            if (attempt < retries) {
-              await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
-              continue;
-            }
-            throw new Error(`WHO API returned 500 error. The API may be temporarily unavailable.`);
-          }
-          throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-        }
-        
-        try {
-          return JSON.parse(text) as T;
-        } catch (parseError) {
+      const text = await response.text();
+      
+      if (!response.ok || isHtmlResponse || text.startsWith('<html>')) {
+        if (text.startsWith('<html>')) {
           if (attempt < retries) {
             await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
             continue;
           }
-          throw new Error(`Failed to parse JSON response: ${text.substring(0, 100)}`);
-        }
-      }
-
-      if (!response.ok) {
-        const text = await response.text();
-        if (attempt < retries && text.startsWith('<html>')) {
-          await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
-          continue;
+          throw new Error(`WHO API returned 500 error. The API may be temporarily unavailable.`);
         }
         throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
       }
-
-      const data = await response.json();
-      const allOriginsResponse = data as { contents: string; status: { http_code: number } };
       
-      if (allOriginsResponse.status.http_code !== 200) {
-        if (attempt < retries) {
-          await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
-          continue;
-        }
-        throw new Error(`API returned error: ${allOriginsResponse.status.http_code}`);
-      }
-
-      if (allOriginsResponse.contents.startsWith('<html>')) {
-        if (attempt < retries) {
-          await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
-          continue;
-        }
-        throw new Error(`WHO API returned 500 error. The API may be temporarily unavailable.`);
-      }
-
       try {
-        return JSON.parse(allOriginsResponse.contents) as T;
+        return JSON.parse(text) as T;
       } catch (parseError) {
-        throw new Error(`Failed to parse API response: ${allOriginsResponse.contents.substring(0, 100)}`);
+        if (attempt < retries) {
+          await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+          continue;
+        }
+        throw new Error(`Failed to parse JSON response: ${text.substring(0, 100)}`);
       }
     } catch (error) {
       if (attempt === retries) {
