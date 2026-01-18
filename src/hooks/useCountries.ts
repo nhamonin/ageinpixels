@@ -13,8 +13,10 @@ export const useCountries = () => {
     queryKey: ['countries'],
     queryFn: fetchCountries,
     staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 60,
     retry: 2,
     refetchOnWindowFocus: false,
+    refetchOnMount: true,
     select: (data: Country[]) => {
       if (!Array.isArray(data)) {
         return [];
@@ -25,7 +27,7 @@ export const useCountries = () => {
 
   return {
     countries,
-    isLoading,
-    error: isError ? error : null,
+    isLoading: isLoading && countries.length === 0,
+    error: isError && countries.length === 0 ? error : null,
   };
 };
