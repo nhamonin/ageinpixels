@@ -12,10 +12,9 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api/gho': {
-        target: 'https://ghoapi.azureedge.net',
+      '/api': {
+        target: 'https://www.ageinpixels.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/gho/, '/api'),
       },
     },
   },

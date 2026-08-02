@@ -1,4 +1,4 @@
 export const URLS = {
   COUNTRIES: '/api/countries',
-  LIFE_EXPECTANCY: 'https://ghoapi.azureedge.net/api/WHOSIS_000001',
+  LIFE_EXPECTANCY: '/api/life-expectancy',
 };

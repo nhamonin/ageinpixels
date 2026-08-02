@@ -1,32 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-
-import { fetchCountry } from '@/api/ghoapi';
-import { Country } from '@/types';
+import { useCountries } from '@/hooks/useCountries';
 
 export const useCountry = (countryCode: string) => {
-  const {
-    data: country,
-    isLoading,
-    isError,
-    error,
-  } = useQuery<Country | null, Error>({
-    queryKey: ['country', countryCode],
-    queryFn: async () => {
-      if (!countryCode) {
-        return null;
-      }
-      const result = await fetchCountry(countryCode);
-      if (result === null) {
-        throw new Error('Country data not found');
-      }
-      return result;
-    },
-    enabled: !!countryCode,
-  });
+  const { countries, isLoading, error } = useCountries();
+
+  const normalizedCode = countryCode.toUpperCase();
+  const country = countryCode
+    ? countries.find((c) => c.Code.toUpperCase() === normalizedCode) || null
+    : null;
 
   return {
-    country: country || null,
-    isLoading,
-    error: isError ? error : null,
+    country,
+    isLoading: !!countryCode && isLoading,
+    error,
   };
 };

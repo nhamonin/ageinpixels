@@ -11,11 +11,5 @@
       "destination": "https://www.ageinpixels.com/:path*",
       "permanent": true
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/gho/:path*",
-      "destination": "https://ghoapi.azureedge.net/api/:path*"
-    }
   ]
 }

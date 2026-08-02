@@ -8,10 +8,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const proxify = (url: string): string => {
-  return url.replace('https://ghoapi.azureedge.net/api', '/api/gho');
-};
-
 export const stringToDate = (dateStr: string) => {
   const parts = dateStr.split('-');
   return new Date(+parts[2], +parts[1] - 1, +parts[0]);
