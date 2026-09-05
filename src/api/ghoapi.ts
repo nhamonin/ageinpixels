@@ -52,7 +52,7 @@ export const fetchLifeExpectancy = async ({
   }
 
   try {
-    const data = await fetchJson<LifeExpectancyResponse>(`${URLS.LIFE_EXPECTANCY}?${params}`, 1);
+    const data = await fetchJson<LifeExpectancyResponse>(`${URLS.LIFE_EXPECTANCY}?${params}`, 0, 8000);
 
     if (typeof data?.value !== 'number') {
       return { value: fallbackValue, source: 'global' };
